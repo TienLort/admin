@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useMeta({
-  title: "NuxtJs 3 Dashboard",
+  title: "Study Support",
 });
 </script>
 <template>

@@ -4,7 +4,7 @@ import { useDisplay } from "vuetify";
 import Sidebar from "~~/components/layoutComponents/sidebar/Sidebar.vue";
 import Header from "~~/components/layoutComponents/header/Header.vue";
 useMeta({
-  title: "NuxtJs 3  Dashboard",
+  title: "Study Support",
 });
 
 const drawer = ref(undefined || true);

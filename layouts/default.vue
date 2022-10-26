@@ -3,10 +3,10 @@ import { ref, onMounted } from "vue";
 import { useDisplay } from "vuetify";
 import Sidebar from "~~/components/layoutComponents/sidebar/Sidebar.vue";
 import Header from "~~/components/layoutComponents/header/Header.vue";
+import "@fontsource/love-ya-like-a-sister";
 useMeta({
   title: "Study Support",
 });
-
 const drawer = ref(undefined || true);
 const innerW = window.innerWidth;
 const { mdAndUp, mdAndDown } = useDisplay();
@@ -24,7 +24,7 @@ onMounted(() => {
       <!-- ---------------------------------------------- -->
       <v-app-bar elevation="0" color="primary">
         <div class="pe-5">
-          <NuxtLink to="/" class="d-flex">
+          <NuxtLink to="/" class="d-flex text-decoration-none">
             <img src="/images/logos/white-logo-icon.svg" />
             <h1 class="Logo">Study With Us</h1>
           </NuxtLink>
@@ -63,6 +63,7 @@ onMounted(() => {
   font-family: "Love Ya Like A Sister";
   text-decoration: none;
   color: #fff;
+  padding-left:20px;
 }
 .NuxtLink{
   text-decoration: none;

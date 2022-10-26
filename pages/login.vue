@@ -31,10 +31,13 @@
             <div class="div">
               <v-text-field
                 label="Password"
+                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                @click:append="show1 = !show1"
                 variant="underlined"
-                type="password"
+                :type="show1 ? 'text' : 'password'"
                 v-model="requestBody.password"
                 required
+                counter
               ></v-text-field>
             </div>
           </div>
@@ -62,6 +65,7 @@ const { getConfig } = useConfig();
 const requestBody = ref({ email: "", password: "" });
 const unauthorizedErrorMessage = ref("");
 const isDisabledButton = ref(false);
+const show1 = ref(false);
 const validationErrorMessages = ref({});
 
 const { data, statusCode, onFetchResponse, onFetchError, post } = useFetchApi({
@@ -73,7 +77,7 @@ onFetchResponse(() => {
   setToken(data.value.token);
   console.log("Ok");
   // $toast("Đăng nhập thành công", "success", 2000);
-  return navigateTo({ name: "dashboard" });
+  return navigateTo({ name: "index" });
 });
 onFetchError(() => {
   console.log("Ok1");

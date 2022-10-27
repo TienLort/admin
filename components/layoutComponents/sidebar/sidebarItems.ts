@@ -9,4 +9,19 @@ export default [
     icon: "mdi-radiobox-blank",
     to: "/manage-user",
   },
+  {
+    title: "Manage Posts",
+    icon: "mdi-card-outline",
+    to: "/manage-posts",
+  },
+  {
+    title: "Manage Mentors",
+    icon: "mdi-form-dropdown",
+    to: "/",
+  },
+  {
+    title: "Manage Groups",
+    icon: "mdi-table",
+    to: "/",
+  },
 ];

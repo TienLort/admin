@@ -22,6 +22,6 @@ export default [
   {
     title: "Manage Groups",
     icon: "mdi-table",
-    to: "/",
+    to: "/manage-groups",
   },
 ];

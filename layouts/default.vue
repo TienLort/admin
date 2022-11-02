@@ -7,7 +7,7 @@ import "@fontsource/love-ya-like-a-sister";
 useMeta({
   title: "Study Support",
 });
-const drawer = ref(undefined || true);
+const drawer = ref(undefined || false);
 const innerW = window.innerWidth;
 const { mdAndUp, mdAndDown } = useDisplay();
 onMounted(() => {

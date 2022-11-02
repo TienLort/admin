@@ -17,7 +17,7 @@ export default [
   {
     title: "Manage Mentors",
     icon: "mdi-form-dropdown",
-    to: "/",
+    to: "/manage-mentors",
   },
   {
     title: "Manage Groups",

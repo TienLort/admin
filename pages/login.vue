@@ -170,16 +170,16 @@ form {
   transition: 0.3s;
 }
 
-.input-div{
-  display:flex;
+.input-div {
+  display: flex;
 }
 
 .div {
   height: 45px;
   width: 90%;
 }
-.pass{
-  padding-top:20px
+.pass {
+  padding-top: 20px;
 }
 .btn {
   display: block;

@@ -21,7 +21,7 @@ const {
   requireAuth: true,
   disableHandleErrorUnauthorized: false,
 })(
-  '/users/logout',
+  '/logout',
   {immediate: false},
 );
 

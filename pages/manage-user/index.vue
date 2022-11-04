@@ -1,84 +1,181 @@
 <template>
   <v-row align-item="center" class="list px-3 mx-auto">
-    <v-col cols="12" sm="8">
-      <v-text-field
-        v-model="searchbar"
-        label="Search"
-        variant="solo"
-        type="text"
-        required
-        class="input"
-      ></v-text-field>
+    <v-col cols="12" sm="3" align-item="center" class="col-cus">
+      <v-col cols="12">
+        <lable>Tìm Sinh viên: </lable>
+        <v-text-field
+          v-model="searchbar"
+          label="Search"
+          variant="solo"
+          type="text"
+          required
+          clearable
+          hide-details="auto"
+          class="input"
+        ></v-text-field>
+        <div class="mt-3">
+          <label for="type">Chọn tình trạng sinh viên :</label>
+          <select v-model="filter.a.type" class="form-select mt-1" id="type">
+            <option :value="getConfig('constants.typeOfUser.all')">
+              Tất cả
+            </option>
+            <option :value="getConfig('constants.typeOfUser.active')">
+              đang hoạt động
+            </option>
+            <option :value="getConfig('constants.typeOfUser.block')">
+              khóa tài khoản
+            </option>
+          </select>
+        </div>
+        <div class="mt-3">
+          <label for="type">Chọn khoa</label>
+          <select v-model="filter.a.faculty" class="form-select mt-1" required>
+            <option value="" disabled selected>Chọn khoa</option>
+            <option
+              v-for="faculty in faculties"
+              :key="faculty.id"
+              :value="faculty.id"
+            >
+              {{ faculty.name }}
+            </option>
+          </select>
+        </div>
+      </v-col>
+      <v-col cols="12">
+        <v-btn @click.prevent="search" width="100%" class="mt-10">
+          Search
+        </v-btn>
+      </v-col>
     </v-col>
-    <v-col cols="12" sm="4">
-      <v-btn @click="page = 1"> Search </v-btn>
+    <v-col cols="12" sm="9" class="cus-table">
+      <v-row>
+        <div class="header_fixed">
+          <table>
+            <thead>
+              <tr>
+                <th>S No.</th>
+                <th>Image</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Faculty</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in myUsers" :key="user.id">
+                <td>{{ user.id }}</td>
+                <td><img :src="`${user.img}`" /></td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.faculty }}</td>
+                <td>
+                  <button @click="navigateTo(`/manage-user/${user.id}`)">
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="loader">
+                <InfiniteLoading
+                  v-if="loading"
+                  class="loading"
+                  @infinite="load"
+                />
+              </div>
+          <v-pagination
+            v-model="page"
+            :length="totalPages"
+            total-visible="7"
+            color="purple"
+          ></v-pagination>
+        </div>
+      </v-row>
     </v-col>
-    <div class="header_fixed">
-      <table>
-        <thead>
-          <tr>
-            <th>S No.</th>
-            <th>Image</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Department</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody v-for="user in myUsers" :key="user.id">
-          <tr>
-            <td>{{ user.id }}</td>
-            <td><img :src="`${user.img}`" /></td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.department }}</td>
-            <td>
-              <button @click="navigateTo(`/manage-user/${user.id}`)">
-                View
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <v-pagination
-        v-model="page"
-        :length="totalPages"
-        total-visible="7"
-        color="purple"
-      ></v-pagination>
-    </div>
   </v-row>
 </template>
 <script setup>
+  import InfiniteLoading from 'v3-infinite-loading';
+  import 'v3-infinite-loading/lib/style.css';
 definePageMeta({
   layout: "default",
   middleware: "authenticated",
 });
-const searchbar = ref("");
-const page = ref(1);
-const totalPages = ref(3);
-
+const route = useRoute();
+const router = useRouter();
+const { getConfig } = useConfig();
+const faculties = ref({});
+const loading = ref(true);
 const myUsers = ref({});
 
-const { url: url2 } = useUrl({
-  path: "/users",
+const filter = ref({
+  a: {
+    search: route.query.search === undefined ? "" : route.query.search,
+    faculty: route.query.faculty === undefined ? "" : route.query.faculty,
+    type: route.query.type === undefined ? "" : route.query.type,
+    page: route.query.page === undefined ? 1 : route.query.page,
+  },
+});
+
+const { url: urlUser } = useUrl({
+  path: "/manage-user",
   queryParams: {
-    isAccept: "true",
+    queryParams: filter.value.a,
   },
 });
 
 const {
-  data: dataGetUsers,
-  get: getUsers,
-  onFetchResponse: getUsersResponse,
+  data: dataGetFilterUsers,
+  get: getFilterUsers,
+  onFetchResponse: getFilterUsersResponse,
+  onFetchError: getFilterUsersError,
 } = useFetchApi({
   requireAuth: false,
   disableHandleErrorUnauthorized: false,
-})(url2, { immediate: false });
-getUsers().json().execute();
-getUsersResponse(() => {
-  myUsers.value = dataGetUsers.value.data.data;
+})(urlUser, { immediate: false });
+getFilterUsers().json().execute();
+getFilterUsersResponse(() => {
+  console.log(dataGetFilterUsers.value.data.data);
+  console.log("ok");
+  if (dataGetFilterUsers.value.data.data.length !== 0) {
+    myUsers.value = myUsers.value.concat(dataGetFilterUsers.value.data.data);
+  }
+  if (dataGetFilterUsers.value.data.data.length < getConfig('constants.pagination')) {
+    loading.value = false;
+  }
+  // myUsers.value = dataGetUsers.value.data.data;
+  console.log(myUsers.value);
 });
+
+
+const {
+  data: dataFaculty,
+  get: getFaculty,
+  onFetchResponse: getFacultyResponse,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})("/faculties", { immediate: false });
+getFaculty().json().execute();
+getFacultyResponse(() => {
+  faculties.value = dataFaculty.value.data.data;
+});
+
+const search = () => {
+  router.replace({
+    path: "/manage-user",
+    query: filter.value.a,
+  });
+  myUsers.value = [];
+  getFilterUsers().json().execute();
+};
+
+const load = () => {
+  setTimeout(() => {
+    getFilterUsers().json().execute();
+    filter.value.a.page += 1; 
+  }, 500);
+};
 </script>
 
 <style scoped>
@@ -95,7 +192,16 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #adacac;
 }
-
+.col-cus {
+  background-color: #f6f8fc;
+  padding: 42px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 400px;
+  border-radius: 10px;
+}
+.cus-table {
+  padding: 0 20px;
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -104,9 +210,8 @@ table {
 .header_fixed {
   width: 100%;
   overflow: auto;
-  border: 1px solid #dddddd;
+  border: 1px solid #bbb;
 }
-
 .header_fixed thead th {
   position: sticky;
   top: 0;
@@ -160,61 +265,36 @@ td button {
   display: flex;
   float: right;
 }
-</style>
 
-<!-- <tr>
-                    <td>2</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Anjali</td>
-                    <td>anjali@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Vejata Gupta</td>
-                    <td>Vejata@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Shweta</td>
-                    <td>Shweta@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Adarsh</td>
-                    <td>Adarsh@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Monti</td>
-                    <td>Monti@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Arpit</td>
-                    <td>Arpit@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td><img src="/images/user.png"/></td>
-                    <td>Priya</td>
-                    <td>priya@gmail.com</td>
-                    <td>Engineering</td>
-                    <td><button>View</button></td>
-                </tr> -->
+.search {
+  display: inline-block;
+  color: black;
+  text-align: center;
+}
+.search input {
+  margin: 0px;
+  margin-right: 0;
+  width: 100%;
+  display: inline-block;
+  border-radius: 4px !important;
+}
+.search button:hover svg {
+  color: rgb(7, 30, 95);
+}
+.loading >>> div {
+  margin: auto;
+  margin-top: 10px;
+}
+.loader {
+  width: 90%;
+  margin: auto;
+}
+.register button {
+  color: rgb(0, 0, 0);
+  border: none;
+  font-size: 16px;
+  background-color: transparent;
+  padding: 5px 10px 5px 0px;
+  text-decoration: underline;
+}
+</style>

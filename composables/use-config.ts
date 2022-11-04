@@ -8,6 +8,12 @@ const CONFIG = {
       forbidden: 403,
       notFound: 404,
     },
+    pagination: 10,
+    typeOfUser: {
+      block: 0,
+      active: 1,
+      all: 'all',
+    }
   }
 };
 const useConfig = () => {

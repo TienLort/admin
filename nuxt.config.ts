@@ -6,7 +6,8 @@ export default defineNuxtConfig({
       extractCSS: false,
       transpile: ["vuetify"],
     },    
-    css: ["@/assets/scss/style.scss"],
+    css: ["@/assets/scss/style.scss",
+    'bootstrap/dist/css/bootstrap.css'],
     vite: {
       define: {
         "process.env.DEBUG": false,
@@ -15,6 +16,7 @@ export default defineNuxtConfig({
 
     modules: [
       '@vueuse/nuxt',
+      'bootstrap-vue-3/nuxt',
     ],
     meta: {
       title: process.env.APP_NAME || '',

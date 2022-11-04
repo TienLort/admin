@@ -3,23 +3,22 @@ import Datepicker from "vue3-datepicker";
 const v = new Date();
 const picked = ref(v);
 const dialog = ref(false);
-
+const tab = ref("option-1");
 const route = useRoute();
 const myMentors = ref({
-  id:'',
-  img:'', 
-  name: '',
-  email: '',
-  phonenumber: '',
-  address: '',
-  gender: '',
-  birthday: '',
-  faculty: '',
-
+  id: "",
+  img: "",
+  name: "",
+  email: "",
+  phonenumber: "",
+  address: "",
+  gender: "",
+  birthday: "",
+  faculty: "",
 });
 
 const { url: url2 } = useUrl({
-  path: `/mentors/${route.params.id}`,
+  path: `/manage-mentors/${route.params.id}`,
   queryParams: {
     isAccept: "true",
   },
@@ -35,10 +34,9 @@ const {
 })(url2, { immediate: false });
 getMentors().json().execute();
 getMentorsResponse(() => {
-  console.log('OK');
+  console.log("OK");
   myMentors.value = dataGetMentors.value.data.data;
-  console.log('OK1');
-
+  console.log("OK1");
 });
 console.log(myMentors);
 </script>
@@ -46,12 +44,9 @@ console.log(myMentors);
   <div class="container">
     <div class="header">
       <v-row>
-        <v-col cols="12" sm="12" md="4" lg="3">
-          <div class="card">
-            <img
-              cover
-              :src="`${myMentors.img}`"
-            />
+    <v-col sm="12" md="4" lg="3">
+      <div class="card">
+            <img cover :src="`${myMentors.img}`" />
             <div class="mentor-name">Nguyễn Văn Tiến</div>
             <div class="action">
               <v-row justify="center">
@@ -147,89 +142,138 @@ console.log(myMentors);
               <v-btn variant="outlined" color="secondary">Lock</v-btn>
             </div>
           </div>
-        </v-col>
-        <v-col cols="12" sm="12" md="8" lg="9">
-          <div class="wrap-info">
-            <h1>Mentor Account</h1>
-            <div class="group">
-              <label>Email:</label>
-              <input
-                type="text"
-                v-model="myMentors.email"
-                class="input-field"
-                readonly
-              />
-              <v-row>
-                <v-col cols="12" sm="12" md="6" lg="6">
-                  <label>Full Name:</label>
-                  <input
-                    type="text"
-                    v-model="myMentors.name"
-                    class="input-field"
-                    readonly
-                  />
-                </v-col>
-                <v-col cols="12" sm="12" md="6" lg="6">
-                  <label>Phone Number:</label>
-                  <input
-                    type="text"
-                    v-model="myMentors.phonenumber"
-                    class="input-field"
-                    readonly
-                  />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12" md="6" lg="6">
-                  <label>Address:</label>
-                  <input
-                    type="text"
-                    v-model="myMentors.address"
-                    class="input-field"
-                    readonly
-                  />
-                </v-col>
-                <v-col cols="12" sm="12" md="6" lg="6">
-                  <label>Gender:</label>
-                  <input
-                    type="text"
-                    :v-model="myMentors.gender"
-                    class="input-field"
-                    readonly
-                  />
-                </v-col>
-              </v-row>
+    </v-col>
+    <v-col sm="12" md="8" lg="9">
+      <v-card>
+    <v-toolbar color="">
+      <v-toolbar-title> 
+        Option
+        <v-tabs v-model="tab" color="primary">
+                  <v-tab value="option-1" class="option-btn">
+                    <v-icon start> mdi-account </v-icon>
+                    Thông tin mentor:
+                  </v-tab>
+                  <v-tab value="option-3" class="option-btn">
+                    <v-icon start> mdi-access-point </v-icon>
+                    Nhóm đang hướng dẫn
+                  </v-tab>
+                  <v-tab value="option-4" class="option-btn">
+                    <v-icon start> mdi-access-point </v-icon>
+                    Nhóm đã hướng dẫn
+                  </v-tab>
 
-              <v-row>
-                <v-col cols="12" sm="12" md="6" lg="6">
-                  <label>Birth Date:</label>
-                  <!-- <Datepicker v-model="picked" class="date-field" /> -->
-                  <input
-                    type="text"
-                    v-model="myMentors.birthday"
-                    class="input-field"
-                    readonly
-                  />
-                </v-col>
-                <v-col cols="12" sm="12" md="6" lg="6">
-                  <label>Faculty:</label>
-                  <input
-                    type="text"
-                    v-model="myMentors.faculty"
-                    class="input-field"
-                    readonly
-                  />
-                </v-col>
-              </v-row>
-            </div>
-          </div>
-        </v-col>
-      </v-row>
+        </v-tabs>
+      </v-toolbar-title>
+    </v-toolbar>
+    <div class="flex-row">
+        <v-window v-model="tab">
+          <v-window-item value="option-1">
+            <v-card flat>
+              <div class="wrap-info">
+             <h1>Mentor Account</h1>
+             <div class="group">
+               <label>Email:</label>
+               <input
+                 type="text"
+                 v-model="myMentors.email"
+                 class="input-field"
+                 readonly
+               />
+               <v-row>
+                 <v-col cols="12" sm="12" md="6" lg="6">
+                   <label>Full Name:</label>
+                   <input
+                     type="text"
+                     v-model="myMentors.name"
+                     class="input-field"
+                     readonly
+                   />
+                 </v-col>
+                 <v-col cols="12" sm="12" md="6" lg="6">
+                   <label>Phone Number:</label>
+                   <input
+                     type="text"
+                     v-model="myMentors.phonenumber"
+                     class="input-field"
+                     readonly
+                   />
+                 </v-col>
+               </v-row>
+               <v-row>
+                 <v-col cols="12" sm="12" md="6" lg="6">
+                   <label>Address:</label>
+                   <input
+                     type="text"
+                     v-model="myMentors.address"
+                     class="input-field"
+                     readonly
+                   />
+                 </v-col>
+                 <v-col cols="12" sm="12" md="6" lg="6">
+                   <label>Gender:</label>
+                   <input
+                     type="text"
+                     :v-model="myMentors.gender"
+                     class="input-field"
+                     readonly
+                   />
+                 </v-col>
+               </v-row>
+  
+               <v-row>
+                 <v-col cols="12" sm="12" md="6" lg="6">
+                   <label>Birth Date:</label>
+                   <!-- <Datepicker v-model="picked" class="date-field" /> -->
+                   <input
+                     type="text"
+                     v-model="myMentors.birthday"
+                     class="input-field"
+                     readonly
+                   />
+                 </v-col>
+                 <v-col cols="12" sm="12" md="6" lg="6">
+                   <label>Faculty:</label>
+                   <input
+                     type="text"
+                     v-model="myMentors.faculty"
+                     class="input-field"
+                     readonly
+                   />
+                 </v-col>
+               </v-row>
+             </div>
+           </div>
+            </v-card>
+          </v-window-item>
+          <v-window-item value="option-2">
+            <v-card flat>
+              
+              OK
+            </v-card>
+          </v-window-item>
+          <v-window-item value="option-3">
+            <v-card flat>
+              ok
+            </v-card>
+          </v-window-item>
+        </v-window>
+      </div>
+  </v-card>
+    </v-col>
+  </v-row>
     </div>
   </div>
+  
 </template>
 
 <style scoped>
+.flex-row{
+  width: 100%;
+}
+.wrap-info{
+  width: 80%;
+  padding: 20px 0px 0px 40px;
+}
 .card {
   display: flex;
   flex-direction: column;
@@ -252,7 +296,7 @@ img {
   flex: none;
 }
 .v-card {
-  min-width: 1000px;
+  min-width: 900px;
 }
 .header {
   border-radius: 5px;

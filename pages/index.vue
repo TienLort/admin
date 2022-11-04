@@ -5,7 +5,7 @@
       <div class="cards">
         <div class="card">
           <div class="box">
-            <h1>2194</h1>
+            <h2>2194</h2>
             <h3>Students</h3>
           </div>
           <div class="icon-case">
@@ -14,7 +14,7 @@
         </div>
         <div class="card">
           <div class="box">
-            <h1>53</h1>
+            <h2>53</h2>
             <h3>Mentor</h3>
           </div>
           <div class="icon-case">
@@ -23,7 +23,7 @@
         </div>
         <div class="card">
           <div class="box">
-            <h1>5</h1>
+            <h2>5</h2>
             <h3>Schools</h3>
           </div>
           <div class="icon-case">
@@ -32,11 +32,29 @@
         </div>
         <div class="card">
           <div class="box">
-            <h1>350000</h1>
+            <h2>350000</h2>
             <h3>Income</h3>
           </div>
           <div class="icon-case">
             <img src="/images/income.png" alt="" />
+          </div>
+        </div>
+        <div class="card">
+          <div class="box">
+            <h2>350000</h2>
+            <h3>Income</h3>
+          </div>
+          <div class="icon-case">
+            <img src="/images/income.png" alt="" />
+          </div>
+        </div>
+        <div class="card">
+          <div class="box">
+            <h2>350000</h2>
+            <h3>Income</h3>
+          </div>
+          <div class="icon-case">
+            <img src="/images/groups.png" alt="" class="img-cus"/>
           </div>
         </div>
       </div>
@@ -175,7 +193,10 @@ h3 {
   padding: 3px 8px;
   border: 2px solid #f05462;
 }
-
+.img-cus{
+  width: 65px;
+  height: 50px;
+}
 .title {
   display: flex;
   align-items: center;
@@ -207,13 +228,13 @@ td {
   padding: 20px 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .container1 .content .cards .card {
   width: 250px;
-  height: 150px;
+  height: 170px;
   background: white;
   margin: 20px 10px;
   display: flex;

@@ -7,7 +7,7 @@ export default [
   {
     title: "Manage User",
     icon: "mdi-radiobox-blank",
-    to: "/manage-user",
+    to: "/users",
   },
   {
     title: "Manage Posts",

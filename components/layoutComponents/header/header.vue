@@ -16,7 +16,7 @@
 const {deleteToken} = useToken();
 const {
   onFetchResponse,
-  get,
+  post,
 } = useFetchApi({
   requireAuth: true,
   disableHandleErrorUnauthorized: false,
@@ -32,7 +32,7 @@ onFetchResponse(() => {
 
 
 const logout = () => {
-  get().json().execute();
+  post().json().execute();
 };
 </script>
 

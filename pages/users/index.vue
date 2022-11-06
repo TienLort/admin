@@ -3,19 +3,17 @@
     <v-col cols="12" sm="3" align-item="center" class="col-cus">
       <v-col cols="12">
         <lable>Tìm Sinh viên: </lable>
-        <v-text-field
-          v-model="searchbar"
-          label="Search"
-          variant="solo"
-          type="text"
-          required
-          clearable
-          hide-details="auto"
-          class="input"
-        ></v-text-field>
+        <div class="input-group search" id="search">
+            <input
+              v-model="filter.a.search"
+              class="form-control border input-cus"
+              type="search"
+              placeholder="Môn học"
+            >
+          </div>
         <div class="mt-3">
           <label for="type">Chọn tình trạng sinh viên :</label>
-          <select v-model="filter.a.type" class="form-select mt-1" id="type">
+          <select v-model="filter.a.type" class="form-select mt-1 select-cus" id="type">
             <option :value="getConfig('constants.typeOfUser.all')">
               Tất cả
             </option>
@@ -29,7 +27,7 @@
         </div>
         <div class="mt-3">
           <label for="type">Chọn khoa</label>
-          <select v-model="filter.a.faculty" class="form-select mt-1" required>
+          <select v-model="filter.a.faculty" class="form-select mt-1 select-cus" required>
             <option value="" disabled selected>Chọn khoa</option>
             <option
               v-for="faculty in faculties"
@@ -42,7 +40,7 @@
         </div>
       </v-col>
       <v-col cols="12">
-        <v-btn @click.prevent="search" width="100%" class="mt-10">
+        <v-btn @click.prevent="search" width="100%" class="mt-4">
           Search
         </v-btn>
       </v-col>
@@ -69,7 +67,7 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.faculty }}</td>
                 <td>
-                  <button @click="navigateTo(`/manage-user/${user.id}`)">
+                  <button @click="navigateTo(`/users/${user.id}`)">
                     View
                   </button>
                 </td>
@@ -118,7 +116,7 @@ const filter = ref({
 });
 
 const { url: urlUser } = useUrl({
-  path: "/manage-user",
+  path: "/users",
   queryParams: {
     queryParams: filter.value.a,
   },
@@ -163,7 +161,7 @@ getFacultyResponse(() => {
 
 const search = () => {
   router.replace({
-    path: "/manage-user",
+    path: "/users",
     query: filter.value.a,
   });
   myUsers.value = [];
@@ -213,8 +211,6 @@ table {
   border: 1px solid #bbb;
 }
 .header_fixed thead th {
-  position: sticky;
-  top: 0;
   background-color: black;
   color: #e6e7e8;
   font-size: 15px;
@@ -240,14 +236,14 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(odd) {
-  background-color: #edeef1;
+  background-color: #fff;
 }
 
-tr:hover td {
+/* tr:hover td {
   color: #44b478;
-  cursor: pointer;
+  cursor: default;
   background-color: #ffffff;
-}
+} */
 
 td button {
   border: none;
@@ -256,7 +252,9 @@ td button {
   background-color: black;
   color: #e6e7e8;
 }
-
+.input-cus{
+  padding: 10px;
+}
 .v-btn {
   background-color: #44b478;
   color: #fff;
@@ -277,6 +275,10 @@ td button {
   width: 100%;
   display: inline-block;
   border-radius: 4px !important;
+}
+
+.select-cus{
+  padding: 10px;
 }
 .search button:hover svg {
   color: rgb(7, 30, 95);

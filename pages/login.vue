@@ -74,8 +74,9 @@ const { data, statusCode, onFetchResponse, onFetchError, post } = useFetchApi({
 })("login", { immediate: false });
 
 onFetchResponse(() => {
+  // setToken(data.value.data.token.access_token);
   setToken(data.value.token);
-  console.log("Ok");
+  console.log("Ok login");
   // $toast("Đăng nhập thành công", "success", 2000);
   return navigateTo({ name: "index" });
 });

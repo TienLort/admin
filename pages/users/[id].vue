@@ -19,7 +19,7 @@ const myUsers = ref({
 });
 
 const { url: url2 } = useUrl({
-  path: `/manage-user/${route.params.id}`,
+  path: `/users/${route.params.id}`,
   queryParams: {
     isAccept: "true",
   },
@@ -150,7 +150,7 @@ console.log(myUsers);
         </v-col>
         <v-col cols="12" sm="12" md="8" lg="9">
           <div class="wrap-info">
-            <h1>Mentor Account</h1>
+            <h1>User Account</h1>
             <div class="group">
               <label>Email:</label>
               <input
@@ -235,8 +235,6 @@ console.log(myUsers);
   flex-direction: column;
   align-items: center;
   height: 100%;
-  background-color: #fff;
-  border: 1px solid #ccc;
 }
 .action {
   display: flex;
@@ -253,9 +251,6 @@ img {
 }
 .v-card {
   min-width: 1000px;
-}
-.header {
-  border-radius: 5px;
 }
 .mentor-name {
   font-size: 24px;

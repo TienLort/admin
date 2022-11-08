@@ -4,16 +4,20 @@
       <v-col cols="12">
         <lable>Tìm Sinh viên: </lable>
         <div class="input-group search" id="search">
-            <input
-              v-model="filter.a.search"
-              class="form-control border input-cus"
-              type="search"
-              placeholder="Môn học"
-            >
-          </div>
+          <input
+            v-model="filter.a.search"
+            class="form-control border input-cus"
+            type="search"
+            placeholder="Môn học"
+          />
+        </div>
         <div class="mt-3">
           <label for="type">Chọn tình trạng sinh viên :</label>
-          <select v-model="filter.a.type" class="form-select mt-1 select-cus" id="type">
+          <select
+            v-model="filter.a.type"
+            class="form-select mt-1 select-cus"
+            id="type"
+          >
             <option :value="getConfig('constants.typeOfUser.all')">
               Tất cả
             </option>
@@ -27,7 +31,11 @@
         </div>
         <div class="mt-3">
           <label for="type">Chọn khoa</label>
-          <select v-model="filter.a.faculty" class="form-select mt-1 select-cus" required>
+          <select
+            v-model="filter.a.faculty"
+            class="form-select mt-1 select-cus"
+            required
+          >
             <option value="" disabled selected>Chọn khoa</option>
             <option
               v-for="faculty in faculties"
@@ -60,27 +68,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in myUsers" :key="user.id">
-                <td>{{ user.id }}</td>
+              <tr v-for="(user, index) in myUsers" :key="user.id">
+                <td>{{ index +1 }}</td>
                 <td><img :src="`${user.img}`" /></td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.faculty }}</td>
                 <td>
-                  <button @click="navigateTo(`/users/${user.id}`)">
-                    View
-                  </button>
+                  <button @click="navigateTo(`/users/${user.id}`)">View</button>
                 </td>
               </tr>
             </tbody>
           </table>
           <div class="loader">
-                <InfiniteLoading
-                  v-if="loading"
-                  class="loading"
-                  @infinite="load"
-                />
-              </div>
+            <InfiniteLoading v-if="loading" class="loading" @infinite="load" />
+          </div>
           <v-pagination
             v-model="page"
             :length="totalPages"
@@ -93,8 +95,8 @@
   </v-row>
 </template>
 <script setup>
-  import InfiniteLoading from 'v3-infinite-loading';
-  import 'v3-infinite-loading/lib/style.css';
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
 definePageMeta({
   layout: "default",
   middleware: "authenticated",
@@ -104,7 +106,7 @@ const router = useRouter();
 const { getConfig } = useConfig();
 const faculties = ref({});
 const loading = ref(true);
-const myUsers = ref({});
+const myUsers = ref([]);
 
 const filter = ref({
   a: {
@@ -131,20 +133,27 @@ const {
   requireAuth: false,
   disableHandleErrorUnauthorized: false,
 })(urlUser, { immediate: false });
-getFilterUsers().json().execute();
+
+// getFilterUsers().json().execute();
+
 getFilterUsersResponse(() => {
   console.log(dataGetFilterUsers.value.data.data);
   console.log("ok");
   if (dataGetFilterUsers.value.data.data.length !== 0) {
+  console.log("ok la");
     myUsers.value = myUsers.value.concat(dataGetFilterUsers.value.data.data);
+    console.log(myUsers.value);
+    console.log("tesst");
   }
-  if (dataGetFilterUsers.value.data.data.length < getConfig('constants.pagination')) {
+  if (
+    dataGetFilterUsers.value.data.data.length <
+    getConfig("constants.pagination")
+  ) {
     loading.value = false;
   }
   // myUsers.value = dataGetUsers.value.data.data;
   console.log(myUsers.value);
 });
-
 
 const {
   data: dataFaculty,
@@ -172,6 +181,7 @@ const load = () => {
   setTimeout(() => {
     getFilterUsers().json().execute();
     filter.value.a.page += 1; 
+    console.log("Thumbz")
   }, 500);
 };
 </script>
@@ -252,7 +262,7 @@ td button {
   background-color: black;
   color: #e6e7e8;
 }
-.input-cus{
+.input-cus {
   padding: 10px;
 }
 .v-btn {
@@ -277,7 +287,7 @@ td button {
   border-radius: 4px !important;
 }
 
-.select-cus{
+.select-cus {
   padding: 10px;
 }
 .search button:hover svg {

@@ -12,7 +12,7 @@ export default [
   {
     title: "Manage Posts",
     icon: "mdi-card-outline",
-    to: "/manage-posts",
+    to: "/notifications",
   },
   {
     title: "Manage Mentors",

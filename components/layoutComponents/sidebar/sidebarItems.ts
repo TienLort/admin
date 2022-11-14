@@ -1,26 +1,26 @@
 export default [
   {
-    title: "Dashboard",
+    title: "Trang chủ",
     icon: "mdi-view-dashboard-outline",
     to: "/",
   },
   {
-    title: "Manage User",
+    title: "Quản lý sinh viên",
     icon: "mdi-radiobox-blank",
     to: "/users",
   },
   {
-    title: "Manage Posts",
-    icon: "mdi-card-outline",
-    to: "/notifications",
-  },
-  {
-    title: "Manage Mentors",
+    title: "Quản lý Mentor",
     icon: "mdi-form-dropdown",
     to: "/manage-mentors",
   },
   {
-    title: "Manage Groups",
+    title: "Quản lý thông báo",
+    icon: "mdi-card-outline",
+    to: "/notifications",
+  },
+  {
+    title: "Quản lý nhóm học",
     icon: "mdi-table",
     to: "/manage-groups",
   },

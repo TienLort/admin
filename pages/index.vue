@@ -169,7 +169,9 @@ h1,
 h2 {
   color: #444;
 }
-
+h2 {
+  text-align: center;
+}
 h3 {
   color: #999;
 }

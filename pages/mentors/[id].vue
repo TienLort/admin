@@ -18,7 +18,7 @@ const myMentors = ref({
 });
 
 const { url: url2 } = useUrl({
-  path: `/manage-mentors/${route.params.id}`,
+  path: `/mentors/${route.params.id}`,
   queryParams: {
     isAccept: "true",
   },

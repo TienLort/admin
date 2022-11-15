@@ -12,7 +12,7 @@ export default [
   {
     title: "Quản lý Mentor",
     icon: "mdi-form-dropdown",
-    to: "/manage-mentors",
+    to: "/mentors",
   },
   {
     title: "Quản lý thông báo",

@@ -62,14 +62,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in myUsers" :key="user.id">
+              <tr v-for="user in myMentors" :key="user.id">
                 <td>{{ user.id }}</td>
                 <td><img :src="`${user.img}`" /></td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.faculty }}</td>
                 <td>
-                  <button @click="navigateTo(`/manage-mentors/${user.id}`)">
+                  <button @click="navigateTo(`/mentors/${user.id}`)">
                     View
                   </button>
                 </td>
@@ -106,7 +106,7 @@ const router = useRouter();
 const { getConfig } = useConfig();
 const faculties = ref({});
 const loading = ref(true);
-const myUsers = ref({});
+const myMentors = ref([]);
 
 const filter = ref({
   a: {
@@ -118,7 +118,7 @@ const filter = ref({
 });
 
 const { url: urlUser } = useUrl({
-  path: "/manage-mentors",
+  path: "/mentors",
   queryParams: {
     queryParams: filter.value.a,
   },
@@ -138,13 +138,12 @@ getFilterUsersResponse(() => {
   console.log(dataGetFilterUsers.value.data.data);
   console.log("ok");
   if (dataGetFilterUsers.value.data.data.length !== 0) {
-    myUsers.value = myUsers.value.concat(dataGetFilterUsers.value.data.data);
+    myMentors.value = myMentors.value.concat(dataGetFilterUsers.value.data.data);
   }
   if (dataGetFilterUsers.value.data.data.length < getConfig('constants.pagination')) {
     loading.value = false;
   }
-  // myUsers.value = dataGetUsers.value.data.data;
-  console.log(myUsers.value);
+  // myMentors.value = dataGetUsers.value.data.data;
 });
 
 
@@ -163,10 +162,10 @@ getFacultyResponse(() => {
 
 const search = () => {
   router.replace({
-    path: "/manage-mentors",
+    path: "/mentors",
     query: filter.value.a,
   });
-  myUsers.value = [];
+  myMentors.value = [];
   getFilterUsers().json().execute();
 };
 
@@ -241,6 +240,30 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
   background-color: #edeef1;
+}
+th:nth-child(1),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(2),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(3),
+.td:nth-child(2) {
+  width: 20%;
+}
+.th:nth-child(4),
+.td:nth-child(3) {
+  width: 20%;
+}
+.th:nth-child(5),
+.td:nth-child(4) {
+  width: 20%;
+}
+.th:nth-child(6),
+.td:nth-child(5) {
+  width: 10%;
 }
 
 tr:hover td {

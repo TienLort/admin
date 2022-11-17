@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-row align-item="center" class="list px-3 mx-auto">
-      <v-col cols="12" sm="3" align-item="center" class="col-cus">
-        <v-col cols="12">
+      <v-col cols="12" sm="12" align-item="center" class="col-cus">
+        <v-row>
+          <v-col cols="4" class="mr-10">
           <lable>Tìm kiếm thông báo: </lable>
           <div class="input-group search" id="search">
             <input
@@ -13,14 +14,14 @@
             />
           </div>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="3">
           <v-btn @click.prevent="search" width="100%" class="mt-4">
             Search
           </v-btn>
         </v-col>
         <v-dialog v-model="dialog" persistent>
         <template v-slot:activator="{ props }">
-          <v-btn tile color="success" v-bind="props" @click="dialog = true" width="100%" class="mt-4">
+          <v-btn tile color="success" v-bind="props" @click="dialog = true" width="" class="mt-4">
             <v-icon left> mdi-pencil </v-icon>
             Create Posts
           </v-btn>
@@ -49,8 +50,9 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+        </v-row>
       </v-col>
-      <v-col cols="12" sm="9" class="cus-table">
+      <v-col cols="12" sm="12">
         <v-row>
           <div class="header_fixed">
             <table >
@@ -58,7 +60,7 @@
                 <tr>
                   <!-- <th><input type="checkbox" v-model="checkAll" data-check-all/></th> -->
                   <th>No.</th>
-                  <th>Title</th>
+                  <th>Content</th>
                   <th>Time</th>
                   <th>Action</th>
                 </tr>
@@ -72,10 +74,11 @@
                       {{ post.title }}
                     </h3>
                     <p>
-                      {{ post.description }}
+                      {{ post.content }}
                     </p>
                   </td>
                   <td>{{ post.time }}</td>
+                  <!-- <td>{{ post.created_at.slice(0, 10) }}</td> -->
                   <td>
                     <div class="text-nowrap mt-3 card">
                       <button @click="navigateTo(`/notifications/${post.id}`)">
@@ -115,7 +118,6 @@ const route = useRoute();
 const dialog = ref(false);
 const posts = ref([]);
 const {token} = useToken();
-console.log(token.value);
 const filter = ref({
   a: {
     search: route.query.search === undefined ? "" : route.query.search,
@@ -141,6 +143,7 @@ const {
 getPosts().json().execute();
 getPostsResponse(() => {
   posts.value = dataGetPosts.value.data.data;
+  console.log(posts.value);
 });
 
 const search = () => {
@@ -274,12 +277,9 @@ td:nth-child(1) {
 }
 .col-cus {
   background-color: #f6f8fc;
-  padding: 42px 20px;
+  padding: 20px;
+  margin-bottom:20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  height: 400px;
   border-radius: 10px;
-}
-.cus-table {
-  padding: 0 20px;
 }
 </style>

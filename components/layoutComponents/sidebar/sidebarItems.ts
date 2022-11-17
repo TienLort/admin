@@ -1,12 +1,12 @@
 export default [
   {
     title: "Trang chủ",
-    icon: "mdi-view-dashboard-outline",
+    icon: "mdi-view-dashboard-edit",
     to: "/",
   },
   {
     title: "Quản lý sinh viên",
-    icon: "mdi-radiobox-blank",
+    icon: "mdi-account",
     to: "/users",
   },
   {
@@ -16,12 +16,12 @@ export default [
   },
   {
     title: "Quản lý thông báo",
-    icon: "mdi-card-outline",
+    icon: "mdi-bell-ring",
     to: "/notifications",
   },
   {
     title: "Quản lý nhóm học",
-    icon: "mdi-table",
+    icon: "mdi-account-group",
     to: "/manage-groups",
   },
 ];

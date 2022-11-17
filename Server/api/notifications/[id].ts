@@ -4,7 +4,7 @@ const createGetResponse = () => ({
       {
         id: '1',
         title: 'Thông báo nghỉ học 1',
-        description: 'Hỗ trợ người dùng lập nhóm học, cải thiện chất lượng học tập dưới sự hỗ trợ của các mentor do người dùng học tốt đăng ký, có hỗ trợ và quản lý từ nhà trường',
+        content: 'Hỗ trợ người dùng lập nhóm học, cải thiện chất lượng học tập dưới sự hỗ trợ của các mentor do người dùng học tốt đăng ký, có hỗ trợ và quản lý từ nhà trường',
         time: '10/24/2022',
       },
     }

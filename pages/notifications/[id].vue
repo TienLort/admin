@@ -5,7 +5,7 @@
       color="black"
       label="Label"
       prepend-icon="mdi-comment"
-      v-model="Posts.description"
+      v-model="Posts.content"
     ></v-textarea>
     <div class="d-flex flex-wrap gap-2 flex-row-reverse ">
         <v-btn elevation="0" color="secondary" rounded="lg" to="/notifications">Reset</v-btn>

@@ -4,9 +4,9 @@ const createGetResponse = () => ({
         {
           id: '1',
           name: 'Nguyễn Văn A',
-          img: '/images/user.png',
+          img: '/images/m1.jpg',
           email: 'anjali@gmail.com',
-          phonenumber:'0344823807',
+          phone_number:'0344823807',
           address:'54 Nguyen Luong Bang',
           gender:'1',
           birthday: '01/28/2001',

@@ -9,14 +9,6 @@ const createGetResponse = () => ({
         id: '2',
         name: 'architect',
       },
-      {
-        id: '3',
-        name: 'chemical',
-      },
-      {
-        id: '4',
-        name: 'information technology',
-      },
     ]
   }
 }

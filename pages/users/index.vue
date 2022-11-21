@@ -1,39 +1,41 @@
 <template>
-  <v-row align-item="center" class="list px-3 mx-auto">
-    <v-col cols="12" sm="3" align-item="center" class="col-cus">
-      <v-col cols="12">
-        <lable>Tìm Sinh viên: </lable>
+  <v-row align-item="center" class="list px-3 mx-auto cus-row">
+    <v-col cols="12" align-item="center" class="col-cus">
+      <v-row>
+        <v-col cols="12" sm="4" lg="3">
         <div class="input-group search" id="search">
           <input
             v-model="filter.a.search"
             class="form-control border input-cus"
             type="search"
-            placeholder="Môn học"
+            placeholder="Sinh viên"
           />
         </div>
-        <div class="mt-3">
-          <label for="type">Chọn tình trạng sinh viên :</label>
-          <select
-            v-model="filter.a.type"
-            class="form-select mt-1 select-cus"
-            id="type"
-          >
-            <option :value="getConfig('constants.typeOfUser.all')">
-              Tất cả
-            </option>
-            <option :value="getConfig('constants.typeOfUser.active')">
-              đang hoạt động
-            </option>
-            <option :value="getConfig('constants.typeOfUser.block')">
-              khóa tài khoản
-            </option>
-          </select>
-        </div>
-        <div class="mt-3">
-          <label for="type">Chọn khoa</label>
+        </v-col>
+        <v-col cols="12" sm="4" lg="3">
+          <div>
+            <select
+              v-model="filter.a.type"
+              class="form-select select-cus"
+              id="type"
+            >
+              <option :value="getConfig('constants.typeOfUser.all')" selected>
+                Tất cả
+              </option>
+              <option :value="getConfig('constants.typeOfUser.active')">
+                đang hoạt động
+              </option>
+              <option :value="getConfig('constants.typeOfUser.block')">
+                khóa tài khoản
+              </option>
+            </select>
+          </div>
+        </v-col>
+        <v-col cols="12" sm="4" lg="3">
+          <div>
           <select
             v-model="filter.a.faculty"
-            class="form-select mt-1 select-cus"
+            class="form-select select-cus"
             required
           >
             <option value="" disabled selected>Chọn khoa</option>
@@ -46,25 +48,28 @@
             </option>
           </select>
         </div>
-      </v-col>
-      <v-col cols="12">
-        <v-btn @click.prevent="search" width="100%" class="mt-4">
-          Search
+        </v-col>
+        <v-col cols="12" sm="4" lg="3" >
+        <v-btn @click.prevent="search" width="100%">
+        <v-icon>mid-camera</v-icon>
+          <v-icon>mdi-magnify</v-icon>Tìm Kiếm
         </v-btn>
       </v-col>
+      </v-row>
+        
     </v-col>
-    <v-col cols="12" sm="9" class="cus-table">
+    <v-col cols="12" class="cus-table">
       <v-row>
         <div class="header_fixed">
           <table>
             <thead>
               <tr>
-                <th>S No.</th>
-                <th>Image</th>
-                <th>Username</th>
+                <th>No.</th>
+                <th>Ảnh</th>
+                <th>Tên Sinh Viên</th>
                 <th>Email</th>
-                <th>Faculty</th>
-                <th>Action</th>
+                <th>Khoa</th>
+                <th>Hành Động</th>
               </tr>
             </thead>
             <tbody>
@@ -75,7 +80,7 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.faculty }}</td>
                 <td>
-                  <button @click="navigateTo(`/users/${user.id}`)">View</button>
+                  <button @click="navigateTo(`/users/${user.id}`)"><v-icon class="pr-3">mdi-eye</v-icon>Xem</button>
                 </td>
               </tr>
             </tbody>
@@ -189,7 +194,7 @@ const load = () => {
 <style scoped>
 * {
   margin: 0;
-  padding: 0;
+  /* padding: 0; */
   box-sizing: border-box;
 }
 
@@ -197,18 +202,22 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto Slab", "Times New Roman", serif;
   background-color: #adacac;
 }
+.cus-row{
+  position: relative;
+}
 .col-cus {
-  background-color: #f6f8fc;
-  padding: 42px 20px;
+  background-color: #9be1bd;
+  padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  height: 400px;
+  margin-bottom:20px;
   border-radius: 10px;
+
 }
 .cus-table {
-  padding: 0 20px;
+  padding: 0;
 }
 table {
   width: 100%;
@@ -221,8 +230,8 @@ table {
   border: 1px solid #bbb;
 }
 .header_fixed thead th {
-  background-color: black;
-  color: #e6e7e8;
+  background-color: #04AA6D;
+  color: #fff;
   font-size: 15px;
 }
 
@@ -242,11 +251,15 @@ td img {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #efefef;
 }
 
 tr:nth-child(odd) {
   background-color: #fff;
+}
+td,
+th {
+  border: 1px solid #dbdada;
 }
 
 /* tr:hover td {
@@ -254,13 +267,43 @@ tr:nth-child(odd) {
   cursor: default;
   background-color: #ffffff;
 } */
+tr:hover td {
+  cursor: pointer;
+}
 
 td button {
   border: none;
   padding: 7px 20px;
-  border-radius: 20px;
-  background-color: black;
-  color: #e6e7e8;
+  border-radius: 10px;
+  background-color: #04aa6d;
+  color: #fff;
+}
+td button:hover{
+  opacity: 0.8;
+}
+th:nth-child(1),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(2),
+.td:nth-child(1) {
+  width: 10%;
+}
+th:nth-child(3),
+.td:nth-child(2) {
+  width: 20%;
+}
+.th:nth-child(4),
+.td:nth-child(3) {
+  width: 20%;
+}
+.th:nth-child(5),
+.td:nth-child(4) {
+  width: 25%;
+}
+.th:nth-child(6),
+.td:nth-child(5) {
+  width: 20%;
 }
 .input-cus {
   padding: 10px;
@@ -273,7 +316,6 @@ td button {
   display: flex;
   float: right;
 }
-
 .search {
   display: inline-block;
   color: black;
@@ -285,10 +327,11 @@ td button {
   width: 100%;
   display: inline-block;
   border-radius: 4px !important;
+  padding:16px;
 }
 
 .select-cus {
-  padding: 10px;
+  padding: 16px;
 }
 .search button:hover svg {
   color: rgb(7, 30, 95);

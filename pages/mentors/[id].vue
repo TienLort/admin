@@ -1,216 +1,25 @@
 <template>
-  <div class="container emp-profile">
-    <div class="row">
-      <div class="col-md-3 col-cus1">
-        <div class="profile-img">
-          <img cover :src="`${myMentors.img}`" alt="" />
-          <div class="file btn btn-lg btn-primary">
-            Change Photo
-            <input type="file" name="file" />
-          </div>
-        </div>
-        <div class="profile-work">
-          <div class="profile-head pl-5">
-            <h5>{{ myMentors.name }}</h5>
-            <h6>{{ myMentors.id }}</h6>
-            <p class="proile-rating">Status : <span>Active</span></p>
-          </div>
-          <p>WORK LINK</p>
-          <a href="">Website Link</a><br />
-          <a href="">Bootsnipp Profile</a><br />
-          <a href="">Bootply Profile</a>
-          <p>SKILLS</p>
-          <a href="">Web Designer</a><br />
-          <a href="">Web Developer</a><br />
-          <a href="">WordPress</a><br />
-          <a href="">WooCommerce</a><br />
-          <a href="">PHP, .Net</a><br />
-        </div>
+  <div class="wrap">
+    <div class="container emp-profile">
+      <img cover src="/images/user.png" alt="" />
+      <div class="file btn btn-lg btn-primary">
+        <v-icon>mdi-image-multiple</v-icon>
+        <input type="file" name="file" />
       </div>
-      <div class="col-md-7 col-cus">
-        <v-card>
-          <v-toolbar class="toolbar-cus">
-            <v-toolbar-title class="pl-3 pt-3">
-              <h5>Mã số sinh viên : 102190242</h5>
-              <v-tabs v-model="tab" color="primary">
-                <v-tab value="option-1" class="option-btn">
-                  <v-icon start> mdi-account </v-icon>
-                  Thông tin sinh viên :
-                </v-tab>
-                <v-tab value="option-2" class="option-btn">
-                  <v-icon start> mdi-account </v-icon>
-                  Thông tin mentor:
-                </v-tab>
-                <v-tab value="option-3" class="option-btn">
-                  <v-icon start> mdi-access-point </v-icon>
-                  Nhóm học :
-                </v-tab>
-              </v-tabs>
-            </v-toolbar-title>
-          </v-toolbar>
-          <div class="flex-row">
-            <v-window v-model="tab">
-              <v-window-item value="option-1">
-                <v-card flat>
-                  <div class="profile-tab pl-5 pt-3">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>User Id</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.id }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Name</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.name }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Email</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.email }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Phone</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.phone_number }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Gender</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.gender == 1 ? "Nam" : "Nữ" }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>BirthDay</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.birthday }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Faculty</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myMentors.faculty_id }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </v-card>
-              </v-window-item>
-              <v-window-item value="option-2">
-                <v-card flat>
-                  <div class="profile-tab pl-5 pt-3">
-                    <div class="row">
-                      <div class="col-md-4">
-                        <label>Tài khoản ngân hàng:</label>
-                      </div>
-                      <div class="col-md-8">
-                        <p>{{ infor.smart_banking }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <label>Người thụ hưởng :</label>
-                      </div>
-                      <div class="col-md-8">
-                        <p>{{ infor.name }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <label>Ngân hàng :</label>
-                      </div>
-                      <div class="col-md-8">
-                        <p>{{ infor.bank }}</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">
-                        <label>Sơ yếu lý lịch :</label>
-                      </div>
-                      <div class="col-md-8">
-                        <p>{{ infor.cv }}</p>
-                      </div>
-                    </div>
-                    
-                  </div>
-                  <div class="mentor-review">
-                      <h5>Đánh giá từ sinh viên :</h5>
-                      <div v-for="rating in ratings" :key="rating.name">
-                        <p class="name">{{ rating.name }}</p>
-                        <p class="content">{{ rating.content }}</p>
-                      </div>
-                    </div>
-                </v-card>
-              </v-window-item>
-              <v-window-item value="option-3">
-                <v-card flat>
-                  <v-expansion-panels>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        <h5>Group đang đăng ký</h5>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text
-                        v-for="j in groupsMentor"
-                        :key="j.id"
-                      >
-                        <NuxtLink
-                          :to="{ path: `/manage-groups/${j.id}` }"
-                          class="full"
-                        >
-                          {{ j.subject }}
-                        </NuxtLink>
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        <h5>Group đang giảng dạy</h5>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text
-                        v-for="j in groupsMentor"
-                        :key="j.id"
-                      >
-                        {{ j.subject }}
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                    <v-expansion-panel>
-                      <v-expansion-panel-title>
-                        <h5>Group đã đóng</h5>
-                      </v-expansion-panel-title>
-                      <v-expansion-panel-text
-                        v-for="j in groupsMentor"
-                        :key="j.id"
-                      >
-                        {{ j.subject }}
-                      </v-expansion-panel-text>
-                    </v-expansion-panel>
-                  </v-expansion-panels>
-                </v-card>
-              </v-window-item>
-            </v-window>
-          </div>
-        </v-card>
-      </div>
-      <div class="col-md-2">
-        <v-row justify="center">
-          <v-dialog v-model="dialog" persistent>
+      <div class="profile-user">
+        <div class="control-btn">
+          <v-dialog v-model="dialog1" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn color="primary" v-bind="props"> Khóa tài khoản </v-btn>
+              <v-btn
+                color="secondary"
+                dark
+                v-bind="props"
+                @click="dialog1 = true"
+                variant="outlined"
+                class="ml-4"
+              >
+                Khóa tài khoản
+              </v-btn>
             </template>
             <v-card>
               <v-card-title class="text-h5">
@@ -225,27 +34,213 @@
                 <v-btn
                   color="green-darken-1"
                   variant="text"
-                  @click="dialog = false"
+                  @click="dialog1 = false"
                 >
                   Hủy
                 </v-btn>
                 <v-btn
                   color="green-darken-1"
                   variant="text"
-                  @click="dialog = false"
+                  @click="dialog1 = false"
                 >
                   Đồng ý
                 </v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
-        </v-row>
+        </div>
+        <div class="profile-head">
+          <h3>Nguyễn Văn Tiến</h3>
+          <p class="proile-status">Trạng thái : <span>Đang hoạt động</span></p>
+        </div>
+        <div class="col-md-12 col-cus">
+          <v-card>
+            <v-toolbar class="toolbar-cus">
+              <v-toolbar-title class="pl-3 pt-3">
+                <h5>Profile :</h5>
+                <v-tabs v-model="tab" color="primary">
+                  <v-tab value="option-1" class="option-btn">
+                    <v-icon start> mdi-account </v-icon>
+                    Thông tin sinh viên :
+                  </v-tab>
+                  <v-tab value="option-2" class="option-btn">
+                    <v-icon start> mdi-account </v-icon>
+                    Thông tin mentor:
+                  </v-tab>
+                  <v-tab value="option-3" class="option-btn">
+                    <v-icon start> mdi-access-point </v-icon>
+                    Nhóm học :
+                  </v-tab>
+                </v-tabs>
+              </v-toolbar-title>
+            </v-toolbar>
+            <div class="flex-row">
+              <v-window v-model="tab">
+                <v-window-item value="option-1">
+                  <v-card flat>
+                    <div class="profile-tab pl-5 pt-3">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Họ và tên:</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.full_name }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Email :</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.email }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Số điện thoại :</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.phone_number }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Tài khoản ngân hàng:</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>
+                            {{ infor.smart_banking }} - {{ infor.name }} -
+                            {{ infor.bank }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Địa chỉ thường trú :</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.address }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Giới tính :</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.gender == 1 ? "Nam" : "Nữ" }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Ngày sinh :</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.birthday }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <label>Khoa :</label>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ myMentors.faculty_id }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </v-card>
+                </v-window-item>
+                <v-window-item value="option-2">
+                  <v-card flat>
+                    <div class="mentor-review">
+                      <h3>Đánh giá từ sinh viên :</h3>
+                      <v-col cols="12" class="cus-table">
+                        <div class="header_fixed">
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>No.</th>
+                                <th>Tên người đánh giá</th>
+                                <th>Group</th>
+                                <th>điểm</th>
+                                <th>Nhận xét</th>
+                                <th>thời gian</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(rating, index) in ratings" :key="index">
+                                <td>{{ index + 1}}</td>
+                                <td>{{ rating.name }}</td>
+                                <td>{{ rating.group_id == 1 ? "CNTT" : "KHMT"  }}</td>
+                                <td>{{ rating.rating }}<v-icon class="icon-cus">mdi-star</v-icon></td>
+                                <td>{{ rating.comment }}</td>
+                                <td>  {{ rating.created_at }}  </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <v-pagination
+                            v-model="page"
+                            :length="totalPages"
+                            total-visible="7"
+                            color="purple"
+                          ></v-pagination>
+                        </div>
+                      </v-col>
+                    </div>
+                  </v-card>
+                </v-window-item>
+                <v-window-item value="option-3">
+                  <v-card flat>
+                    <v-expansion-panels>
+                      <v-expansion-panel>
+                        <v-expansion-panel-title>
+                          <h5>Group đang đăng ký</h5>
+                        </v-expansion-panel-title>
+                        <v-expansion-panel-text
+                          v-for="j in groupsMentor"
+                          :key="j.id"
+                        >
+                          <NuxtLink
+                            :to="{ path: `/manage-groups/${j.id}` }"
+                            class="full"
+                          >
+                            {{ j.subject }}
+                          </NuxtLink>
+                        </v-expansion-panel-text>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-title>
+                          <h5>Group đang giảng dạy</h5>
+                        </v-expansion-panel-title>
+                        <v-expansion-panel-text
+                          v-for="j in groupsMentor"
+                          :key="j.id"
+                        >
+                          {{ j.subject }}
+                        </v-expansion-panel-text>
+                      </v-expansion-panel>
+                      <v-expansion-panel>
+                        <v-expansion-panel-title>
+                          <h5>Group đã đóng</h5>
+                        </v-expansion-panel-title>
+                        <v-expansion-panel-text
+                          v-for="j in groupsMentor"
+                          :key="j.id"
+                        >
+                          {{ j.subject }}
+                        </v-expansion-panel-text>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </v-card>
+                </v-window-item>
+              </v-window>
+            </div>
+          </v-card>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-const dialog = ref(false);
 const tab = ref("option-1");
 const route = useRoute();
 const faculties = ref({});
@@ -253,14 +248,14 @@ const ratings = ref([]);
 const groupsMentor = ref([]);
 const myMentors = ref({
   id: "",
-  img: "",
-  name: "",
+  avatar_url: "",
+  full_name: "",
   email: "",
   phone_number: "",
   address: "",
   gender: "",
   birthday: "",
-  faculty_id: "",
+  id_faculty: "",
 });
 const infor = ref({
   smart_banking: "",
@@ -350,10 +345,7 @@ const {
 } = useFetchApi({
   requireAuth: true,
   disableHandleErrorUnauthorized: false,
-})(
-  '/mentors/rating',
-  { immediate: false },
-);
+})("/mentors/rating", { immediate: false });
 getRating().json().execute();
 getRatingResponse(() => {
   ratings.value = dataRating.value.data;
@@ -361,83 +353,99 @@ getRatingResponse(() => {
 </script>
 
 <style scoped>
+.wrap {
+  min-height: 183vh;
+  font-family: "Roboto Slab", "Times New Roman", serif !important;
+}
 .emp-profile {
   padding: 3% 0;
   border-radius: 0.5rem;
-  background: #fff;
+  background: #7d7d7d;
+  position: relative;
+  min-height: 400px;
+  max-width: 1318px;
+  border: 1px solid #ddd;
 }
-.profile-img {
-  text-align: center;
+.profile-user {
+  background-color: #fff;
+  width: 70%;
+  position: absolute;
+  top: 35%;
+  left: 14%;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
+    0 7px 10px -5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 }
-.profile-img img {
+.control-btn {
+  display: flex;
+  margin-top: 120px;
+  justify-content: center;
+  align-items: center;
+}
+.control-btn .v-btn {
+  min-width: 180px;
+}
+.emp-profile img {
   width: 200px;
   height: 200px;
   border: 1px solid #ccc;
   border-radius: 50%;
+  position: absolute;
+  top: 9%;
+  left: 40%;
+  z-index: 100;
 }
-.option-btn {
-  padding: 0 20px;
-}
-.profile-img .file {
-  position: relative;
+.emp-profile .file {
+  position: absolute;
   overflow: hidden;
-  margin-top: -20%;
-  width: 60%;
   border: none;
-  border-radius: 0;
-  font-size: 15px;
+  border-radius: 50%;
   background: #212529b8;
+  font-size: 15px;
+  top: 13%;
+  left: 53%;
+  z-index: 100;
 }
-.profile-img .file input {
+.emp-profile .file input {
   position: absolute;
   opacity: 0;
   right: 0;
   top: 0;
-}
-img {
-  width: 150px;
-  height: 150px;
-  border: 1px solid #0062cc;
-  border-radius: 50%;
-}
-.profile-head h5 {
-  color: #333;
-}
-.profile-head h6 {
-  color: #0062cc;
-}
-.toolbar-cus {
-  background-color: #fff;
-  padding-bottom: 5px;
-  border-bottom: 3px solid #0062cc;
-}
-
-.profile-edit-btn {
-  border: none;
-  border-radius: 1.5rem;
-  width: 70%;
-  padding: 2%;
-  font-weight: 600;
-  color: #6c757d;
-  cursor: pointer;
-}
-.proile-rating {
-  font-size: 12px;
-  color: #818182;
-  margin-top: 5%;
 }
 .card-cus {
   min-width: 80vw;
   min-height: 90vh;
   align-content: center;
 }
-.col-cus {
-  padding-left: 20px;
+.profile-head h3 {
+  margin-top: 30px;
+  min-height: 32px;
+  color: #3c4858;
+  font-weight: 700;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+  text-align: center;
+}
+.proile-status {
+  text-align: center;
+}
+.v-tabs .v-btn {
+  /* background-color: #6c7ee1; */
+  margin-left: 20px;
+  /* color: #fff; */
+  text-align: center;
+}
+.v-toolbar {
+  padding-top: 20px;
+  height: 100px;
+  background-color: #fff;
+}
+.v-slide-group-item--active {
+  /* color: #ffc4a4 !important; */
 }
 .col-md-6 {
   padding: 10px;
 }
-.col-cus1 {
+.bor-col {
   border-right: 3px solid #0062cc;
 }
 .proile-rating span {
@@ -455,6 +463,8 @@ img {
 .profile-head .nav-tabs .nav-link.active {
   border: none;
   border-bottom: 2px solid #0062cc;
+}
+.col-cus {
 }
 .profile-work {
   padding: 14%;
@@ -478,8 +488,8 @@ img {
 .profile-work ul {
   list-style: none;
 }
-.full {
-  text-decoration: none;
+.profile-tab {
+  background-color: #fff;
 }
 .profile-tab label {
   font-weight: 600;
@@ -535,27 +545,116 @@ input[type="date"] {
   border-radius: 3px;
   border: 1px solid #ddd;
 }
-
+.v-expansion-panel {
+  background-color: #fff;
+}
 .v-expansion-panel-title--active {
-  background-color: #4f93ff;
+  background-color: #2f3c7e;
   color: #fff;
 }
 .v-expansion-panel {
   padding-top: 20px;
 }
-.mentor-review{
-  padding:10px;
+.full {
+  text-decoration: none;
+}
+.mentor-review {
+  padding: 10px;
   font-weight: 600;
 }
-.mentor-review h5{
-  text-align:center;
+.mentor-review h3 {
+  /* text-align: center; */
+  padding: 20px;
 }
-.name{
-  margin-bottom: 0 ;
+.mentor-review h3:after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ee2c74;
+  margin-top: 5px;
 }
-.content{
-  padding-left:20px;
-  margin-bottom:20px;
-  font-weight:500;
+.name {
+  margin-bottom: 0;
+}
+.select-cus {
+  padding: 15px 20px;
+  outline: none;
+  background-color: #f6f6f6;
+  font-family: "Roboto Mono", monospace;
+  color: rgb(58, 58, 58);
+  font-size: 18px;
+  border: none;
+  border-bottom: 1px solid #a5a5a5;
+  width: 100%;
+}
+.content {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.header_fixed {
+  width: 100%;
+  overflow: auto;
+  border-top: 3px solid red;
+}
+.header_fixed thead th {
+  background-color: #04aa6d;
+  color: #fff;
+  font-size: 15px;
+}
+th,
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-align: center;
+}
+tr:nth-child(even) {
+  background-color: #efefef;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+.icon-cus{
+  font-size: 16px;
+  padding:0 0 4px 4px;
+}
+td,
+th {
+  /* border: 1px solid #dbdada; */
+}
+tr:hover td {
+  cursor: pointer;
+}
+th:nth-child(1),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(2),
+.td:nth-child(1) {
+  width: 20%;
+}
+th:nth-child(3),
+.td:nth-child(2) {
+  width: 15%;
+}
+.th:nth-child(4),
+.td:nth-child(3) {
+  width: 10%;
+}
+.th:nth-child(5),
+.td:nth-child(4) {
+  width: 40%;
+}
+.th:nth-child(6),
+.td:nth-child(5) {
+  width: 10%;
 }
 </style>

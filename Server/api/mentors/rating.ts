@@ -4,23 +4,39 @@ const createGetResponse = () => ({
   data: [
     {
         name: 'Nguyễn Văn Tiến',
-        content: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà'
+        group_id: '1',
+        rating:'4',
+        comment: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà',
+        created_at:'2001-11-09'
     },
     {
         name: 'Hoàng Thị Thu Như',
-        content: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà'
+        group_id: '2',
+
+        rating:'4',
+        comment: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà',
+        created_at:'2001-11-09'
     },
     {
         name: 'Trần Thị Thảo',
-        content: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà'
+        group_id: '1',
+        rating:'4',
+        comment: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà',
+        created_at:'2001-11-09'
     },
     {
         name: 'Trần Đức Bình',
-        content: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà'
+        group_id: '2',
+        rating:'4',
+        comment: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà',
+        created_at:'2001-11-09'
     },
     {
         name: 'Trần Đức Bình',
-        content: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà'
+        group_id: '1',
+        rating:'4',
+        comment: 'Hướng dẫn dễ hiểu, tận tình , chu đáo trong việc hướng dẫn bài tập về nhà',
+        created_at:'2001-11-09'
     },
   ]
 });

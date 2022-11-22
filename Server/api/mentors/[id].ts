@@ -3,14 +3,14 @@ const createGetResponse = () => ({
       data: 
         {
           id: '1',
-          name: 'Nguyễn Văn A',
-          img: '/images/m1.jpg',
+          full_name: 'Nguyễn Văn A',
+          avatar_url: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
           address:'54 Nguyen Luong Bang',
           gender:'1',
-          birthday: '01/28/2001',
-          faculty: 'Cong Nghe Thong Tin',
+          birthday: '2001-11-09',
+          id_faculty: '1',
         },
     }
   });

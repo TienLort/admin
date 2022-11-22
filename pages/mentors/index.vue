@@ -19,23 +19,21 @@
       <v-window v-model="tab">
         <v-window-item value="option-1">
           <v-card flat>
-            <v-row align-item="center" class="list px-3 mx-auto pt-3
-            ">
-              <v-col cols="12" sm="3" align-item="center" class="col-cus">
-                <v-col cols="12">
-                  <lable>Tìm Mentor: </lable>
-                  <input
-                    v-model="filter.a.search"
-                    class="form-control border input-cus"
-                    type="search"
-                    placeholder="Môn học"
-                  />
-
-                  <div class="mt-3">
-                    <label for="type">Chọn khoa</label>
+            <v-row align-item="center" class="list px-3 mx-auto pt-3">
+              <v-col cols="12" align-item="center" class="col-cus">
+                <v-row>
+                  <v-col cols="12" sm="4" lg="3">
+                    <input
+                      v-model="filter.a.search"
+                      class="form-control border input-cus"
+                      type="search"
+                      placeholder="Môn học"
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="4" lg="3">
                     <select
                       v-model="faculty.faculty_id"
-                      class="form-select mt-1 select-cus"
+                      class="form-select select-cus"
                       required
                     >
                       <option value="" disabled selected>Chọn khoa</option>
@@ -47,12 +45,11 @@
                         {{ faculty.name }}
                       </option>
                     </select>
-                  </div>
-                  <div class="mt-3">
-                    <label for="type">Chọn Môn :</label>
+                  </v-col>
+                  <v-col cols="12" sm="4" lg="3">
                     <select
                       v-model="filter.a.subject_id"
-                      class="form-select mt-1 select-cus"
+                      class="form-select select-cus"
                       required
                     >
                       <option value="" disabled selected>Chọn môn học</option>
@@ -64,26 +61,26 @@
                         {{ subject.name }}
                       </option>
                     </select>
-                  </div>
-                </v-col>
-                <v-col cols="12">
-                  <v-btn @click.prevent="search" width="100%" class="mt-1">
-                    Search
-                  </v-btn>
-                </v-col>
+                  </v-col>
+                  <v-col cols="12" sm="4" lg="3">
+                    <v-btn @click.prevent="search" width="100%">
+                      <v-icon>mdi-magnify</v-icon>Tìm kiếm
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
-              <v-col cols="12" sm="9" class="cus-table">
+              <v-col cols="12" class="cus-table">
                 <v-row>
                   <div class="header_fixed">
                     <table>
                       <thead>
                         <tr>
                           <th>No.</th>
-                          <th>Image</th>
-                          <th>Mentor Name</th>
+                          <th>Ảnh</th>
+                          <th>Họ và Tên</th>
                           <th>Email</th>
-                          <th>Faculty</th>
-                          <th>Action</th>
+                          <th>Khoa</th>
+                          <th>Hành động</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -97,7 +94,7 @@
                             <button
                               @click="navigateTo(`/mentors/${mentor.id}`)"
                             >
-                              View
+                              <v-icon class="pr-3">mdi-eye</v-icon>Xem
                             </button>
                           </td>
                         </tr>
@@ -127,65 +124,56 @@
             <div>
               <div class="cus-header">
                 <v-row align-item="center">
-                  <v-col cols="9">
-                    <v-row>
-                      <v-col cols="4">
-                        <input
-                          v-model="filter.a.search"
-                          class="form-control border input-cus"
-                          type="search"
-                          placeholder="Search"
-                        />
-                      </v-col>
-                      <v-col cols="4">
-                        <div>
-                          <select
-                            v-model="filter.a.type"
-                            class="form-select mt-1"
-                            id="type"
-                          >
-                            <option value="" disabled selected>
-                              Trạng thái
-                            </option>
-                            <option
-                              :value="getConfig('constants.typeOfUser.all')"
-                            >
-                              Tất cả
-                            </option>
-                            <option
-                              :value="getConfig('constants.typeOfUser.active')"
-                            >
-                              đang hoạt động
-                            </option>
-                            <option
-                              :value="getConfig('constants.typeOfUser.block')"
-                            >
-                              khóa tài khoản
-                            </option>
-                          </select>
-                        </div>
-                      </v-col>
-                      <v-col cols="4">
-                        <div>
-                          <select
-                            v-model="filter.a.faculty"
-                            class="form-select mt-1"
-                            required
-                          >
-                            <option value="" disabled selected>
-                              Chọn khoa
-                            </option>
-                            <option
-                              v-for="faculty in faculties"
-                              :key="faculty.id"
-                              :value="faculty.id"
-                            >
-                              {{ faculty.name }}
-                            </option>
-                          </select>
-                        </div>
-                      </v-col>
-                    </v-row>
+                  <v-col cols="3">
+                    <input
+                      v-model="filter.a.search"
+                      class="form-control border input-cus"
+                      type="search"
+                      placeholder="Search"
+                    />
+                  </v-col>
+                  <v-col cols="3">
+                    <div>
+                      <select
+                        v-model="filter.a.type"
+                        class="form-select select-cus"
+                        id="type"
+                        required
+                      >
+                        <option value="" disabled selected>Trạng thái</option>
+                        <option :value="getConfig('constants.typeOfUser.all')">
+                          Tất cả
+                        </option>
+                        <option
+                          :value="getConfig('constants.typeOfUser.active')"
+                        >
+                          đang hoạt động
+                        </option>
+                        <option
+                          :value="getConfig('constants.typeOfUser.block')"
+                        >
+                          khóa tài khoản
+                        </option>
+                      </select>
+                    </div>
+                  </v-col>
+                  <v-col cols="3">
+                    <div>
+                      <select
+                        v-model="filter.a.faculty"
+                        class="form-select select-cus"
+                        required
+                      >
+                        <option value="" disabled selected>Chọn khoa</option>
+                        <option
+                          v-for="faculty in faculties"
+                          :key="faculty.id"
+                          :value="faculty.id"
+                        >
+                          {{ faculty.name }}
+                        </option>
+                      </select>
+                    </div>
                   </v-col>
                   <v-col cols="3">
                     <v-btn @click.prevent="search1" width="100%" class="">
@@ -195,30 +183,16 @@
                 </v-row>
               </div>
               <v-row>
-                <v-col cols="12" sm="4" md="4" lg="3" v-for="mentor in myMentors" :key="mentor.id">
-                  <GroupCard :mentor="mentor"/>
+                <v-col
+                  cols="12"
+                  sm="4"
+                  md="4"
+                  lg="3"
+                  v-for="mentor in myMentors"
+                  :key="mentor.id"
+                >
+                  <GroupCard :mentor="mentor" />
                 </v-col>
-                <!-- <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col>
-                <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col>
-                <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col>
-                <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col>
-                <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col>
-                <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col>
-                <v-col cols="12" sm="4" md="4" lg="3">
-                  <GroupCard />
-                </v-col> -->
               </v-row>
               <div class="text-center">
                 <v-pagination
@@ -372,62 +346,6 @@ watch(faculty.value, () => {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  /* padding: 0; */
-  box-sizing: border-box;
-}
-
-body {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  font-family: "Roboto", sans-serif;
-  background-color: #adacac;
-}
-.col-cus {
-  background-color: #f6f8fc;
-  padding: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  height: 400px;
-  border-radius: 10px;
-}
-.cus-table {
-  padding: 0 20px;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.header_fixed {
-  width: 100%;
-  overflow: auto;
-  border: 1px solid #bbb;
-}
-.header_fixed thead th {
-  position: sticky;
-  top: 0;
-  background-color: black;
-  color: #e6e7e8;
-  font-size: 15px;
-}
-
-th,
-td {
-  border-bottom: 1px solid #dddddd;
-  padding: 10px 20px;
-  font-size: 14px;
-  text-align: center;
-}
-
-td img {
-  height: 60px;
-  width: 60px;
-  border-radius: 100%;
-  border: 5px solid #e6e7e8;
-}
-
 tr:nth-child(even) {
   background-color: #dddddd;
 }
@@ -465,17 +383,6 @@ tr:hover td {
   cursor: pointer;
   background-color: #ffffff;
 }
-.input-cus,
-.select-cus {
-  padding: 10px;
-}
-td button {
-  border: none;
-  padding: 7px 20px;
-  border-radius: 20px;
-  background-color: rgb(38, 20, 206);
-  color: #e6e7e8;
-}
 
 .v-btn {
   background-color: #44b478;
@@ -503,19 +410,153 @@ td button {
   border-radius: 10px;
 }
 .text-center {
-  padding-top: 20px;  
+  padding-top: 20px;
 }
-.v-card{
+.v-card {
   min-height: 100vh;
 }
-.v-tabs .v-btn{
-  background-color: #6c7ee1;
+.v-tabs .v-btn {
+  background-color: #3c195b;
+  align-items: center;
+  padding:10px 20px;
+  border-radius: 10px !important;
 }
 .v-toolbar {
-  padding-top:20px;
-  height: 100px;
+  padding-top: 20px;
+  height: 90px;
+  background-color: #fff;
 }
-.v-slide-group-item--active{
-  color: #ffc4a4 !important;
+.v-slide-group-item--active {
+  color: #fefb00 !important;
+}
+
+* {
+  margin: 0;
+  /* padding: 0; */
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+  background-color: #adacac;
+}
+.cus-row {
+  position: relative;
+}
+.col-cus {
+  background-color: #9be1bd;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.cus-table {
+  padding: 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.header_fixed {
+  width: 100%;
+  overflow: auto;
+  border: 1px solid #bbb;
+}
+.header_fixed thead th {
+  background-color: #04aa6d;
+  color: #fff;
+  font-size: 15px;
+}
+
+th,
+td {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+td img {
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  border: 5px solid #e6e7e8;
+}
+
+tr:nth-child(even) {
+  background-color: #efefef;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+td,
+th {
+  border: 1px solid #dbdada;
+}
+tr:hover td {
+  cursor: pointer;
+}
+
+td button {
+  border: none;
+  padding: 7px 20px;
+  border-radius: 10px;
+  background-color: #04aa6d;
+  color: #fff;
+}
+td button:hover {
+  opacity: 0.8;
+}
+th:nth-child(1),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(2),
+.td:nth-child(1) {
+  width: 10%;
+}
+th:nth-child(3),
+.td:nth-child(2) {
+  width: 20%;
+}
+.th:nth-child(4),
+.td:nth-child(3) {
+  width: 20%;
+}
+.th:nth-child(5),
+.td:nth-child(4) {
+  width: 25%;
+}
+.th:nth-child(6),
+.td:nth-child(5) {
+  width: 20%;
+}
+.input-cus {
+  padding: 16px;
+}
+.search {
+  display: inline-block;
+  color: black;
+  text-align: center;
+}
+.search input {
+  margin: 0px;
+  margin-right: 0;
+  width: 100%;
+  display: inline-block;
+  border-radius: 4px !important;
+  padding: 16px;
+}
+
+.select-cus {
+  padding: 16px;
+}
+.search button:hover svg {
+  color: rgb(7, 30, 95);
 }
 </style>

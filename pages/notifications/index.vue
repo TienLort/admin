@@ -21,14 +21,14 @@
         </v-col>
         <v-dialog v-model="dialog" persistent>
         <template v-slot:activator="{ props }">
-          <v-btn tile color="success" v-bind="props" @click="dialog = true" width="" class="mt-4">
+          <v-btn tile v-bind="props" @click="dialog = true" width="" class="mt-4">
             <v-icon left> mdi-pencil </v-icon>
-            Create Posts
+             Tạo thông báo
           </v-btn>
         </template>
         <v-card>
-          <v-card-title>
-            <span class="text-h5">Create Post</span>
+          <v-card-title class=" ml-3 mt-3 mb-3">
+            <span class="text-h5"> Thông báo mới :</span>
           </v-card-title>
           <div>
             <v-text-field
@@ -66,9 +66,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="post in posts" :key="post.id">
+                <tr v-for="(post, index) in posts" :key="index">
                   <!-- <td><input type="checkbox" data-check-all-item/></td> -->
-                  <td>{{ post.id }}</td>
+                  <td>{{ index + 1 }}</td>
                   <td class="td-cus">
                     <h3>
                       {{ post.title }}
@@ -77,11 +77,11 @@
                       {{ post.content }}
                     </p>
                   </td>
-                  <td>{{ post.time }}</td>
+                  <td>{{ post.created_at.slice(0,10) }}</td>
                   <!-- <td>{{ post.created_at.slice(0, 10) }}</td> -->
                   <td>
                     <div class="text-nowrap mt-3 card">
-                      <button @click="navigateTo(`/notifications/${post.id}`)">
+                      <button @click="navigateTo(`/notifications/${index}`)">
                         View
                       </button>
                     </div>
@@ -137,8 +137,8 @@ const {
   get: getPosts,
   onFetchResponse: getPostsResponse,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(url1, { immediate: false });
 getPosts().json().execute();
 getPostsResponse(() => {
@@ -164,6 +164,8 @@ const search = () => {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+
 }
 
 body {
@@ -193,7 +195,7 @@ table {
 .header_fixed thead th {
   position: sticky;
   top: 0;
-  background-color: black;
+  background-color: #023e73;
   color: #e6e7e8;
   font-size: 15px;
 }
@@ -228,13 +230,13 @@ tr:hover td {
 td button {
   border: none;
   padding: 7px 20px;
-  border-radius: 20px;
-  background-color: black;
+  border-radius:5px;
+  background-color: #023e73;
   color: #e6e7e8;
 }
 
 .v-btn {
-  background-color: #44b478;
+  background-color: #023e73;
   color: #fff;
   margin-left: 40px;
   padding: 28px;

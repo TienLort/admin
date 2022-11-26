@@ -3,7 +3,7 @@ const createGetResponse = () => ({
       data: [
         {
           id: '1',
-          name: 'Nguyễn Văn A',
+          full_name: 'Nguyễn Văn A',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -14,7 +14,7 @@ const createGetResponse = () => ({
         },
         {
           id: '2',
-          name: 'Nguyễn Văn B',
+          full_name: 'Nguyễn Văn B',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -25,7 +25,7 @@ const createGetResponse = () => ({
         },
         {
           id: '3',
-          name: 'Nguyễn Văn C',
+          full_name: 'Nguyễn Văn C',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -36,7 +36,7 @@ const createGetResponse = () => ({
         },  
         {
           id: '4',
-          name: 'Nguyễn Văn D',
+          full_name: 'Nguyễn Văn D',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -47,7 +47,7 @@ const createGetResponse = () => ({
         },
         {
           id: '5',
-          name: 'Nguyễn Văn E',
+          full_name: 'Nguyễn Văn E',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -58,7 +58,7 @@ const createGetResponse = () => ({
         },
         {
           id: '6',
-          name: 'Nguyễn Văn Q',
+          full_name: 'Nguyễn Văn Q',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -69,7 +69,7 @@ const createGetResponse = () => ({
         },
         {
           id: '7',
-          name: 'Nguyễn Văn S',
+          full_name: 'Nguyễn Văn S',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -80,7 +80,7 @@ const createGetResponse = () => ({
         },
         {
           id: '8',
-          name: 'Nguyễn Văn E',
+          full_name: 'Nguyễn Văn E',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -91,7 +91,7 @@ const createGetResponse = () => ({
         },  
         {
           id: '9',
-          name: 'Nguyễn Văn V',
+          full_name: 'Nguyễn Văn V',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -102,7 +102,7 @@ const createGetResponse = () => ({
         },
         {
           id: '10',
-          name: 'Nguyễn Văn Z',
+          full_name: 'Nguyễn Văn Z',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -113,7 +113,7 @@ const createGetResponse = () => ({
         },
         {
           id: '11',
-          name: 'Nguyễn Văn W',
+          full_name: 'Nguyễn Văn W',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -124,7 +124,7 @@ const createGetResponse = () => ({
         },
         {
           id: '12',
-          name: 'Nguyễn Văn R',
+          full_name: 'Nguyễn Văn R',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -135,7 +135,7 @@ const createGetResponse = () => ({
         },
         {
           id: '13',
-          name: 'Nguyễn Văn T',
+          full_name: 'Nguyễn Văn T',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -146,7 +146,7 @@ const createGetResponse = () => ({
         },  
         {
           id: '14',
-          name: 'Nguyễn Văn Y',
+          full_name: 'Nguyễn Văn Y',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',
@@ -157,7 +157,7 @@ const createGetResponse = () => ({
         },
         {
           id: '15',
-          name: 'Nguyễn Văn H',
+          full_name: 'Nguyễn Văn H',
           img: '/images/user.png',
           email: 'anjali@gmail.com',
           phone_number:'0344823807',

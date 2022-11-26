@@ -34,7 +34,6 @@ const desserts = ref([
   },
 ]);
 
-
 const groups = ref([]);
 
 const { url: url1 } = useUrl({
@@ -61,10 +60,10 @@ getGroupsResponse(() => {
 <template>
   <v-card>
     <v-toolbar color="">
-      <v-toolbar-title> 
-        Option
+      <v-toolbar-title>
+        <!-- Quản lý Nhóm học :  -->
         <v-tabs v-model="tab" color="primary">
-          <v-tab value="option-1" class="option-btn" >
+          <v-tab value="option-1" class="option-btn">
             <v-icon start> mdi-account </v-icon>
             Tạo Nhóm Mới
           </v-tab>
@@ -133,9 +132,9 @@ getGroupsResponse(() => {
             <v-row>
               <v-col
                 cols="12"
-                sm="12"
-                md="6"
-                lg="4"
+                sm="6"
+                md="4"
+                lg="3"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -156,9 +155,9 @@ getGroupsResponse(() => {
             <v-row>
               <v-col
                 cols="12"
-                sm="12"
-                md="6"
-                lg="4"
+                sm="6"
+                md="4"
+                lg="3"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -179,9 +178,9 @@ getGroupsResponse(() => {
             <v-row>
               <v-col
                 cols="12"
-                sm="12"
-                md="6"
-                lg="4"
+                sm="6"
+                md="4"
+                lg="3"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -202,9 +201,9 @@ getGroupsResponse(() => {
             <v-row>
               <v-col
                 cols="12"
-                sm="12"
-                md="6"
-                lg="4"
+                sm="6"
+                md="4"
+                lg="3"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -225,16 +224,20 @@ getGroupsResponse(() => {
   </v-card>
 </template>
 
-
 <style scoped>
 .v-btn {
   width: 40px;
   margin: 5px;
 }
-.option-btn{
+.option-btn {
   min-width: 200px;
 }
-.v-btn__content{
-  color:#fff;
+.v-btn__content {
+  color: #fff;
+}
+.v-toolbar {
+  padding-top: 20px;
+  height: 90px;
+  background-color: #fff;
 }
 </style>

@@ -4,7 +4,7 @@ const createGetResponse = () => ({
       {
         id: '5',
         name: 'Giải tích 1',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g1.png',
         faculty: 'Hóa',
         quatity: '3',
         group_id: '12332111',
@@ -14,7 +14,7 @@ const createGetResponse = () => ({
       {
         id: '4',
         name: 'Tin học đại cương',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g2.jpg',
         faculty: 'Công nghệ thông tin',
         quatity: '3',
         group_id: '12332111',
@@ -24,7 +24,7 @@ const createGetResponse = () => ({
       {
         id: '1',
         name: 'Xác suất thống kê',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g3.jpg',
         faculty: 'Cơ khí giao thông',
         quatity: '1',
         group_id: '12332111',
@@ -34,7 +34,7 @@ const createGetResponse = () => ({
       {
         id: '2',
         name: 'Vi điều khiển',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g4.jpg',
         faculty: 'Cơ khí giao thông',
         quatity: '3',
         group_id: '12332111',
@@ -44,7 +44,7 @@ const createGetResponse = () => ({
       {
         id: '3',
         name: 'Khoa học dữ liệu',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g2.jpg',
         faculty: 'Công nghệ tiên tiến',
         quatity: '2',
         group_id: '12332111',
@@ -54,7 +54,7 @@ const createGetResponse = () => ({
       {
         id: '6',
         name: 'Chuyên đề công nghệ Công nghệ thông tin',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g3.jpg',
         faculty: 'Công nghệ tiên tiến và xây dựng dân dụng',
         quatity: '2',
         group_id: '12332111',
@@ -64,7 +64,7 @@ const createGetResponse = () => ({
       {
         id: '7',
         name: 'Chuyên đề công nghệ Công nghệ thông tin',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g1.png',
         faculty: 'Công nghệ tiên tiến và xây dựng dân dụng',
         quatity: '2',
         group_id: '12332111',
@@ -74,7 +74,7 @@ const createGetResponse = () => ({
       {
         id: '8',
         name: 'Chuyên đề công nghệ Công nghệ thông tin',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g2.jpg',
         faculty: 'Công nghệ tiên tiến và xây dựng dân dụng',
         quatity: '2',
         group_id: '12332111',
@@ -84,7 +84,7 @@ const createGetResponse = () => ({
       {
         id: '9',
         name: 'Chuyên đề công nghệ Công nghệ thông tin',
-        img: '/images/background/blog-bg-2x.jpg',
+        img: '/images/groups/g4.jpg',
         faculty: 'Công nghệ tiên tiến và xây dựng dân dụng',
         quatity: '2',
         group_id: '12332111',

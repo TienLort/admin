@@ -2,7 +2,7 @@
   <v-card>
     <v-toolbar color="">
       <v-toolbar-title>
-        Quản lý thông tin mentor :
+        <!-- Quản lý thông tin mentor : -->
         <v-tabs v-model="tab" color="primary">
           <v-tab value="option-1" class="option-btn">
             <v-icon start> mdi-account </v-icon>
@@ -254,8 +254,8 @@ const {
   onFetchResponse: getFilterMentorsResponse,
   onFetchError: getFilterMentorsError,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(urlMentor, { immediate: false });
 
 // getFilterMentors().json().execute();
@@ -336,8 +336,10 @@ getFacultyResponse(() => {
   faculties.value = dataFaculty.value.data.data;
 });
 getSubjectResponse(() => {
-  subjects.value = dataSubject.value.data.data;
-});
+  subjects.value = dataSubject.value.data;
+  console.log("subject")
+  console.log(subjects.value);
+}); 
 
 watch(faculty.value, () => {
   getSubject().json().execute();
@@ -385,7 +387,7 @@ tr:hover td {
 }
 
 .v-btn {
-  background-color: #44b478;
+  background-color: #023e73;
   color: #fff;
   margin-left: 40px;
   padding: 28px;
@@ -404,7 +406,7 @@ tr:hover td {
 .cus-header {
   width: 80%;
   margin: 20px auto;
-  background-color: #6a7ea7;
+  background-color: #d5e7f2;
   padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
@@ -447,7 +449,7 @@ body {
   position: relative;
 }
 .col-cus {
-  background-color: #9be1bd;
+  background-color: #d5e7f2;
   padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-bottom: 20px;
@@ -467,7 +469,7 @@ table {
   border: 1px solid #bbb;
 }
 .header_fixed thead th {
-  background-color: #04aa6d;
+  background-color: #023e73;
   color: #fff;
   font-size: 15px;
 }
@@ -506,7 +508,7 @@ td button {
   border: none;
   padding: 7px 20px;
   border-radius: 10px;
-  background-color: #04aa6d;
+  background-color: #023e73;
   color: #fff;
 }
 td button:hover {

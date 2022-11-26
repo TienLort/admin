@@ -2,7 +2,7 @@
   <v-row align-item="center" class="list px-3 mx-auto cus-row">
     <v-col cols="12" align-item="center" class="col-cus">
       <v-row>
-        <v-col cols="12" sm="4" lg="3">
+        <v-col cols="12" sm="6" md="6" lg="3">
         <div class="input-group search" id="search">
           <input
             v-model="filter.a.search"
@@ -12,12 +12,13 @@
           />
         </div>
         </v-col>
-        <v-col cols="12" sm="4" lg="3">
+        <v-col cols="12" sm="6" md="6" lg="3">
           <div>
             <select
               v-model="filter.a.type"
               class="form-select select-cus"
               id="type"
+              required
             >
               <option :value="getConfig('constants.typeOfUser.all')" selected>
                 Tất cả
@@ -31,7 +32,7 @@
             </select>
           </div>
         </v-col>
-        <v-col cols="12" sm="4" lg="3">
+        <v-col cols="12" sm="6" md="6" lg="3">
           <div>
           <select
             v-model="filter.a.faculty"
@@ -49,7 +50,7 @@
           </select>
         </div>
         </v-col>
-        <v-col cols="12" sm="4" lg="3" >
+        <v-col cols="12" sm="6" md="6" lg="3" >
         <v-btn @click.prevent="search" width="100%">
         <v-icon>mid-camera</v-icon>
           <v-icon>mdi-magnify</v-icon>Tìm Kiếm
@@ -76,7 +77,7 @@
               <tr v-for="(user, index) in myUsers" :key="user.id">
                 <td>{{ index +1 }}</td>
                 <td><img :src="`${user.img}`" /></td>
-                <td>{{ user.name }}</td>
+                <td>{{ user.full_name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.faculty }}</td>
                 <td>
@@ -135,8 +136,8 @@ const {
   onFetchResponse: getFilterUsersResponse,
   onFetchError: getFilterUsersError,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(urlUser, { immediate: false });
 
 // getFilterUsers().json().execute();
@@ -209,7 +210,7 @@ body {
   position: relative;
 }
 .col-cus {
-  background-color: #9be1bd;
+  background-color: #d5e7f2;
   padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-bottom:20px;
@@ -228,9 +229,10 @@ table {
   width: 100%;
   overflow: auto;
   border: 1px solid #bbb;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .header_fixed thead th {
-  background-color: #04AA6D;
+  background-color: #023e73;
   color: #fff;
   font-size: 15px;
 }
@@ -275,7 +277,7 @@ td button {
   border: none;
   padding: 7px 20px;
   border-radius: 10px;
-  background-color: #04aa6d;
+  background-color: #023e73;
   color: #fff;
 }
 td button:hover{
@@ -309,7 +311,7 @@ th:nth-child(3),
   padding: 10px;
 }
 .v-btn {
-  background-color: #44b478;
+  background-color: #126DA6;
   color: #fff;
   margin-left: 40px;
   padding: 28px;

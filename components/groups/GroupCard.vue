@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink :to="{ path: `/manage-groups/${group.id}` }" class="full">
+    <NuxtLink :to="{ path: `/groups/${group.id}` }" class="full">
         <div class="image">
             <img :src="`${group.img}`" alt="">
         </div>
@@ -20,6 +20,8 @@ const props = defineProps({
 <style scoped>
 * {
     color: black;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+
 }
 .full {
     background-color: white;
@@ -31,6 +33,8 @@ const props = defineProps({
     padding-bottom: 40px;
     text-decoration: none;
     position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
 }
 
 .full:hover img {

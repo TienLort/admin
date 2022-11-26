@@ -1,37 +1,173 @@
 <template>
-  <div class="container emp-profile">
-    <div class="row">
-      <div class="col-md-3 col-cus1">
-        <div class="profile-img">
-          <img cover :src="`${myUsers.img}`" alt="" />
-          <div class="file btn btn-lg btn-primary">
-            Change Photo
-            <input type="file" name="file" />
-          </div>
-        </div>
-        <div class="profile-work">
-          <div class="profile-head pl-5">
-            <h5>{{ myUsers.name }}</h5>
-            <h6>{{ myUsers.id }}</h6>
-            <p class="proile-rating">Status : <span>Active</span></p>
-          </div>
-          <p>WORK LINK</p>
-          <a href="">Website Link</a><br />
-          <a href="">Bootsnipp Profile</a><br />
-          <a href="">Bootply Profile</a>
-          <p>SKILLS</p>
-          <a href="">Web Designer</a><br />
-          <a href="">Web Developer</a><br />
-          <a href="">WordPress</a><br />
-          <a href="">WooCommerce</a><br />
-          <a href="">PHP, .Net</a><br />
-        </div>
+  <div class="wrap">
+    <div class="container emp-profile">
+      <h3>Quản lý thông tin sinh viên :</h3>
+      <div class="user-infor">
+        <v-row>
+          <v-cow sm="4">
+            <img cover src="/images/user.png" alt="" />
+            <div class="file btn btn-lg btn-primary">
+              <v-icon>mdi-image-multiple</v-icon>
+              <input type="file" name="file" />
+            </div>
+            <div class="profile-head">
+              <h3>Nguyễn Văn Tiến</h3>
+              <p class="proile-status">Status : <span>Active</span></p>
+            </div>
+            <div class="control-btn">
+              <v-dialog v-model="dialog" persistent max-width="600px">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    color="secondary"
+                    dark
+                    v-bind="props"
+                    @click="dialog = true"
+                    variant="outlined"
+                  >
+                    Chỉnh sửa thông tin
+                  </v-btn>
+                </template>
+                <v-card class="card-cus">
+                  <v-card-title>
+                    <span class="text-h5">Update User Profile</span>
+                  </v-card-title>
+                  <form @submit.prevent="submit">
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Full name*"
+                              required
+                              v-model="myUsers.full_name"
+                            ></v-text-field>
+                          </v-col>
+
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Email*"
+                              required
+                              v-model="myUsers.email"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Phone number*"
+                              required
+                              type="number"
+                              v-model="myUsers.phone_number"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Address*"
+                              required
+                              type="text"
+                              v-model="myUsers.address"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <!-- <Datepicker v-model="myUsers.birthday" /> -->
+                            <input type="date" v-model="myUsers.birthday" />
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <v-select
+                              :items="['male', 'female']"
+                              label="Gender*"
+                              required
+                              v-model="myUsers.gender"
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12" sm="6">
+                            <select
+                              id="faculty"
+                              v-model="myUsers.faculty_id"
+                              class="form-select select-cus"
+                              required
+                            >
+                              <option value="" disable selected>
+                                Choose your faculty
+                              </option>
+                              <option
+                                v-for="faculty in faculties"
+                                :key="faculty.id"
+                                :value="faculty.id"
+                              >
+                                {{ faculty.name }}
+                              </option>
+                            </select>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small>* Các trường bắt buộc nhập thông tin</small>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="dialog = false">
+                        Close
+                      </v-btn>
+                      <v-btn
+                        color="blue darken-1"
+                        text
+                        @click="dialog = false"
+                        type="submit"
+                      >
+                        Save
+                      </v-btn>
+                    </v-card-actions>
+                  </form>
+                </v-card>
+              </v-dialog>
+              <v-dialog v-model="dialog1" persistent>
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    color="secondary"
+                    dark
+                    v-bind="props"
+                    @click="dialog1 = true"
+                    variant="outlined"
+                  >
+                    Khóa tài khoản
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title class="text-h5">
+                    Bạn có chắc muốn khóa tài khoản này không ?
+                  </v-card-title>
+                  <v-card-text
+                    >Tài khoản sau khi khóa sẽ không thể sử dụng các chức năng
+                    của ứng dụng cho đến khi được mở lại.</v-card-text
+                  >
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="dialog1 = false"
+                    >
+                      Hủy
+                    </v-btn>
+                    <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="dialog1 = false"
+                    >
+                      Đồng ý
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </div>
+          </v-cow>
+        </v-row>
       </div>
-      <div class="col-md-7 col-cus">
+    </div>
+    <div class="profile-user">
+      <div class="col-md-12 col-cus">
         <v-card>
           <v-toolbar class="toolbar-cus">
-            <v-toolbar-title class="pl-3 pt-3">
-              <h5>Mã số sinh viên : 102190242</h5>
+            <v-toolbar-title class="pl-3 pt-3 pb-3">
+              <h5>Quản lý thông tin sinh viên :</h5>
               <v-tabs v-model="tab" color="primary">
                 <v-tab value="option-1" class="option-btn">
                   <v-icon start> mdi-account </v-icon>
@@ -40,6 +176,10 @@
                 <v-tab value="option-2" class="option-btn">
                   <v-icon start> mdi-access-point </v-icon>
                   Nhóm học :
+                </v-tab>
+                <v-tab value="option-3" class="option-btn">
+                  <v-icon start> mdi-text-box </v-icon>
+                  Đánh giá :
                 </v-tab>
               </v-tabs>
             </v-toolbar-title>
@@ -62,7 +202,7 @@
                         <label>Name</label>
                       </div>
                       <div class="col-md-6">
-                        <p>{{ myUsers.name }}</p>
+                        <p>{{ myUsers.full_name }}</p>
                       </div>
                     </div>
                     <div class="row">
@@ -111,145 +251,121 @@
               <v-window-item value="option-2">
                 <v-card flat>
                   <v-expansion-panels>
-                    <v-expansion-panel v-for="i in 3" :key="i">
-                      <v-expansion-panel-title> Item </v-expansion-panel-title>
-                      <v-expansion-panel-text v-for="j in 3" :key="j">
-                        Mon Hoc {{ j }}
+                    <v-expansion-panel>
+                      <v-expansion-panel-title>
+                        <h5>Group đang đăng ký</h5>
+                      </v-expansion-panel-title>
+                      <v-expansion-panel-text
+                        v-for="j in groupsUser"
+                        :key="j.id"
+                      >
+                        <NuxtLink
+                          :to="{ path: `/manage-groups/${j.id}` }"
+                          class="full"
+                        >
+                          {{ j.subject }}
+                        </NuxtLink>
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                      <v-expansion-panel-title>
+                        <h5>Group đang giảng dạy</h5>
+                      </v-expansion-panel-title>
+                      <v-expansion-panel-text
+                        v-for="j in groupsUser"
+                        :key="j.id"
+                      >
+                        <NuxtLink
+                          :to="{ path: `/manage-groups/${j.id}` }"
+                          class="full"
+                        >
+                          {{ j.subject }}
+                        </NuxtLink>
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                    <v-expansion-panel>
+                      <v-expansion-panel-title>
+                        <h5>Group đã đóng</h5>
+                      </v-expansion-panel-title>
+                      <v-expansion-panel-text
+                        v-for="j in groupsUser"
+                        :key="j.id"
+                      >
+                        <NuxtLink
+                          :to="{ path: `/manage-groups/${j.id}` }"
+                          class="full"
+                        >
+                          {{ j.subject }}
+                        </NuxtLink>
                       </v-expansion-panel-text>
                     </v-expansion-panel>
                   </v-expansion-panels>
+                </v-card>
+              </v-window-item>
+              <v-window-item value="option-3">
+                <v-card flat>
+                  <div class="mentor-review">
+                    <h3>Đánh giá từ sinh viên :</h3>
+                    <v-col cols="12" class="cus-table">
+                      <div class="header_fixed">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>No.</th>
+                              <th>Tên người đánh giá</th>
+                              <th>Group</th>
+                              <th>điểm</th>
+                              <th>Nhận xét</th>
+                              <th>thời gian</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(rating, index) in ratings" :key="index">
+                              <td>{{ index + 1 }}</td>
+                              <td>{{ rating.name }}</td>
+                              <td>
+                                {{ rating.group_id == 1 ? "CNTT" : "KHMT" }}
+                              </td>
+                              <td>
+                                {{ rating.rating
+                                }}<v-icon class="icon-cus">mdi-star</v-icon>
+                              </td>
+                              <td>{{ rating.comment }}</td>
+                              <td>{{ rating.created_at }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <v-pagination
+                          v-model="page"
+                          :length="totalPages"
+                          total-visible="7"
+                          color="purple"
+                        ></v-pagination>
+                      </div>
+                    </v-col>
+                  </div>
                 </v-card>
               </v-window-item>
             </v-window>
           </div>
         </v-card>
       </div>
-      <div class="col-md-2">
-        <v-dialog v-model="dialog" persistent max-width="600px">
-          <template v-slot:activator="{ props }">
-            <v-btn
-              color="secondary"
-              dark
-              v-bind="props"
-              @click="dialog = true"
-              variant="outlined"
-            >
-              Edit user
-            </v-btn>
-          </template>
-          <v-card class="card-cus">
-            <v-card-title>
-              <span class="text-h5">Update User Profile</span>
-            </v-card-title>
-            <form @submit.prevent="submit">
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        label="Full name*"
-                        required
-                        v-model="myUsers.name"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12">
-                      <v-text-field
-                        label="Email*"
-                        required
-                        v-model="myUsers.email"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-text-field
-                        label="Phone number*"
-                        required
-                        type="number"
-                        v-model="myUsers.phone_number"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-text-field
-                        label="Address*"
-                        required
-                        type="text"
-                        v-model="myUsers.address"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <!-- <Datepicker v-model="myUsers.birthday" /> -->
-                      <input type="date" v-model="myUsers.birthday" />
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        :items="['male', 'female']"
-                        label="Gender*"
-                        required
-                        v-model="myUsers.gender"
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <select
-                        id="faculty"
-                        v-model="myUsers.faculty_id"
-                        class="form-select"
-                        required
-                      >
-                        <option value="" disable selected>
-                          Choose your faculty
-                        </option>
-                        <option
-                          v-for="faculty in faculties"
-                          :key="faculty.id"
-                          :value="faculty.id"
-                        >
-                          {{ faculty.name }}
-                        </option>
-                      </select>
-                    </v-col>
-                  </v-row>
-                </v-container>
-                <small>* Các trường bắt buộc nhập thông tin</small>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false">
-                  Close
-                </v-btn>
-                <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="dialog = false"
-                  type="submit"
-                >
-                  Save
-                </v-btn>
-              </v-card-actions>
-            </form>
-          </v-card>
-        </v-dialog>
-        <input
-          type="submit"
-          class="profile-edit-btn"
-          name="btnAddMore"
-          value="Block user"
-        />
-      </div>
     </div>
   </div>
 </template>
 <script setup>
-import Datepicker from "vue3-datepicker";
 const v = new Date();
-const picked = ref(v);
 const dialog = ref(false);
+const dialog1 = ref(false);
+const groupsUser = ref([]);
+const ratings = ref([]);
 const tab = ref("option-1");
 const route = useRoute();
 const faculties = ref({});
 const myUsers = ref({
   id: "",
   img: "",
-  name: "",
+  full_name: "",
   email: "",
   phone_number: "",
   address: "",
@@ -266,20 +382,20 @@ const { url: url2 } = useUrl({
 });
 
 const {
-  data: dataGetMentors,
-  get: getMentors,
-  onFetchResponse: getMentorsResponse,
+  data: dataGetUsers,
+  get: getUsers,
+  onFetchResponse: getUsersResponse,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(url2, { immediate: false });
-getMentors().json().execute();
-getMentorsResponse(() => {
+getUsers().json().execute();
+getUsersResponse(() => {
   console.log("OK");
-  myUsers.value = dataGetMentors.value.data.data;
-  console.log("OK1");
+  myUsers.value = dataGetUsers.value.data.user;
+  ratings.value = dataGetUsers.value.data.ratings;
+  console.log(dataGetUsers.value.data.ratings);
 });
-console.log(myUsers);
 
 const {
   data: dataGetFaculty,
@@ -287,7 +403,7 @@ const {
   onFetchResponse: getFacultyResponse,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })("/faculties", { immediate: false });
 // Lấy tất cả khoa
 getFaculty().json().execute();
@@ -303,7 +419,7 @@ const {
   put,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })(`/users/${route.params.id}`, { immediate: false });
 // Trả về khi put thông tin cá nhân
 resPut(() => {
@@ -316,96 +432,129 @@ errPut(() => {
   return false;
 });
 const submit = () => {
-  // validationErrorMessages.value = {};
-  // isDisabledButton.value = true;
-  // if (myUsers.value.birthday === null) {
-  //   const temp = new Date();
-  //   myUsers.value.birthday = temp.toString().slice(4, 15);
-  // } else if (myUsers.value.birthday.toString().length > 12) {
-  //   myUsers.value.birthday = myUsers.value.birthday.toString().slice(4, 15);
-  // }
   put(myUsers.value).json().execute();
 };
-</script>
 
+// Tạo url lấy groups user đang tham gia học
+const { url: urlgroupUser } = useUrl({
+  path: "users/groups",
+  queryParams: {
+    is_user: 1,
+    is_active: 1,
+  },
+});
+
+// Lấy groups của user đang đăng nhập
+const {
+  data: dataGetgroupsUser,
+  get: getgroupsUser,
+  onFetchResponse: getgroupsUserResponse,
+  onFetchError: getgroupsUserError,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(urlgroupUser, { immediate: false });
+getgroupsUser().json().execute();
+getgroupsUserResponse(() => {
+  groupsUser.value = dataGetgroupsUser.value.data.data;
+  console.log(dataGetgroupsUser.value.data.data);
+});
+</script>
 <style scoped>
+.wrap {
+  /* min-height: 200vh; */
+  font-family: "Roboto Slab", "Times New Roman", serif !important;
+}
 .emp-profile {
-  padding: 3% 0;
   border-radius: 0.5rem;
-  background: #fff;
+  background: #b3b5f2;
+  height: 300px;
+  max-width: 1318px;
+  border: 1px solid #ddd;
 }
-.profile-img {
-  text-align: center;
+.emp-profile h3{
+  font-family: "Roboto Slab", "Times New Roman", serif ;
+    color:#a652;
 }
-.profile-img img {
+.user-infor {
+  background-color: #fff;
+  width: 70%;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
+    0 7px 10px -5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  margin: 20px auto;
+  padding: 20px;
+}
+.profile-user {
+  margin-top: 290px;
+  background-color: #fff;
+  width: 70%;
+
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
+    0 7px 10px -5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+.control-btn {
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+.control-btn .v-btn {
+  min-width: 180px;
+}
+.emp-profile img {
   width: 200px;
   height: 200px;
   border: 1px solid #ccc;
   border-radius: 50%;
 }
-.option-btn {
-  padding: 0 20px;
-}
-.profile-img .file {
-  position: relative;
+.emp-profile .file {
   overflow: hidden;
-  margin-top: -20%;
-  width: 60%;
   border: none;
-  border-radius: 0;
-  font-size: 15px;
+  border-radius: 50%;
   background: #212529b8;
+  font-size: 15px;
+  z-index: 100;
 }
-.profile-img .file input {
+.emp-profile .file input {
   position: absolute;
   opacity: 0;
   right: 0;
   top: 0;
-}
-img {
-  width: 150px;
-  height: 150px;
-  border: 1px solid #0062cc;
-  border-radius: 50%;
-}
-.profile-head h5 {
-  color: #333;
-}
-.profile-head h6 {
-  color: #0062cc;
-}
-.toolbar-cus {
-  background-color: #fff;
-  padding-bottom: 5px;
-  border-bottom: 3px solid #0062cc;
-}
-
-.profile-edit-btn {
-  border: none;
-  border-radius: 1.5rem;
-  width: 70%;
-  padding: 2%;
-  font-weight: 600;
-  color: #6c757d;
-  cursor: pointer;
-}
-.proile-rating {
-  font-size: 12px;
-  color: #818182;
-  margin-top: 5%;
 }
 .card-cus {
   min-width: 80vw;
   min-height: 90vh;
   align-content: center;
 }
-.col-cus {
-  padding-left: 20px;
+.profile-head h3 {
+  margin-top: 30px;
+  min-height: 32px;
+  color: #3c4858;
+  font-weight: 700;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+  text-align: center;
+}
+.proile-status {
+  text-align: center;
+}
+.v-tabs .v-btn {
+  /* background-color: #6c7ee1; */
+  /* color: #fff; */
+  text-align: center;
+}
+.v-toolbar {
+  padding-top: 20px;
+  height: 100px;
+  background-color: #fff;
+}
+.v-slide-group-item--active {
+  /* color: #ffc4a4 !important; */
 }
 .col-md-6 {
   padding: 10px;
 }
-.col-cus1 {
+.bor-col {
   border-right: 3px solid #0062cc;
 }
 .proile-rating span {
@@ -502,9 +651,107 @@ input[type="date"] {
 }
 
 .v-expansion-panel-title--active {
-  background-color: #4f93ff;
+  background-color: #00ff00;
 }
 .v-expansion-panel {
   padding-top: 20px;
+}
+.full {
+  text-decoration: none;
+}
+.mentor-review {
+  padding: 10px;
+  font-weight: 600;
+}
+.mentor-review h5 {
+  text-align: center;
+}
+.name {
+  margin-bottom: 0;
+}
+.select-cus {
+  padding: 15px 20px;
+  outline: none;
+  background-color: #f6f6f6;
+  font-family: "Roboto Mono", monospace;
+  color: rgb(58, 58, 58);
+  font-size: 18px;
+  border: none;
+  border-bottom: 1px solid #a5a5a5;
+  width: 100%;
+}
+.content {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.mentor-review {
+  padding: 10px;
+  font-weight: 600;
+}
+.mentor-review h3 {
+  /* text-align: center; */
+  padding: 20px;
+}
+.mentor-review h3:after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ee2c74;
+  margin-top: 5px;
+}
+
+.header_fixed {
+  width: 100%;
+  overflow: auto;
+  border-top: 3px solid red;
+}
+.header_fixed thead th {
+  background-color: #04aa6d;
+  color: #fff;
+  font-size: 15px;
+}
+th,
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-align: center;
+}
+tr:nth-child(even) {
+  background-color: #efefef;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+tr:hover td {
+  cursor: pointer;
+}
+th:nth-child(1),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(2),
+.td:nth-child(1) {
+  width: 20%;
+}
+th:nth-child(3),
+.td:nth-child(2) {
+  width: 15%;
+}
+.th:nth-child(4),
+.td:nth-child(3) {
+  width: 10%;
+}
+.th:nth-child(5),
+.td:nth-child(4) {
+  width: 40%;
+}
+.th:nth-child(6),
+.td:nth-child(5) {
+  width: 10%;
 }
 </style>

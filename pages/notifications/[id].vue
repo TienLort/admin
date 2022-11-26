@@ -33,8 +33,8 @@ const {
   get: getPosts,
   onFetchResponse: getPostsResponse,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(url2, { immediate: false });
 getPosts().json().execute();
 getPostsResponse(() => {

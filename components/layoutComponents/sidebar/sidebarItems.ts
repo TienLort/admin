@@ -22,6 +22,6 @@ export default [
   {
     title: "Quản lý nhóm học",
     icon: "mdi-account-group",
-    to: "/manage-groups",
+    to: "/groups",
   },
 ];

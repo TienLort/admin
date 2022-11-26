@@ -32,7 +32,7 @@
                         <v-text-field
                           label="Full name*"
                           required
-                          v-model="myUsers.name"
+                          v-model="myUsers.full_name"
                         ></v-text-field>
                       </v-col>
 
@@ -160,7 +160,7 @@
           <v-card>
             <v-toolbar class="toolbar-cus">
               <v-toolbar-title class="pl-3 pt-3 pb-3">
-                <h5>Mã số sinh viên : 102190242</h5>
+                <h5>Quản lý thông tin sinh viên :</h5>
                 <v-tabs v-model="tab" color="primary">
                   <v-tab value="option-1" class="option-btn">
                     <v-icon start> mdi-account </v-icon>
@@ -182,25 +182,18 @@
                 <v-window-item value="option-1">
                   <v-card flat>
                     <div class="profile-tab pl-5 pt-3">
+                      
                       <div class="row">
                         <div class="col-md-6">
-                          <label>User Id</label>
+                          <label>Họ và tên : </label>
                         </div>
                         <div class="col-md-6">
-                          <p>{{ myUsers.id }}</p>
+                          <p>{{ myUsers.full_name }}</p>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Name</label>
-                        </div>
-                        <div class="col-md-6">
-                          <p>{{ myUsers.name }}</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <label>Email</label>
+                          <label>Email :</label>
                         </div>
                         <div class="col-md-6">
                           <p>{{ myUsers.email }}</p>
@@ -208,7 +201,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Phone</label>
+                          <label>Số điện thoại : </label>
                         </div>
                         <div class="col-md-6">
                           <p>{{ myUsers.phone_number }}</p>
@@ -216,7 +209,15 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Gender</label>
+                          <label>Địa chỉ thường trú : </label>
+                        </div>
+                        <div class="col-md-6">
+                          <p>{{ myUsers.address }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Giới tính : </label>
                         </div>
                         <div class="col-md-6">
                           <p>{{ myUsers.gender == 1 ? "Nam" : "Nữ" }}</p>
@@ -224,7 +225,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>BirthDay</label>
+                          <label>Ngày sinh : </label>
                         </div>
                         <div class="col-md-6">
                           <p>{{ myUsers.birthday }}</p>
@@ -232,7 +233,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <label>Faculty</label>
+                          <label>Khoa : </label>
                         </div>
                         <div class="col-md-6">
                           <p>{{ myUsers.faculty_id }}</p>
@@ -253,7 +254,7 @@
                           :key="j.id"
                         >
                           <NuxtLink
-                            :to="{ path: `/manage-groups/${j.id}` }"
+                            :to="{ path: `/groups/${j.id}` }"
                             class="full"
                           >
                             {{ j.subject }}
@@ -262,7 +263,7 @@
                       </v-expansion-panel>
                       <v-expansion-panel>
                         <v-expansion-panel-title>
-                          <h5>Group đang giảng dạy</h5>
+                          <h5>Group đang theo học :</h5>
                         </v-expansion-panel-title>
                         <v-expansion-panel-text
                           v-for="j in groupsUser"
@@ -278,7 +279,7 @@
                       </v-expansion-panel>
                       <v-expansion-panel>
                         <v-expansion-panel-title>
-                          <h5>Group đã đóng</h5>
+                          <h5>Group đã hoàn thành : </h5>
                         </v-expansion-panel-title>
                         <v-expansion-panel-text
                           v-for="j in groupsUser"
@@ -297,26 +298,41 @@
                 </v-window-item>
                 <v-window-item value="option-3">
                   <v-card flat>
-                    <v-row>
-                      <v-col sm="6" class="bor-col">
-                        <div class="mentor-review">
-                          <h5>Đánh giá từ Mentor :</h5>
-                          <div v-for="rating in ratings" :key="rating.name">
-                            <p class="name">{{ rating.name }}</p>
-                            <p class="content">{{ rating.content }}</p>
-                          </div>
+                    <div class="mentor-review">
+                      <h3>Đánh giá từ sinh viên :</h3>
+                      <v-col cols="12" class="cus-table">
+                        <div class="header_fixed">
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>No.</th>
+                                <th>Tên người đánh giá</th>
+                                <th>Group</th>
+                                <th>điểm</th>
+                                <th>Nhận xét</th>
+                                <th>thời gian</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(rating, index) in ratings" :key="index">
+                                <td>{{ index + 1}}</td>
+                                <td>{{ rating.name }}</td>
+                                <td>{{ rating.group_id == 1 ? "CNTT" : "KHMT"  }}</td>
+                                <td>{{ rating.rating }}<v-icon class="icon-cus">mdi-star</v-icon></td>
+                                <td>{{ rating.comment }}</td>
+                                <td>  {{ rating.created_at }}  </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <v-pagination
+                            v-model="page"
+                            :length="totalPages"
+                            total-visible="7"
+                            color="purple"
+                          ></v-pagination>
                         </div>
                       </v-col>
-                      <v-col sm="6">
-                        <div class="mentor-review">
-                          <h5>Đánh giá tới Mentor :</h5>
-                          <div v-for="rating in ratings" :key="rating.name">
-                            <p class="name">{{ rating.name }}</p>
-                            <p class="content">{{ rating.content }}</p>
-                          </div>
-                        </div>
-                      </v-col>
-                    </v-row>
+                    </div>
                   </v-card>
                 </v-window-item>
               </v-window>
@@ -328,9 +344,7 @@
   </div>
 </template>
 <script setup>
-import Datepicker from "vue3-datepicker";
 const v = new Date();
-const picked = ref(v);
 const dialog = ref(false);
 const dialog1 = ref(false);
 const groupsUser = ref([]);
@@ -341,7 +355,7 @@ const faculties = ref({});
 const myUsers = ref({
   id: "",
   img: "",
-  name: "",
+  full_name: "",
   email: "",
   phone_number: "",
   address: "",
@@ -362,16 +376,16 @@ const {
   get: getUsers,
   onFetchResponse: getUsersResponse,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(url2, { immediate: false });
 getUsers().json().execute();
 getUsersResponse(() => {
   console.log("OK");
-  myUsers.value = dataGetUsers.value.data.data;
-  console.log("OK1");
+  myUsers.value = dataGetUsers.value.data.user;
+  ratings.value = dataGetUsers.value.data.ratings;
+  console.log(dataGetUsers.value.data.ratings);
 });
-console.log(myUsers);
 
 const {
   data: dataGetFaculty,
@@ -379,7 +393,7 @@ const {
   onFetchResponse: getFacultyResponse,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })("/faculties", { immediate: false });
 // Lấy tất cả khoa
 getFaculty().json().execute();
@@ -395,7 +409,7 @@ const {
   put,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })(`/users/${route.params.id}`, { immediate: false });
 // Trả về khi put thông tin cá nhân
 resPut(() => {
@@ -408,14 +422,6 @@ errPut(() => {
   return false;
 });
 const submit = () => {
-  // validationErrorMessages.value = {};
-  // isDisabledButton.value = true;
-  // if (myUsers.value.birthday === null) {
-  //   const temp = new Date();
-  //   myUsers.value.birthday = temp.toString().slice(4, 15);
-  // } else if (myUsers.value.birthday.toString().length > 12) {
-  //   myUsers.value.birthday = myUsers.value.birthday.toString().slice(4, 15);
-  // }
   put(myUsers.value).json().execute();
 };
 
@@ -436,31 +442,17 @@ const {
   onFetchError: getgroupsUserError,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })(urlgroupUser, { immediate: false });
-
 getgroupsUser().json().execute();
 getgroupsUserResponse(() => {
   groupsUser.value = dataGetgroupsUser.value.data.data;
-});
-
-const {
-  data: dataRating,
-  get: getRating,
-  onFetchResponse: getRatingResponse,
-  onFetchError: getRatingError,
-} = useFetchApi({
-  requireAuth: true,
-  disableHandleErrorUnauthorized: false,
-})("/users/rating", { immediate: false });
-getRating().json().execute();
-getRatingResponse(() => {
-  ratings.value = dataRating.value.data;
+  console.log(dataGetgroupsUser.value.data.data);
 });
 </script>
 <style scoped>
 .wrap {
-  min-height: 170vh;
+  min-height: 200vh;
   font-family: "Roboto Slab", "Times New Roman", serif !important;
 }
 .emp-profile {
@@ -474,10 +466,10 @@ getRatingResponse(() => {
 }
 .profile-user {
   background-color: #fff;
-  width: 70%;
+  width: 90%;
   position: absolute;
   top: 35%;
-  left: 14%;
+  left: 5%;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
     0 7px 10px -5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -646,9 +638,15 @@ input[type="date"] {
   border-radius: 3px;
   border: 1px solid #ddd;
 }
+.v-expansion-panel-title h5{
+  font-family: "Roboto Slab", "Times New Roman", serif !important;
+  font-weight: 500;
+  font-size: 24px;
+}
 
 .v-expansion-panel-title--active {
-  background-color: #00FF00;
+  background-color: #023e73;
+  color:#fff;
 }
 .v-expansion-panel {
   padding-top: 20px;
@@ -681,5 +679,79 @@ input[type="date"] {
   padding-left: 20px;
   margin-bottom: 20px;
   font-weight: 500;
+}
+
+.mentor-review {
+  padding: 10px;
+  font-weight: 600;
+}
+.mentor-review h3 {
+  /* text-align: center; */
+  padding: 20px;
+}
+.mentor-review h3:after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #ee2c74;
+  margin-top: 5px;
+}
+
+.header_fixed {
+  width: 100%;
+  overflow: auto;
+  border-top: 3px solid red;
+}
+table{
+  /* white-space: nowrap; */
+  /* overflow: hidden; */
+}
+.header_fixed thead th {
+  background-color: #023e73;
+  color: #fff;
+  font-size: 15px;
+}
+th,
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+  font-size: 14px;
+  text-align: center;
+  
+}
+tr:nth-child(even) {
+  background-color: #efefef;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+tr:hover td {
+  cursor: pointer;
+}
+th:nth-child(1),
+.td:nth-child(1) {
+  width: 5%;
+}
+th:nth-child(2),
+.td:nth-child(1) {
+  width: 20%;
+}
+th:nth-child(3),
+.td:nth-child(2) {
+  width: 10%;
+}
+.th:nth-child(4),
+.td:nth-child(3) {
+  width: 10%;
+}
+.th:nth-child(5),
+.td:nth-child(4) {
+  width: 40%;
+}
+.th:nth-child(6),
+.td:nth-child(5) {
+  width: 15%;
 }
 </style>

@@ -40,18 +40,13 @@ getGroupRes(() => {
 </script>
 <template>
   <div class="container">
-    <BRow>
-      <BCol class="pb-3">
-        <h5>>> Đăng ký là thành viên của nhóm</h5>
-      </BCol>
-    </BRow>
-    <BRow>
-      <BCol class="col-4">
+    <v-row>
+      <v-col cols="12" lg="4" sm="12">
         <div class="img">
-          <img src="/images/background/blog-bg-2x.jpg" alt="" />
+          <img src="/images/groups/g1.png" alt="" />
         </div>
-      </BCol>
-      <BCol class="group-infor">
+      </v-col>
+      <v-col class="group-infor" cols="12" lg="8" sm="12">
         <h4 class="pt-3 pb-4">{{ group.subject }}</h4>
         <p><span>Khoa:</span> {{ group.faculty }}</p>
         <p class="title">
@@ -62,24 +57,40 @@ getGroupRes(() => {
         <p class="information">
           {{ group.information }}
         </p>
-      </BCol>
-    </BRow>
-    <BRow class="mt-3">
-      <BRow>
+      </v-col>
+    </v-row>
+    <v-row class="mt-3">
+      <v-col cols="12" sm="4">
         <p><span>Thành viên hiện có:</span> {{ group.quantity }} thành viên</p>
         <div v-for="(member, index) in group.members" :key="member.id">
           <p class="mb-0">
-            <NuxtLink :to="{ path: `/manage-user/${index+1}` }" class="full">
-              {{ index + 1 }}. {{ member.full_name }} _ Khoa: {{ member.faculty }}
+            <NuxtLink :to="{ path: `/users/${index + 1}` }" class="full">
+              {{ index + 1 }}. {{ member.full_name }} _ Khoa:
+              {{ member.faculty }}
             </NuxtLink>
           </p>
         </div>
-      </BRow>
-    </BRow>
+      </v-col>
+      <v-col cols="12" sm="8">
+        <h5>Chức năng :</h5>
+        <div class="control-btn">
+          <v-btn color="success">
+            <NuxtLink to="/groups" class="full"> Tìm kiếm mentors </NuxtLink>
+          </v-btn>
+          <v-btn color="secondary"> Bắt đầu hoạt động </v-btn>
+          <v-btn color="error"> Khóa nhóm </v-btn>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <style scoped>
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+}
 .img {
   /* background-color: red; */
   height: 250px;
@@ -100,14 +111,27 @@ h4 {
 }
 h5 {
   font-size: 17px;
-  color: rgb(0, 85, 119);
+  /* color: rgb(0, 85, 119); */
+}
+.full {
+  text-decoration: none;
+  color:#fff;
 }
 .group-infor span {
   color: rgb(0, 16, 192);
   display: inline-block;
   width: 160px;
 }
-.full{
+.full {
   text-decoration: none;
+}
+.control-btn {
+  display: flex;
+  padding-top: 20px;
+  align-items: center;
+  justify-content: space-around;
+}
+.v-btn {
+  width: 200px;
 }
 </style>

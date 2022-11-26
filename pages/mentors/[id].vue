@@ -65,7 +65,7 @@
                   </v-tab>
                   <v-tab value="option-2" class="option-btn">
                     <v-icon start> mdi-account </v-icon>
-                    Thông tin mentor:
+                    Đánh giá mentor:
                   </v-tab>
                   <v-tab value="option-3" class="option-btn">
                     <v-icon start> mdi-access-point </v-icon>
@@ -200,7 +200,7 @@
                           :key="j.id"
                         >
                           <NuxtLink
-                            :to="{ path: `/manage-groups/${j.id}` }"
+                            :to="{ path: `/groups/${j.id}` }"
                             class="full"
                           >
                             {{ j.subject }}
@@ -265,7 +265,7 @@ const infor = ref({
 const { url: url2 } = useUrl({
   path: `/mentors/${route.params.id}`,
   queryParams: {
-    isAccept: "true",
+    // isAccept: "true",
   },
 });
 
@@ -274,16 +274,17 @@ const {
   get: getMentors,
   onFetchResponse: getMentorsResponse,
 } = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
 })(url2, { immediate: false });
 getMentors().json().execute();
 getMentorsResponse(() => {
   console.log("OK");
-  myMentors.value = dataGetMentors.value.data.data;
-  console.log("OK1");
+  myMentors.value = dataGetMentors.value.data.mentor;
+  ratings.value = dataGetMentors.value.data.ratings;
+
 });
-console.log(myMentors);
+
 
 const {
   data: dataGetFaculty,
@@ -291,7 +292,7 @@ const {
   onFetchResponse: getFacultyResponse,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })("/faculties", { immediate: false });
 // Lấy tất cả khoa
 getFaculty().json().execute();
@@ -316,7 +317,7 @@ const {
   onFetchError: getgroupsMentorError,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })(urlgroupMentor, { immediate: false });
 
 getgroupsMentor().json().execute();
@@ -330,25 +331,11 @@ const {
   onFetchError: getMentorInforError,
 } = useFetchApi({
   requireAuth: true,
-  disableHandleErrorUnauthorized: false,
+  disableHandleErrorUnauthorized: true,
 })("/mentors/mentor-infor", { immediate: false });
 getMentorInfor().json().execute();
 getMentorInforResponse(() => {
   infor.value = dataMentorInfor.value.data;
-});
-
-const {
-  data: dataRating,
-  get: getRating,
-  onFetchResponse: getRatingResponse,
-  onFetchError: getRatingError,
-} = useFetchApi({
-  requireAuth: true,
-  disableHandleErrorUnauthorized: false,
-})("/mentors/rating", { immediate: false });
-getRating().json().execute();
-getRatingResponse(() => {
-  ratings.value = dataRating.value.data;
 });
 </script>
 
@@ -448,7 +435,7 @@ getRatingResponse(() => {
 .bor-col {
   border-right: 3px solid #0062cc;
 }
-.proile-rating span {
+.profile-rating span {
   color: #495057;
   font-size: 15px;
   font-weight: 600;
@@ -462,9 +449,7 @@ getRatingResponse(() => {
 }
 .profile-head .nav-tabs .nav-link.active {
   border: none;
-  border-bottom: 2px solid #0062cc;
-}
-.col-cus {
+  border-bottom: 2px solid #023e73;
 }
 .profile-work {
   padding: 14%;
@@ -604,7 +589,7 @@ table {
   border-top: 3px solid red;
 }
 .header_fixed thead th {
-  background-color: #04aa6d;
+  background-color: #023e73;
   color: #fff;
   font-size: 15px;
 }

@@ -37,12 +37,12 @@ const sidebarMenu = ref(sidebarItems);
           </v-list-item>
         </template>
       </v-list>
-      <div class="pa-4 ma-4 bg-light-primary rounded-lg text-center">
+      <!-- <div class="pa-4 ma-4 bg-light-primary rounded-lg text-center">
         <img src="/images/sidebar-buynow-bg.svg" />
         <h4 class="font-weight-regular mb-3">Study for love</h4>
         <v-btn class="mb-2" href="#" block>Check 1</v-btn>
         <v-btn color="primary" href="#" block>Check 2</v-btn>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

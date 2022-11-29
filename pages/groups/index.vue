@@ -6,30 +6,35 @@ const desserts = ref([
     id: 1,
     name: "Nguyễn Văn A",
     subject: "Đại số tuyến tính",
+    topic: "Tìm hiểu và làm bài cuối kỳ",
     datetime: "20/10/2022",
   },
   {
     id: 2,
     name: "Nguyễn Văn A",
     subject: "Đại số tuyến tính",
+    topic: "Tìm hiểu và làm bài cuối kỳ",
     datetime: "20/10/2022",
   },
   {
     id: 3,
     name: "Nguyễn Văn A",
     subject: "Đại số tuyến tính",
+    topic: "Tìm hiểu và làm bài cuối kỳ",
     datetime: "20/10/2022",
   },
   {
     id: 4,
     name: "Nguyễn Văn A",
     subject: "Đại số tuyến tính",
+    topic: "Tìm hiểu và làm bài cuối kỳ",
     datetime: "20/10/2022",
   },
   {
     id: 5,
     name: "Nguyễn Văn A",
     subject: "Đại số tuyến tính",
+    topic: "Tìm hiểu và làm bài cuối kỳ",
     datetime: "20/10/2022",
   },
 ]);
@@ -91,32 +96,37 @@ getGroupsResponse(() => {
         <v-window-item value="option-1">
           <v-card flat>
             <v-card-text>
-              <br />
-              <v-table>
-                <thead>
-                  <tr>
-                    <th class="text-left">Id</th>
-                    <th class="text-left">Name Student</th>
-                    <th class="text-left">subject</th>
-                    <th class="text-left">datetime</th>
-                    <th class="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in desserts" :key="item.id">
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.subject }}</td>
-                    <td>{{ item.datetime }}</td>
-                    <td>
-                      <v-btn block color="success" elevation="0">Accept</v-btn>
-                      <v-btn block color="error" elevation="0" class="btn"
-                        >Refuse</v-btn
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </v-table>
+              <div class="header_fixed">
+                <v-table>
+                  <thead>
+                    <tr>
+                      <th >No.</th>
+                      <th >Tên sinh viên</th>
+                      <th >Môn học</th>
+                      <th >Chủ đề</th>
+                      <th >Thời gian</th>
+                      <th >Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in desserts" :key="item.id">
+                      <td>{{ item.id }}</td>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.subject }}</td>
+                      <td>{{ item.topic }}</td>
+                      <td>{{ item.datetime }}</td>
+                      <td class="cus-td">
+                        <v-btn color="success" elevation="0"
+                          ><v-icon>mdi-account-multiple-check</v-icon></v-btn
+                        >
+                        <v-btn color="error" elevation="0" class="btn"
+                          ><v-icon>mdi-account-multiple-remove</v-icon></v-btn
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </v-table>
+              </div>
             </v-card-text>
             <div class="text-center">
               <v-pagination
@@ -134,7 +144,7 @@ getGroupsResponse(() => {
                 cols="12"
                 sm="6"
                 md="4"
-                lg="3"
+                lg="4"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -157,7 +167,7 @@ getGroupsResponse(() => {
                 cols="12"
                 sm="6"
                 md="4"
-                lg="3"
+                lg="4"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -180,7 +190,7 @@ getGroupsResponse(() => {
                 cols="12"
                 sm="6"
                 md="4"
-                lg="3"
+                lg="4"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -203,7 +213,7 @@ getGroupsResponse(() => {
                 cols="12"
                 sm="6"
                 md="4"
-                lg="3"
+                lg="4"
                 v-for="group in groups"
                 :key="group.id"
               >
@@ -226,8 +236,7 @@ getGroupsResponse(() => {
 
 <style scoped>
 .v-btn {
-  width: 40px;
-  margin: 5px;
+  margin:5px;
 }
 .option-btn {
   min-width: 200px;
@@ -240,4 +249,66 @@ getGroupsResponse(() => {
   height: 90px;
   background-color: #fff;
 }
+.cus-td {
+  /* display: flex;
+  justify-content: center;
+  margin: 0; */
+}
+.header_fixed {
+  width: 100%;
+  overflow: auto;
+  border: 1px solid #bbb;
+}
+.header_fixed thead th {
+  background-color: #26333f;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+}
+
+th,
+td {
+  text-align: center;
+  border: 1px solid #dbdada;
+}
+tr:nth-child(even) {
+  background-color: #efefef;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+tr:hover td {
+  cursor: pointer;
+}
+td button:hover {
+  opacity: 0.8;
+}
+.table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+thead th:nth-child(1) {
+  width: 5%;
+}
+
+thead th:nth-child(2) {
+  width: 15%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 35%;
+}
+thead th:nth-child(5) {
+  width: 15%;
+}
+thead th:nth-child(6) {
+  width: 15%;
+}
+
 </style>

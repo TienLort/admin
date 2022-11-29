@@ -26,14 +26,13 @@ const props = defineProps({
 .full {
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 5px 8px 0 rgb(0 0 0 / 10%);
     overflow: hidden;
     display: block;
     height: 100%;
     padding-bottom: 40px;
     text-decoration: none;
     position: relative;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
 }
 

@@ -191,7 +191,7 @@
                   v-for="mentor in myMentors"
                   :key="mentor.id"
                 >
-                  <GroupCard :mentor="mentor" />
+                  <MentorCard :mentor="mentor" />
                 </v-col>
               </v-row>
               <div class="text-center">
@@ -210,7 +210,7 @@
 </template>
 <script setup>
 import InfiniteLoading from "v3-infinite-loading";
-import GroupCard from "../../components/mentors/MentorCard.vue";
+import MentorCard from "../../components/mentors/MentorCard.vue";
 import "v3-infinite-loading/lib/style.css";
 definePageMeta({
   layout: "default",
@@ -381,13 +381,11 @@ th:nth-child(3),
 }
 
 tr:hover td {
-  color: #44b478;
   cursor: pointer;
-  background-color: #ffffff;
 }
 
 .v-btn {
-  background-color: #023e73;
+  background-color: #126da6;
   color: #fff;
   margin-left: 40px;
   padding: 28px;

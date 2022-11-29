@@ -5,7 +5,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest --run --reporter verbose --globals",
+    "test:watch": "vitest --reporter verbose --globals"
   },
   "devDependencies": {
     "nuxt": "^3.0.0-rc.12"
@@ -13,6 +15,7 @@
   "dependencies": {
     "@fontsource/love-ya-like-a-sister": "^4.5.11",
     "@mdi/font": "^7.0.96",
+    "@nuxt/test-utils": "^3.0.0",
     "@vuepic/vue-datepicker": "^3.5.2",
     "@vueuse/core": "^9.3.1",
     "@vueuse/nuxt": "^9.3.1",
@@ -24,6 +27,7 @@
     "sass-loader": "^13.1.0",
     "typescript": "^4.8.4",
     "v3-infinite-loading": "^1.2.1",
+    "vitest": "^0.25.3",
     "vue": "^3.2.41",
     "vue-google-charts": "^1.1.0",
     "vue-sweetalert2": "^5.0.5",

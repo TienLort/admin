@@ -1,104 +1,117 @@
 <template>
-  <v-row align-item="center" class="list px-3 mx-auto cus-row">
-    <v-col cols="12" align-item="center" class="col-cus">
-      <v-row>
-        <v-col cols="12" sm="6" md="6" lg="3">
-        <div class="input-group search" id="search">
-          <input
-            v-model="filter.a.search"
-            class="form-control border input-cus"
-            type="search"
-            placeholder="Sinh viên"
-          />
-        </div>
+  <v-window>
+    <v-window-item>
+      <v-row align-item="center" class="list px-3 mx-auto cus-row">
+        <v-col cols="12" align-item="center" class="col-cus">
+          <v-row>
+            <v-col cols="12" sm="6" md="6" lg="3">
+              <div class="input-group search" id="search">
+                <input
+                  v-model="filter.a.search"
+                  class="form-control border input-cus"
+                  type="search"
+                  placeholder="Sinh viên"
+                />
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="6" lg="3">
+              <div>
+                <select
+                  v-model="filter.a.type"
+                  class="form-select select-cus"
+                  id="type"
+                  required
+                >
+                  <option
+                    :value="getConfig('constants.typeOfUser.all')"
+                    selected
+                  >
+                    Tất cả
+                  </option>
+                  <option :value="getConfig('constants.typeOfUser.active')">
+                    đang hoạt động
+                  </option>
+                  <option :value="getConfig('constants.typeOfUser.block')">
+                    khóa tài khoản
+                  </option>
+                </select>
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="6" lg="3">
+              <div>
+                <select
+                  v-model="filter.a.faculty"
+                  class="form-select select-cus"
+                  required
+                >
+                  <option value="" disabled selected>Chọn khoa</option>
+                  <option
+                    v-for="faculty in faculties"
+                    :key="faculty.id"
+                    :value="faculty.id"
+                  >
+                    {{ faculty.name }}
+                  </option>
+                </select>
+              </div>
+            </v-col>
+            <v-col cols="12" sm="6" md="6" lg="3">
+              <v-btn @click.prevent="search" width="100%">
+                <v-icon>mid-camera</v-icon>
+                <v-icon>mdi-magnify</v-icon>Tìm Kiếm
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-col>
-        <v-col cols="12" sm="6" md="6" lg="3">
-          <div>
-            <select
-              v-model="filter.a.type"
-              class="form-select select-cus"
-              id="type"
-              required
-            >
-              <option :value="getConfig('constants.typeOfUser.all')" selected>
-                Tất cả
-              </option>
-              <option :value="getConfig('constants.typeOfUser.active')">
-                đang hoạt động
-              </option>
-              <option :value="getConfig('constants.typeOfUser.block')">
-                khóa tài khoản
-              </option>
-            </select>
-          </div>
+        <v-col cols="12" class="cus-table">
+          <v-row>
+            <div class="header_fixed">
+              <table>
+                <thead>
+                  <tr>
+                    <th>TT</th>
+                    <!-- <th>Ảnh</th> -->
+                    <th>Họ & tên sinh viên</th>
+                    <th>Email</th>
+                    <th>Khoa</th>
+                    <th>Hành Động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(user, index) in myUsers" :key="user.id">
+                    <td>{{ index + 1 }}</td>
+                    <!-- <td><img :src="`${user.img}`" /></td> -->
+                    <td>{{ user.full_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.faculty }}</td>
+                    <td>
+                      <button @click="navigateTo(`/users/${user.id}`)">
+                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="loader">
+                <InfiniteLoading
+                  v-if="loading"
+                  class="loading"
+                  @infinite="load1"
+                />
+              </div>
+
+              <v-pagination
+                v-model="page"
+                :length="totalPages"
+                total-visible="7"
+                color="purple"
+              ></v-pagination>
+            </div>
+          </v-row>
         </v-col>
-        <v-col cols="12" sm="6" md="6" lg="3">
-          <div>
-          <select
-            v-model="filter.a.faculty"
-            class="form-select select-cus"
-            required
-          >
-            <option value="" disabled selected>Chọn khoa</option>
-            <option
-              v-for="faculty in faculties"
-              :key="faculty.id"
-              :value="faculty.id"
-            >
-              {{ faculty.name }}
-            </option>
-          </select>
-        </div>
-        </v-col>
-        <v-col cols="12" sm="6" md="6" lg="3" >
-        <v-btn @click.prevent="search" width="100%">
-        <v-icon>mid-camera</v-icon>
-          <v-icon>mdi-magnify</v-icon>Tìm Kiếm
-        </v-btn>
-      </v-col>
       </v-row>
-        
-    </v-col>
-    <v-col cols="12" class="cus-table">
-      <v-row>
-        <div class="header_fixed">
-          <table>
-            <thead>
-              <tr>
-                <th>No.</th>
-                <th>Ảnh</th>
-                <th>Tên Sinh Viên</th>
-                <th>Email</th>
-                <th>Khoa</th>
-                <th>Hành Động</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(user, index) in myUsers" :key="user.id">
-                <td>{{ index +1 }}</td>
-                <td><img :src="`${user.img}`" /></td>
-                <td>{{ user.full_name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.faculty }}</td>
-                <td>
-                  <button @click="navigateTo(`/users/${user.id}`)"><v-icon class="pr-3">mdi-eye</v-icon>Xem</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="loader">
-            <InfiniteLoading v-if="loading" class="loading" @infinite="load" />
-          </div>
-          <v-pagination
-            v-model="page"
-            :length="totalPages"
-            total-visible="7"
-            color="purple"
-          ></v-pagination>
-        </div>
-      </v-row>
-    </v-col>
-  </v-row>
+    </v-window-item>
+  </v-window>
 </template>
 <script setup>
 import InfiniteLoading from "v3-infinite-loading";
@@ -112,8 +125,8 @@ const router = useRouter();
 const { getConfig } = useConfig();
 const faculties = ref({});
 const loading = ref(true);
+console.log("Load :", loading);
 const myUsers = ref([]);
-
 const filter = ref({
   a: {
     search: route.query.search === undefined ? "" : route.query.search,
@@ -126,7 +139,7 @@ const filter = ref({
 const { url: urlUser } = useUrl({
   path: "/users",
   queryParams: {
-    queryParams: filter.value.a,
+    // queryParams: filter.value.a,
   },
 });
 
@@ -144,12 +157,10 @@ const {
 
 getFilterUsersResponse(() => {
   console.log(dataGetFilterUsers.value.data.data);
-  console.log("ok");
+
   if (dataGetFilterUsers.value.data.data.length !== 0) {
-  console.log("ok la");
     myUsers.value = myUsers.value.concat(dataGetFilterUsers.value.data.data);
     console.log(myUsers.value);
-    console.log("tesst");
   }
   if (
     dataGetFilterUsers.value.data.data.length <
@@ -183,11 +194,11 @@ const search = () => {
   getFilterUsers().json().execute();
 };
 
-const load = () => {
+const load1 = () => {
   setTimeout(() => {
     getFilterUsers().json().execute();
-    filter.value.a.page += 1; 
-    console.log("Thumbz")
+    filter.value.a.page += 1;
+    console.log("Thumbz");
   }, 500);
 };
 </script>
@@ -206,16 +217,15 @@ body {
   font-family: "Roboto Slab", "Times New Roman", serif;
   background-color: #adacac;
 }
-.cus-row{
+.cus-row {
   position: relative;
 }
 .col-cus {
   background-color: #d5e7f2;
   padding: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom:20px;
+  margin-bottom: 20px;
   border-radius: 10px;
-
 }
 .cus-table {
   padding: 0;
@@ -264,11 +274,6 @@ th {
   border: 1px solid #dbdada;
 }
 
-/* tr:hover td {
-  color: #44b478;
-  cursor: default;
-  background-color: #ffffff;
-} */
 tr:hover td {
   cursor: pointer;
 }
@@ -280,38 +285,32 @@ td button {
   background-color: #023e73;
   color: #fff;
 }
-td button:hover{
+td button:hover {
   opacity: 0.8;
 }
-th:nth-child(1),
-.td:nth-child(1) {
+thead th:nth-child(1) {
   width: 5%;
 }
-th:nth-child(2),
-.td:nth-child(1) {
-  width: 10%;
-}
-th:nth-child(3),
-.td:nth-child(2) {
+
+thead th:nth-child(2) {
   width: 20%;
 }
-.th:nth-child(4),
-.td:nth-child(3) {
+
+thead th:nth-child(3) {
   width: 20%;
 }
-.th:nth-child(5),
-.td:nth-child(4) {
-  width: 25%;
-}
-.th:nth-child(6),
-.td:nth-child(5) {
+
+thead th:nth-child(4) {
   width: 20%;
+}
+thead th:nth-child(5) {
+  width: 15%;
 }
 .input-cus {
   padding: 10px;
 }
 .v-btn {
-  background-color: #126DA6;
+  background-color: #126da6;
   color: #fff;
   margin-left: 40px;
   padding: 28px;
@@ -329,7 +328,7 @@ th:nth-child(3),
   width: 100%;
   display: inline-block;
   border-radius: 4px !important;
-  padding:16px;
+  padding: 16px;
 }
 
 .select-cus {

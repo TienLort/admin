@@ -1,13 +1,13 @@
 <template>
   <div id="login">
-    <img class="wave" src="/images/wave.png" />
+    <img class="wave" src="/images/wave1.png" />
     <div class="container">
       <div class="img">
-        <img src="/images/bg-login.svg" />
+        <img src="/images/bg-ava.png" />
       </div>
       <div class="login-content">
         <form @submit.prevent="submit">
-          <img src="/images/avatar.svg" />
+          <img src="/images/images.png" class="img1"/>
           <h2 class="title">Welcome</h2>
           <div class="input-div one">
             <div class="i">
@@ -189,7 +189,7 @@ form {
   border-radius: 25px;
   outline: none;
   border: none;
-  background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+  background-image: linear-gradient(to right, #4239cc, #6b62ec, #4239cc);
   background-size: 200%;
   font-size: 1.2rem;
   color: #fff;
@@ -197,7 +197,7 @@ form {
   text-transform: uppercase;
   margin: 1rem 0;
   cursor: pointer;
-  transition: 0.5s;
+  transition: 1s;
   margin-top: 32px;
 }
 .btn:hover {

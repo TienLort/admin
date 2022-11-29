@@ -16,6 +16,7 @@
         </v-col>
         <v-col cols="3">
           <v-btn @click.prevent="search" width="100%" class="mt-4">
+            <v-icon>mdi-magnify</v-icon>
             Search
           </v-btn>
         </v-col>
@@ -82,7 +83,10 @@
                   <td>
                     <div class="text-nowrap mt-3 card">
                       <button @click="navigateTo(`/notifications/${index}`)">
-                        View
+                        <v-icon>mdi-clipboard-edit-outline</v-icon>
+                      </button>
+                      <button >
+                        <v-icon>mdi-trash-can-outline</v-icon>
                       </button>
                     </div>
                   </td>
@@ -211,8 +215,11 @@ td {
 .td-cus {
   text-align: left;
 }
+.td-cus h3{
+  color:blue;
+}
 .input-cus {
-  padding: 10px;
+  padding: 15px;
 }
 
 tr:nth-child(even) {
@@ -236,7 +243,7 @@ td button {
 }
 
 .v-btn {
-  background-color: #023e73;
+  background-color: #126da6;
   color: #fff;
   margin-left: 40px;
   padding: 28px;

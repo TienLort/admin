@@ -3,11 +3,11 @@ const createGetResponse = () => ({
     data: [
       {
         id: '1',
-        name: 'information technology',
+        name: 'Công nghệ thông tin',
       },
       {
         id: '2',
-        name: 'architect',
+        name: 'Tự động hóa',
       },
     ]
   }

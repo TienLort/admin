@@ -23,35 +23,46 @@
               <v-dialog v-model="dialog1" persistent>
                 <template v-slot:activator="{ props }">
                   <v-btn
-                    color="secondary"
                     dark
                     v-bind="props"
                     @click="dialog1 = true"
-                    variant="outlined"
+                    variant="flat"
+                    color="error"
                   >
                     Khóa tài khoản
                   </v-btn>
                 </template>
-                <v-card>
-                  <v-card-title class="text-h5">
-                    Bạn có chắc muốn khóa tài khoản này không ?
-                  </v-card-title>
-                  <v-card-text
-                    >Tài khoản sau khi khóa sẽ không thể sử dụng các chức năng
-                    của ứng dụng cho đến khi được mở lại.</v-card-text
+                <v-card style="width: 50%; margin: auto">
+                  <v-card-title
+                    style="
+                      text-align: center;
+                      padding: 16px 0;
+                      background-color: red;
+                      color: #fff;
+                    "
+                    class="text-h5"
                   >
-                  <v-card-actions>
+                    Khoá Tài Khoản
+                  </v-card-title>
+                  <v-card-text style="display:flex;align-item:center;">
+                    <v-icon style="font-size: 60px; color: red; margin-right: 10px"
+                      >mdi-account-lock</v-icon
+                    >
+                    <span>Tài khoản sau khi khóa sẽ không thể sử dụng các chức năng
+                    của ứng dụng cho đến khi được mở lại.</span></v-card-text
+                  >
+                  <v-card-actions style="background-color:#ddd">
                     <v-spacer></v-spacer>
                     <v-btn
-                      color="green-darken-1"
-                      variant="text"
+                      color="secondary"
+                      variant="flat"
                       @click="dialog1 = false"
                     >
                       Hủy
                     </v-btn>
                     <v-btn
-                      color="green-darken-1"
-                      variant="text"
+                      color="error"
+                      variant="flat"
                       @click="dialog1 = false"
                     >
                       Đồng ý
@@ -394,6 +405,7 @@
 </template>
 <script setup>
 const tab = ref("option-1");
+const dialog1 = ref(false);
 const tab1 = ref("option-1");
 const route = useRoute();
 const faculties = ref({});
@@ -787,29 +799,26 @@ tr:nth-child(odd) {
 tr:hover td {
   cursor: pointer;
 }
-th:nth-child(1),
-.td:nth-child(1) {
+thead th:nth-child(1) {
   width: 5%;
 }
-th:nth-child(2),
-.td:nth-child(1) {
-  width: 20%;
-}
-th:nth-child(3),
-.td:nth-child(2) {
+
+thead th:nth-child(2) {
   width: 15%;
 }
-.th:nth-child(4),
-.td:nth-child(3) {
-  width: 10%;
+
+thead th:nth-child(3) {
+  width: 15%;
 }
-.th:nth-child(5),
-.td:nth-child(4) {
-  width: 40%;
+
+thead th:nth-child(4) {
+  width: 15%;
 }
-.th:nth-child(6),
-.td:nth-child(5) {
-  width: 10%;
+thead th:nth-child(5) {
+  width: 35%;
+}
+thead th:nth-child(6) {
+  width: 15%;
 }
 
 td button {

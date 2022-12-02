@@ -11,7 +11,7 @@ export default [
   },
   {
     title: "Quản lý Mentor",
-    icon: "mdi-form-dropdown",
+    icon: "mdi-account-school",
     to: "/mentors",
   },
   {

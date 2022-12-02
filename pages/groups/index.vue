@@ -100,12 +100,12 @@ getGroupsResponse(() => {
                 <v-table>
                   <thead>
                     <tr>
-                      <th >No.</th>
-                      <th >Tên sinh viên</th>
-                      <th >Môn học</th>
-                      <th >Chủ đề</th>
-                      <th >Thời gian</th>
-                      <th >Hành động</th>
+                      <th>No.</th>
+                      <th>Tên sinh viên</th>
+                      <th>Môn học</th>
+                      <th>Chủ đề</th>
+                      <th>Thời gian</th>
+                      <th>Hành động</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,12 +116,25 @@ getGroupsResponse(() => {
                       <td>{{ item.topic }}</td>
                       <td>{{ item.datetime }}</td>
                       <td class="cus-td">
-                        <v-btn color="success" elevation="0"
-                          ><v-icon>mdi-account-multiple-check</v-icon></v-btn
+                        <button
+                          @click="navigateTo(`/notifications/${index}`)"
+                          style="
+                            margin-left: 10px;
+                            background-color: #05b187;
+                            color: #fff;
+                          "
                         >
-                        <v-btn color="error" elevation="0" class="btn"
-                          ><v-icon>mdi-account-multiple-remove</v-icon></v-btn
+                          <v-icon>mdi-clipboard-edit-outline</v-icon>
+                        </button>
+                        <button
+                          style="
+                            margin: 10px 0 0 10px;
+                            background-color: #fc4b6c;
+                            color: #fff;
+                          "
                         >
+                          <v-icon>mdi-trash-can-outline</v-icon>
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -236,7 +249,7 @@ getGroupsResponse(() => {
 
 <style scoped>
 .v-btn {
-  margin:5px;
+  margin: 5px;
 }
 .option-btn {
   min-width: 200px;
@@ -250,9 +263,7 @@ getGroupsResponse(() => {
   background-color: #fff;
 }
 .cus-td {
-  /* display: flex;
-  justify-content: center;
-  margin: 0; */
+  padding: 7px 0px;
 }
 .header_fixed {
   width: 100%;
@@ -263,18 +274,27 @@ getGroupsResponse(() => {
   background-color: #26333f;
   color: #fff;
   text-align: center;
+  padding: 10px 20px;
   font-size: 15px;
 }
-
+tr{
+  padding: 10px 20px;
+}
 th,
 td {
+  padding: 10px 20px;
+  font-size: 14px;
   text-align: center;
   border: 1px solid #dbdada;
 }
 tr:nth-child(even) {
   background-color: #efefef;
 }
-
+td button {
+  border: none;
+  padding: 7px 20px;
+  border-radius: 5px;
+}
 tr:nth-child(odd) {
   background-color: #fff;
 }
@@ -310,5 +330,4 @@ thead th:nth-child(5) {
 thead th:nth-child(6) {
   width: 15%;
 }
-
 </style>

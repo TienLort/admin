@@ -75,7 +75,7 @@ getGroupRes(() => {
         <h5>Chức năng :</h5>
         <div class="control-btn">
           <v-btn color="success">
-            <NuxtLink to="/groups" class="full"> Tìm kiếm mentors </NuxtLink>
+            Tìm kiếm mentors
           </v-btn>
           <v-btn color="secondary"> Bắt đầu hoạt động </v-btn>
           <v-btn color="error"> Khóa nhóm </v-btn>
@@ -115,7 +115,7 @@ h5 {
 }
 .full {
   text-decoration: none;
-  color:#fff;
+  /* color:#fff; */
 }
 .group-infor span {
   color: rgb(0, 16, 192);

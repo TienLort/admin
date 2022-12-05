@@ -27,14 +27,23 @@
                     dark
                     v-bind="props"
                     @click="dialog = true"
-                    variant="outlined"
+                    variant="flat"
                   >
-                    Chỉnh sửa thông tin
+                    <v-icon style="font-size: 18px">mdi-account-edit</v-icon>
+                    <span>Chỉnh sửa thông tin</span>
                   </v-btn>
                 </template>
                 <v-card class="card-cus">
-                  <v-card-title>
-                    <span class="text-h5">Update User Profile</span>
+                  <v-card-title
+                    color="secondary"
+                    style="
+                      text-align: center;
+                      padding: 16px 0;
+                      background-color: blue;
+                      color: #fff;
+                    "
+                  >
+                    <span class="text-h3">Cập nhật thông tin sinh viên</span>
                   </v-card-title>
                   <form @submit.prevent="submit">
                     <v-card-text>
@@ -106,18 +115,24 @@
                       </v-container>
                       <small>* Các trường bắt buộc nhập thông tin</small>
                     </v-card-text>
-                    <v-card-actions>
+                    <v-card-actions style="background-color: #ddd">
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="dialog = false">
-                        Close
+                      <v-btn
+                        color="black"
+                        text
+                        @click="dialog = false"
+                        variant="outlined"
+                      >
+                        Đóng
                       </v-btn>
                       <v-btn
-                        color="blue darken-1"
                         text
                         @click="dialog = false"
                         type="submit"
+                        variant="flat"
+                        color="secondary"
                       >
-                        Save
+                        Lưu
                       </v-btn>
                     </v-card-actions>
                   </form>
@@ -126,35 +141,50 @@
               <v-dialog v-model="dialog1" persistent>
                 <template v-slot:activator="{ props }">
                   <v-btn
-                    color="secondary"
                     dark
                     v-bind="props"
                     @click="dialog1 = true"
-                    variant="outlined"
+                    variant="flat"
+                    color="error"
                   >
+                    <v-icon>mdi-lock</v-icon>
                     Khóa tài khoản
                   </v-btn>
                 </template>
-                <v-card>
-                  <v-card-title class="text-h5">
-                    Bạn có chắc muốn khóa tài khoản này không ?
-                  </v-card-title>
-                  <v-card-text
-                    >Tài khoản sau khi khóa sẽ không thể sử dụng các chức năng
-                    của ứng dụng cho đến khi được mở lại.</v-card-text
+                <v-card style="width: 50%; margin: auto">
+                  <v-card-title
+                    style="
+                      text-align: center;
+                      padding: 16px 0;
+                      background-color: red;
+                      color: #fff;
+                    "
+                    class="text-h5"
                   >
-                  <v-card-actions>
+                    Khoá Tài Khoản
+                  </v-card-title>
+                  <v-card-text style="display: flex; align-item: center">
+                    <v-icon
+                      style="font-size: 60px; color: red; margin-right: 10px"
+                      >mdi-account-lock</v-icon
+                    >
+                    <span
+                      >Tài khoản sau khi khóa sẽ không thể sử dụng các chức năng
+                      của ứng dụng cho đến khi được mở lại.</span
+                    ></v-card-text
+                  >
+                  <v-card-actions style="background-color: #ddd">
                     <v-spacer></v-spacer>
                     <v-btn
-                      color="green-darken-1"
-                      variant="text"
+                      color="secondary"
+                      variant="flat"
                       @click="dialog1 = false"
                     >
                       Hủy
                     </v-btn>
                     <v-btn
-                      color="green-darken-1"
-                      variant="text"
+                      color="error"
+                      variant="flat"
                       @click="dialog1 = false"
                     >
                       Đồng ý
@@ -281,16 +311,16 @@
                   </v-toolbar>
                   <div class="d-flex flex-row">
                     <v-tabs v-model="tab1" direction="vertical" color="primary">
-                      <v-tab value="option-1"> Đăng ký </v-tab>
-                      <v-tab value="option-2"> Đang học </v-tab>
-                      <v-tab value="option-3"> Hoàn thành </v-tab>
+                      <v-tab value="option-1">Đăng ký</v-tab>
+                      <v-tab value="option-2">Đang học</v-tab>
+                      <v-tab value="option-3">Hoàn thành</v-tab>
                     </v-tabs>
                     <v-window v-model="tab1">
                       <v-window-item value="option-1">
                         <v-card flat>
                           <v-card-text>
                             <div class="header_fixed">
-                              <table>
+                              <table class="table-group">
                                 <thead>
                                   <tr>
                                     <th>No.</th>
@@ -298,14 +328,15 @@
                                     <th>Môn học</th>
                                     <th>Khoa</th>
                                     <th>Thành viên</th>
+                                    <th>Topic</th>
                                     <th>Trạng thái</th>
-                                    <th>Hành động</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr
                                     v-for="(group, index) in groupsUser"
                                     :key="index"
+                                    @click="navigateTo(`/groups/${group.id}`)"
                                   >
                                     <td>{{ group.id }}</td>
 
@@ -313,15 +344,11 @@
                                       {{ group.subject }}
                                     </td>
                                     <td>{{ group.faculty }}</td>
-                                    <td>{{ group.quantity }} người</td>
-                                    <td>{{ group.status }}</td>
+                                    <td>{{ group.quantity }}</td>
                                     <td>
-                                      <button
-                                        @click="navigateTo(`/groups/${group.id}`)"
-                                      >
-                                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                                      </button>
+                                      {{ group.topic }}
                                     </td>
+                                    <td>{{ group.status }}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -339,7 +366,7 @@
                         <v-card flat>
                           <v-card-text>
                             <div class="header_fixed">
-                              <table>
+                              <table class="table-group">
                                 <thead>
                                   <tr>
                                     <th>No.</th>
@@ -347,14 +374,15 @@
                                     <th>Môn học</th>
                                     <th>Khoa</th>
                                     <th>Thành viên</th>
+                                    <th>Topic</th>
                                     <th>Trạng thái</th>
-                                    <th>Hành động</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr
                                     v-for="(group, index) in groupsUser"
                                     :key="index"
+                                    @click="navigateTo(`/groups/${group.id}`)"
                                   >
                                     <td>{{ group.id }}</td>
 
@@ -363,14 +391,10 @@
                                     </td>
                                     <td>{{ group.faculty }}</td>
                                     <td>{{ group.quantity }} người</td>
-                                    <td>{{ group.status }}</td>
                                     <td>
-                                      <button
-                                        @click="navigateTo(`/groups/${group.id}`)"
-                                      >
-                                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                                      </button>
+                                      {{ group.topic }}
                                     </td>
+                                    <td>{{ group.status }}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -388,7 +412,7 @@
                         <v-card flat>
                           <v-card-text>
                             <div class="header_fixed">
-                              <table>
+                              <table class="table-group">
                                 <thead>
                                   <tr>
                                     <th>No.</th>
@@ -396,14 +420,15 @@
                                     <th>Môn học</th>
                                     <th>Khoa</th>
                                     <th>Thành viên</th>
+                                    <th>Topic</th>
                                     <th>Trạng thái</th>
-                                    <th>Hành động</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr
                                     v-for="(group, index) in groupsUser"
                                     :key="index"
+                                    @click="navigateTo(`/groups/${group.id}`)"
                                   >
                                     <td>{{ group.id }}</td>
 
@@ -412,14 +437,10 @@
                                     </td>
                                     <td>{{ group.faculty }}</td>
                                     <td>{{ group.quantity }} người</td>
-                                    <td>{{ group.status }}</td>
                                     <td>
-                                      <button
-                                        @click="navigateTo(`/groups/${group.id}`)"
-                                      >
-                                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                                      </button>
+                                      {{ group.topic }}
                                     </td>
+                                    <td>{{ group.status }}</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -434,48 +455,50 @@
                         </v-card>
                       </v-window-item>
                     </v-window>
-                  </div>                  
+                  </div>
                 </v-card>
               </v-window-item>
               <v-window-item value="option-3">
                 <v-card flat>
-                  <div class="mentor-review">
-                    <h3>Đánh giá từ sinh viên :</h3>
-                    <v-col cols="12" class="cus-table">
-                      <div class="header_fixed">
-                        <table>
-                          <thead>
-                            <tr>
-                              <th>No.</th>
-                              <th>Tên người đánh giá</th>
-                              <th>Group</th>
-                              <th>điểm</th>
-                              <th>Nhận xét</th>
-                              <th>thời gian</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(rating, index) in ratings" :key="index">
-                              <td>{{ index + 1 }}</td>
-                              <td>{{ rating.name }}</td>
-                              <td>
-                                {{ rating.group_id == 1 ? "CNTT" : "KHMT" }}
-                              </td>
-                              <td>{{ rating.rating }} / 10</td>
-                              <td>{{ rating.comment }}</td>
-                              <td>{{ rating.created_at }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <v-pagination
-                          v-model="page"
-                          :length="totalPages"
-                          total-visible="7"
-                          color="purple"
-                        ></v-pagination>
-                      </div>
-                    </v-col>
-                  </div>
+                  <v-toolbar>
+                    <v-card-title class="text-center justify-center">
+                      <h3 class="h3-cus">Chi tiết đánh giá :</h3>
+                    </v-card-title>
+                  </v-toolbar>
+                  <v-card-text>
+                    <div class="header_fixed">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>No.</th>
+                            <th>Tên người đánh giá</th>
+                            <th>Group</th>
+                            <th>điểm</th>
+                            <th>Nhận xét</th>
+                            <th>thời gian</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(rating, index) in ratings" :key="index">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ rating.name }}</td>
+                            <td>
+                              {{ rating.group_id == 1 ? "CNTT" : "KHMT" }}
+                            </td>
+                            <td>{{ rating.rating }}/5</td>
+                            <td>{{ rating.comment }}</td>
+                            <td>{{ rating.created_at }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <v-pagination
+                        v-model="page"
+                        :length="totalPages"
+                        total-visible="7"
+                        color="purple"
+                      ></v-pagination>
+                    </div>
+                  </v-card-text>
                 </v-card>
               </v-window-item>
             </v-window>
@@ -493,6 +516,7 @@ const groupsUser = ref([]);
 const ratings = ref([]);
 const tab = ref("option-1");
 const tab1 = ref("option-1");
+const tab2 = ref("option-1");
 const route = useRoute();
 const faculties = ref({});
 const myUsers = ref({
@@ -620,7 +644,7 @@ getgroupsUserResponse(() => {
 .profile-user {
   margin: 20px auto;
   background-color: #fff;
-  width: 90%;
+  width: 100%;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
     0 7px 10px -5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -808,6 +832,9 @@ input[type="date"] {
   padding: 10px;
   font-weight: 600;
 }
+.text-h3 {
+  margin: 5px auto;
+}
 .mentor-review h5 {
   text-align: center;
 }
@@ -867,13 +894,21 @@ input[type="date"] {
   overflow: auto;
   border-top: 3px solid red;
 }
+table {
+  width: 100%;
+}
 
 .header_fixed thead th {
   background-color: #023e73;
   color: #fff;
   font-size: 15px;
 }
-th,
+th {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+  font-size: 14px;
+  text-align: center;
+}
 td {
   border-bottom: 1px solid #ccc;
   padding: 10px 20px;
@@ -890,29 +925,51 @@ tr:nth-child(odd) {
 tr:hover td {
   cursor: pointer;
 }
-th:nth-child(1),
-.td:nth-child(1) {
+thead th:nth-child(1) {
   width: 5%;
 }
-th:nth-child(2),
-.td:nth-child(1) {
+
+thead th:nth-child(2) {
   width: 20%;
 }
-th:nth-child(3),
-.td:nth-child(2) {
+
+thead th:nth-child(3) {
   width: 15%;
 }
-.th:nth-child(4),
-.td:nth-child(3) {
-  width: 10%;
+
+thead th:nth-child(4) {
+  width: 5%;
 }
-.th:nth-child(5),
-.td:nth-child(4) {
+thead th:nth-child(5) {
   width: 40%;
 }
-.th:nth-child(6),
-.td:nth-child(5) {
-  width: 10%;
+thead th:nth-child(6) {
+  width: 20%;
+}
+.table-group {
+  width: 100%;
+}
+
+.table-group thead th:nth-child(1) {
+  width: 5%;
+}
+
+.table-group thead th:nth-child(2) {
+  width: 20%;
+}
+
+.table-group thead th:nth-child(3) {
+  width: 20%;
+}
+
+.table-group thead th:nth-child(4) {
+  width: 15%;
+}
+.table-group thead th:nth-child(5) {
+  width: 30%;
+}
+.table-group thead th:nth-child(6) {
+  width: 15%;
 }
 
 td button {

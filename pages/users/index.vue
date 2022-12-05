@@ -69,7 +69,7 @@
               <table>
                 <thead>
                   <tr>
-                    <th>TT</th>
+                    <th>STT</th>
                     <!-- <th>Ảnh</th> -->
                     <th>Họ & tên sinh viên</th>
                     <th>Email</th>

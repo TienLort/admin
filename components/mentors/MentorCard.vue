@@ -9,7 +9,7 @@
                 </div>
                 <span class="desc">{{ mentor.faculty }}</span>
                 <div class="share">
-                    <v-btn>4.5<v-icon>mdi-heart</v-icon></v-btn>
+                    <span >4.5<v-icon>mdi-heart</v-icon></span>
                 </div>
             </div>
         </div>
@@ -78,6 +78,7 @@ const props = defineProps({
 .share {
     margin-top: 14px;
     border-top: 1px solid #4444;
+    padding:7px;
 }
 
 </style>

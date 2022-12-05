@@ -1,50 +1,33 @@
 <script setup>
 import GroupCard from "../../components/groups/GroupCard.vue";
 const tab = ref("option-1");
-const desserts = ref([
-  {
-    id: 1,
-    name: "Nguyễn Văn A",
-    subject: "Đại số tuyến tính",
-    topic: "Tìm hiểu và làm bài cuối kỳ",
-    datetime: "20/10/2022",
-  },
-  {
-    id: 2,
-    name: "Nguyễn Văn A",
-    subject: "Đại số tuyến tính",
-    topic: "Tìm hiểu và làm bài cuối kỳ",
-    datetime: "20/10/2022",
-  },
-  {
-    id: 3,
-    name: "Nguyễn Văn A",
-    subject: "Đại số tuyến tính",
-    topic: "Tìm hiểu và làm bài cuối kỳ",
-    datetime: "20/10/2022",
-  },
-  {
-    id: 4,
-    name: "Nguyễn Văn A",
-    subject: "Đại số tuyến tính",
-    topic: "Tìm hiểu và làm bài cuối kỳ",
-    datetime: "20/10/2022",
-  },
-  {
-    id: 5,
-    name: "Nguyễn Văn A",
-    subject: "Đại số tuyến tính",
-    topic: "Tìm hiểu và làm bài cuối kỳ",
-    datetime: "20/10/2022",
-  },
-]);
-
 const groups = ref([]);
+const groupsCreate = ref([]);
 
 const { url: url1 } = useUrl({
+  path: "/groups/create",
+  queryParams: {
+    // isAccept: "true",
+  },
+});
+
+const {
+  data: dataGetGroupsCreate,
+  get: getGroupsCreate,
+  onFetchResponse: getGroupsCreateResponse,
+} = useFetchApi({
+  requireAuth: false,
+  disableHandleErrorUnauthorized: false,
+})(url1, { immediate: false });
+getGroupsCreate().json().execute();
+getGroupsCreateResponse(() => {
+  groupsCreate.value = dataGetGroupsCreate.value.data.data;
+});
+
+const { url: url2 } = useUrl({
   path: "/groups",
   queryParams: {
-    isAccept: "true",
+    // isAccept: "true",
   },
 });
 
@@ -55,7 +38,7 @@ const {
 } = useFetchApi({
   requireAuth: false,
   disableHandleErrorUnauthorized: false,
-})(url1, { immediate: false });
+})(url2, { immediate: false });
 getGroups().json().execute();
 getGroupsResponse(() => {
   groups.value = dataGetGroups.value.data.data;
@@ -95,46 +78,43 @@ getGroupsResponse(() => {
       <v-window v-model="tab">
         <v-window-item value="option-1">
           <v-card flat>
-            <v-card-text>
+            <v-card-text>              
               <div class="header_fixed">
-                <v-table>
+                <table>
                   <thead>
                     <tr>
-                      <th >No.</th>
-                      <th >Tên sinh viên</th>
-                      <th >Môn học</th>
-                      <th >Chủ đề</th>
-                      <th >Thời gian</th>
-                      <th >Hành động</th>
+                      <th>No.</th>
+                      <th>Tên sinh viên</th>
+                      <th>Môn học</th>
+                      <th>Chủ đề</th>
+                      <th>Thời gian</th>
+                      <th>Hành động</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in desserts" :key="item.id">
-                      <td>{{ item.id }}</td>
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.subject }}</td>
-                      <td>{{ item.topic }}</td>
-                      <td>{{ item.datetime }}</td>
-                      <td class="cus-td">
-                        <v-btn color="success" elevation="0"
-                          ><v-icon>mdi-account-multiple-check</v-icon></v-btn
-                        >
-                        <v-btn color="error" elevation="0" class="btn"
-                          ><v-icon>mdi-account-multiple-remove</v-icon></v-btn
-                        >
+                    <tr v-for="(group, index) in groupsCreate" :key="index">
+                      <td>{{ group.id }}</td>
+                      <td>{{ group.user_name }}</td>
+                      <td>{{ group.subject }}</td>
+                      <td>{{ group.topic }}</td>
+                      <td>{{ group.created_at.slice(0,10) }}</td>
+                      <td>
+                        <button @click="navigateTo(`/groups/${group.id}/create`)">
+                          <v-icon class="pr-3">mdi-eye</v-icon>Xem
+                        </button>
                       </td>
                     </tr>
                   </tbody>
-                </v-table>
+                </table>
+                <v-pagination
+                  v-model="page"
+                  :length="totalPages"
+                  total-visible="7"
+                  color="purple"
+                ></v-pagination>
               </div>
             </v-card-text>
-            <div class="text-center">
-              <v-pagination
-                v-model="model"
-                :length="4"
-                rounded="circle"
-              ></v-pagination>
-            </div>
+            
           </v-card>
         </v-window-item>
         <v-window-item value="option-2">
@@ -236,10 +216,7 @@ getGroupsResponse(() => {
 
 <style scoped>
 .v-btn {
-  margin:5px;
-}
-.option-btn {
-  min-width: 200px;
+  margin: 5px;
 }
 .v-btn__content {
   color: #fff;
@@ -249,28 +226,38 @@ getGroupsResponse(() => {
   height: 90px;
   background-color: #fff;
 }
-.cus-td {
-  /* display: flex;
-  justify-content: center;
-  margin: 0; */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
+
 .header_fixed {
   width: 100%;
   overflow: auto;
   border: 1px solid #bbb;
 }
 .header_fixed thead th {
-  background-color: #26333f;
+  background-color: #023e73;
   color: #fff;
-  text-align: center;
   font-size: 15px;
 }
 
 th,
 td {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px 20px;
+  font-size: 14px;
   text-align: center;
-  border: 1px solid #dbdada;
 }
+
+td img {
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  border: 5px solid #e6e7e8;
+}
+
 tr:nth-child(even) {
   background-color: #efefef;
 }
@@ -278,17 +265,24 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: #fff;
 }
+td,
+th {
+  border: 1px solid #dbdada;
+}
 tr:hover td {
   cursor: pointer;
+}
+
+td button {
+  border: none;
+  padding: 7px 20px;
+  border-radius: 10px;
+  background-color: #023e73;
+  color: #fff;
 }
 td button:hover {
   opacity: 0.8;
 }
-.table {
-  table-layout: fixed;
-  width: 100%;
-}
-
 thead th:nth-child(1) {
   width: 5%;
 }
@@ -309,6 +303,5 @@ thead th:nth-child(5) {
 }
 thead th:nth-child(6) {
   width: 15%;
-}
-
+  }
 </style>

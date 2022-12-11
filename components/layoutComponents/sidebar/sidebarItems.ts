@@ -15,13 +15,18 @@ export default [
     to: "/mentors",
   },
   {
-    title: "Quản lý thông báo",
-    icon: "mdi-bell-ring",
-    to: "/notifications",
+    title: "Quản lý câu hỏi",
+    icon: "mdi-account-question",
+    to: "/questions",
   },
   {
     title: "Quản lý nhóm học",
     icon: "mdi-account-group",
     to: "/groups",
+  },
+  {
+    title: "Quản lý thông báo",
+    icon: "mdi-bell-ring",
+    to: "/notifications",
   },
 ];

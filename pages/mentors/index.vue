@@ -87,7 +87,7 @@
                         <tr v-for="mentor in myMentors" :key="mentor.id">
                           <td>{{ mentor.id }}</td>
                           <td><img :src="`${mentor.img}`" /></td>
-                          <td>{{ mentor.name }}</td>
+                          <td>{{ mentor.full_name }}</td>
                           <td>{{ mentor.email }}</td>
                           <td>{{ mentor.faculty }}</td>
                           <td>
@@ -244,7 +244,7 @@ const filter = ref({
 const { url: urlMentor } = useUrl({
   path: "/mentors",
   queryParams: {
-    queryParams: filter.value.a,
+    // queryParams: filter.value.a,
   },
 });
 
@@ -328,7 +328,7 @@ const load = () => {
     getFilterMentors().json().execute();
     filter.value.a.page += 1;
     console.log("run load");
-  }, 500);
+  }, 200);
 };
 
 getFaculty().json().execute();

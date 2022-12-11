@@ -69,14 +69,13 @@ const show1 = ref(false);
 const validationErrorMessages = ref({});
 
 const { data, statusCode, onFetchResponse, onFetchError, post } = useFetchApi({
-  requireAuth: false,
+  requireAuth: true,
   disableHandleErrorUnauthorized: true,
 })("login", { immediate: false });
 
 onFetchResponse(() => {
-  // setToken(data.value.data.token.access_token);
-  setToken(data.value.token);
-  console.log("Ok login");
+  setToken(data.value.data.token.access_token);
+  // setToken(data.value.token);
   // $toast("Đăng nhập thành công", "success", 2000);
   return navigateTo({ name: "index" });
 });

@@ -1,13 +1,17 @@
 <template>
-    <NuxtLink :to="{ path: `/groups/${group.id}/${group.status}` }" class="full">
+    <NuxtLink :to="{ path: `/groups/${group.id}/${messages[group.status]}` }" class="full">
         <div class="image">
-            <img :src="`${group.img}`" alt="">
+            <!-- <img :src="`${group.img}`" alt=""/> /images/groups/g2.jpg -->
+            <img src="/images/groups/g2.jpg" alt=""/>
         </div>
         <div class="content m-3">
             <p class="">Khoa {{group.faculty}}</p>
             <h5>{{group.name}}</h5>
-            <p class="quatity"> {{group.quatity}} Thành viên</p>
+            <p class="quantity"> {{group.quantity}} Thành viên</p>
         </div>
+        {{
+            
+        }}
     </NuxtLink>
 </template>
 <script setup>
@@ -16,6 +20,12 @@ const props = defineProps({
     type: Object,
   }
 });
+var messages = {
+  '1':'recruit-member',
+  '2': 'recruit-mentor',
+  '3': 'is-active',
+  '4': 'is-close'
+}
 </script>
 <style scoped>
 * {
@@ -59,7 +69,7 @@ const props = defineProps({
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.quatity {
+.quantity {
     padding: 8px 0 0;
     margin-right: 15px;
     border-top: 1px solid #e0e0e0;

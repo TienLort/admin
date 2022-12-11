@@ -1,50 +1,3 @@
-<script setup>
-import GroupCard from "../../components/groups/GroupCard.vue";
-const tab = ref("option-1");
-const groups = ref([]);
-const groupsCreate = ref([]);
-
-const { url: url1 } = useUrl({
-  path: "/groups/create",
-  queryParams: {
-    // isAccept: "true",
-  },
-});
-
-const {
-  data: dataGetGroupsCreate,
-  get: getGroupsCreate,
-  onFetchResponse: getGroupsCreateResponse,
-} = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
-})(url1, { immediate: false });
-getGroupsCreate().json().execute();
-getGroupsCreateResponse(() => {
-  groupsCreate.value = dataGetGroupsCreate.value.data.data;
-});
-
-const { url: url2 } = useUrl({
-  path: "/groups",
-  queryParams: {
-    // isAccept: "true",
-  },
-});
-
-const {
-  data: dataGetGroups,
-  get: getGroups,
-  onFetchResponse: getGroupsResponse,
-} = useFetchApi({
-  requireAuth: false,
-  disableHandleErrorUnauthorized: false,
-})(url2, { immediate: false });
-getGroups().json().execute();
-getGroupsResponse(() => {
-  groups.value = dataGetGroups.value.data.data;
-});
-</script>
-
 <template>
   <v-card>
     <v-toolbar color="">
@@ -53,23 +6,23 @@ getGroupsResponse(() => {
         <v-tabs v-model="tab" color="primary">
           <v-tab value="option-1" class="option-btn">
             <v-icon start> mdi-account </v-icon>
-            Tạo Nhóm Mới
+            <span>Tạo Nhóm Mới</span>
           </v-tab>
           <v-tab value="option-2" class="option-btn">
             <v-icon start> mdi-lock </v-icon>
-            Nhóm Tuyển Thành viên
+            Tuyển Thành viên
           </v-tab>
           <v-tab value="option-3" class="option-btn">
             <v-icon start> mdi-access-point </v-icon>
-            Nhóm Tìm Mentor
+            Tìm Mentor
           </v-tab>
           <v-tab value="option-4" class="option-btn">
             <v-icon start> mdi-access-point </v-icon>
-            Nhóm Đang Hoạt Động
+            Đang Hoạt Động
           </v-tab>
           <v-tab value="option-5" class="option-btn">
             <v-icon start> mdi-access-point </v-icon>
-            Nhóm Đã Đóng
+            Đã Đóng
           </v-tab>
         </v-tabs>
       </v-toolbar-title>
@@ -78,7 +31,7 @@ getGroupsResponse(() => {
       <v-window v-model="tab">
         <v-window-item value="option-1">
           <v-card flat>
-            <v-card-text>              
+            <v-card-text>
               <div class="header_fixed">
                 <table>
                   <thead>
@@ -87,19 +40,22 @@ getGroupsResponse(() => {
                       <th>Tên sinh viên</th>
                       <th>Môn học</th>
                       <th>Chủ đề</th>
-                      <th>Thời gian</th>
+                      <th>Phân Loại</th>
                       <th>Hành động</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(group, index) in groupsCreate" :key="index">
-                      <td>{{ group.id }}</td>
-                      <td>{{ group.user_name }}</td>
+                      <td>{{ index + 1 }}</td>
+                      <td>{{ group.members[0].full_name }}</td>
                       <td>{{ group.subject }}</td>
                       <td>{{ group.topic }}</td>
-                      <td>{{ group.created_at.slice(0,10) }}</td>
+                      <td>{{ group.seft_study ? "Nhóm có mentor" : "Nhóm tự học" }}</td>
+                      <!-- <td>{{ group.created_at.slice(0, 10) }}</td> -->
                       <td>
-                        <button @click="navigateTo(`/groups/${group.id}/create`)">
+                        <button
+                          @click="navigateTo(`/groups/${group.id}/create`)"
+                        >
                           <v-icon class="pr-3">mdi-eye</v-icon>Xem
                         </button>
                       </td>
@@ -114,7 +70,6 @@ getGroupsResponse(() => {
                 ></v-pagination>
               </div>
             </v-card-text>
-            
           </v-card>
         </v-window-item>
         <v-window-item value="option-2">
@@ -125,8 +80,8 @@ getGroupsResponse(() => {
                 sm="6"
                 md="4"
                 lg="4"
-                v-for="group in groups"
-                :key="group.id"
+                v-for="(group, index) in groups1"
+                :key="index"
               >
                 <GroupCard :group="group" />
               </v-col>
@@ -148,8 +103,8 @@ getGroupsResponse(() => {
                 sm="6"
                 md="4"
                 lg="4"
-                v-for="group in groups"
-                :key="group.id"
+                v-for="(group, index) in groups2"
+                :key="index"
               >
                 <GroupCard :group="group" />
               </v-col>
@@ -171,8 +126,8 @@ getGroupsResponse(() => {
                 sm="6"
                 md="4"
                 lg="4"
-                v-for="group in groups"
-                :key="group.id"
+                v-for="(group, index) in groups3"
+                :key="index"
               >
                 <GroupCard :group="group" />
               </v-col>
@@ -194,8 +149,8 @@ getGroupsResponse(() => {
                 sm="6"
                 md="4"
                 lg="4"
-                v-for="group in groups"
-                :key="group.id"
+                v-for="(group, index) in groups4"
+                :key="index"
               >
                 <GroupCard :group="group" />
               </v-col>
@@ -213,6 +168,123 @@ getGroupsResponse(() => {
     </div>
   </v-card>
 </template>
+
+<script setup>
+import GroupCard from "../../components/groups/GroupCard.vue";
+const tab = ref("option-1");
+const groups = ref([]);
+const groupsCreate = ref([]);
+const groups1 = ref([]);
+const groups2 = ref([]);
+const groups3 = ref([]);
+const groups4 = ref([]);
+
+const { url: url0 } = useUrl({
+  path: "/groups",
+  queryParams: {
+    status: 0,
+  },
+});
+const { url: url1 } = useUrl({
+  path: "/groups",
+  queryParams: {
+    status: 1,
+  },
+});
+const { url: url2 } = useUrl({
+  path: "/groups",
+  queryParams: {
+    status: 2,
+  },
+});
+const { url: url3 } = useUrl({
+  path: "/groups",
+  queryParams: {
+    status: 3,
+  },
+});
+const { url: url4 } = useUrl({
+  path: "/groups",
+  queryParams: {
+    status: 4,
+  },
+});
+
+const {
+  data: dataGetGroupsCreate,
+  get: getGroupsCreate,
+  onFetchResponse: getGroupsCreateResponse,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(url0, { immediate: false });
+getGroupsCreate().json().execute();
+getGroupsCreateResponse(() => {
+  groupsCreate.value = dataGetGroupsCreate.value.data.data;
+});
+
+// const { url: url2 } = useUrl({
+//   path: "/groups",
+//   queryParams: {
+//     // isAccept: "true",
+//   },
+// });
+
+const {
+  data: dataGetGroups1,
+  get: getGroups1,
+  onFetchResponse: getGroupsResponse1,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(url1, { immediate: false });
+getGroups1().json().execute();
+getGroupsResponse1(() => {
+  groups1.value = dataGetGroups1.value.data.data;
+});
+
+const {
+  data: dataGetGroups2,
+  get: getGroups2,
+  onFetchResponse: getGroupsResponse2,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(url2, { immediate: false });
+getGroups2().json().execute();
+getGroupsResponse2(() => {
+  groups2.value = dataGetGroups2.value.data.data;
+});
+
+const {
+  data: dataGetGroups3,
+  get: getGroups3,
+  onFetchResponse: getGroupsResponse3,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(url3, { immediate: false });
+getGroups3().json().execute();
+getGroupsResponse3(() => {
+  groups3.value = dataGetGroups3.value.data.data;
+});
+
+const {
+  data: dataGetGroups4,
+  get: getGroups4,
+  onFetchResponse: getGroupsResponse4,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(url4, { immediate: false });
+getGroups4().json().execute();
+getGroupsResponse4(() => {
+  groups4.value = dataGetGroups4.value.data.data;
+});
+
+
+
+</script>
 
 <style scoped>
 .v-btn {
@@ -303,5 +375,13 @@ thead th:nth-child(5) {
 }
 thead th:nth-child(6) {
   width: 15%;
-  }
+}
+.v-tabs .v-btn {
+  padding: 10px 20px;
+  border-radius: 10px !important;
+}
+
+.v-slide-group-item--active {
+  color: rgb(63, 80, 181) !important;
+}
 </style>

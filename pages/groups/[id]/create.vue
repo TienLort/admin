@@ -21,8 +21,8 @@
                     class="border-bottom "
                     type="text"
                     disabled
-                    v-model="data.user_name"
-                  />
+                    v-model="data.membersAccepted[0].full_name"
+                    />
                 </div>
               </div>
             </div>
@@ -36,7 +36,7 @@
                     class="border-bottom "
                     type="text"
                     disabled
-                    v-model="data.faculty_id"
+                    v-model="data.faculty"
                   />
                 </div>
               </div>
@@ -53,7 +53,7 @@
                     class="border-bottom "
                     type="text"
                     disabled
-                    v-model="data.subject_id"
+                    v-model="data.subject"
                   />
                 </div>
               </div>
@@ -96,7 +96,8 @@
                   <input
                     class="border-bottom "
                     type="text"
-                    v-model="data.difficult"
+                    disabled
+                    v-model="data.topic"
                   />
                 </div>
               </div>
@@ -110,8 +111,8 @@
                 <div class="col-md-12">
                   <textarea
                     class="border-bottom"
-                    disabledd
-                    v-model="data.target"
+                    disabled
+                    v-model="data.information"
                   ></textarea>
                 </div>
               </div>
@@ -122,8 +123,8 @@
                 <div class="col-md-12">
                   <textarea
                     class="border-bottom"
-                    disabledd
-                    v-model="data.note"
+                    disabled
+                    v-model="data.location_study"
                   ></textarea>
                 </div>
               </div>
@@ -134,8 +135,8 @@
                 <div class="col-md-12">
                   <textarea
                     class="border-bottom"
-                    disabledd
-                    v-model="data.time"
+                    disabled
+                    v-model="data.time_study"
                   ></textarea>
                 </div>
               </div>
@@ -181,8 +182,8 @@
           </div>
         </div>
         <div class="control-btn">
-          <v-btn variant="flat" color="error">Xoá </v-btn>
-          <v-btn variant="flat" color="success">Duyệt</v-btn>
+          <v-btn variant="flat" color="error" >Xoá </v-btn>
+          <v-btn variant="flat" color="success" @click="submit">Duyệt</v-btn>
         </div>
       </div>
     </div>
@@ -190,22 +191,27 @@
 </template>
 
 <script setup>
-// const route = $route();
 const route = useRoute();
 
 const data = ref({
-  user_name: "",
-  faculty_id: "",
-  subject_id: "",
+  answers: [],
+  faculty: "",
+  information:"",
+  location_study:"",
+  membersAccepted: [{
+    id:"",
+    full_name:"",
+    faculty: "",
+  }],
   self_study: "",
-  difficult: "",
-  target: "",
-  note: "",
-  time: "",
+  subject: "",
+  time_study: "",
+  topic: "",
 });
+// const data = ref({});
 
 const { url: url1 } = useUrl({
-  path: `groups/${route.params.id}/create`,
+  path: `groups/${route.params.id}`,
   queryParams: {
     // isAccept: "true",
   },
@@ -216,14 +222,39 @@ const {
   get: getGroupsCreate,
   onFetchResponse: getGroupsCreateResponse,
 } = useFetchApi({
-  requireAuth: false,
-  disabledHandleErrorUnauthorized: false,
+  requireAuth: true,
+  disabledHandleErrorUnauthorized: true,
 })(url1, { immediate: false });
 getGroupsCreate().json().execute();
 getGroupsCreateResponse(() => {
   data.value = dataGetGroupsCreate.value.data.data;
   console.log(data.value);
 });
+
+const {
+  data: dataPut,
+  onFetchResponse: resPut,
+  onFetchError: errPut,
+  statusCode: codePut,
+  put,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})(`/groups/${route.params.id}`, { immediate: false });
+// Trả về khi put thông tin cá nhân
+resPut(() => {
+  // myUsers.value = dataPut.value.data.data;
+  console.log("ok")
+});
+errPut(() => {
+  if (codePut.value === getConfig("constants.statusCodes.validation")) {
+    validationErrorMessages.value = dataPut.value.meta.error_message;
+  }
+  return false;
+});
+const submit = () => {
+  put().json().execute();
+};
 </script>
 
 <style scoped>

@@ -199,7 +199,7 @@ const load1 = () => {
     getFilterUsers().json().execute();
     filter.value.a.page += 1;
     console.log("Thumbz");
-  }, 500);
+  }, 200);
 };
 </script>
 

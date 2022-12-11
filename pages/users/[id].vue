@@ -17,7 +17,7 @@
           <v-col sm="12" md="12" lg="8">
             <div class="profile-head">
               <h3>{{ myUsers.full_name }}</h3>
-              <p class="proile-status">Status : <span>Active</span></p>
+              <p class="proile-status">Status : <span>{{myUsers.is_active == 0 ? "Đang khóa" : "Đang hoạt động"}}</span></p>
             </div>
             <div class="control-btn">
               <v-dialog v-model="dialog" persistent max-width="600px">
@@ -81,6 +81,14 @@
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
+                            <v-text-field
+                              label="is_active*"
+                              required
+                              type="text"
+                              v-model="myUsers.is_active"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
                             <!-- <Datepicker v-model="myUsers.birthday" /> -->
                             <input type="date" v-model="myUsers.birthday" />
                           </v-col>
@@ -95,17 +103,14 @@
                           <v-col cols="12" sm="6">
                             <select
                               id="faculty"
-                              v-model="myUsers.faculty_id"
+                              v-model="myUsers.faculty"
                               class="form-select select-cus"
                               required
-                            >
-                              <option value="" disable selected>
-                                Choose your faculty
-                              </option>
+                            >                              
                               <option
                                 v-for="faculty in faculties"
                                 :key="faculty.id"
-                                :value="faculty.id"
+                                :value="myUsers.faculty"
                               >
                                 {{ faculty.name }}
                               </option>
@@ -127,7 +132,7 @@
                       </v-btn>
                       <v-btn
                         text
-                        @click="dialog = false"
+                        @click="submit,dialog=false"
                         type="submit"
                         variant="flat"
                         color="secondary"
@@ -296,7 +301,7 @@
                         <label>Faculty</label>
                       </div>
                       <div class="col-md-6">
-                        <p>{{ myUsers.faculty_id }}</p>
+                        <p>{{ myUsers.faculty }}</p>
                       </div>
                     </div>
                   </div>
@@ -320,7 +325,7 @@
                         <v-card flat>
                           <v-card-text>
                             <div class="header_fixed">
-                              <table class="table-group">
+                              <!-- <table class="table-group">
                                 <thead>
                                   <tr>
                                     <th>No.</th>
@@ -351,7 +356,7 @@
                                     <td>{{ group.status }}</td>
                                   </tr>
                                 </tbody>
-                              </table>
+                              </table> -->
                               <v-pagination
                                 v-model="page"
                                 :length="totalPages"
@@ -475,19 +480,19 @@
                             <th>Group</th>
                             <th>điểm</th>
                             <th>Nhận xét</th>
-                            <th>thời gian</th>
+                            <!-- <th>thời gian</th> -->
                           </tr>
                         </thead>
                         <tbody>
                           <tr v-for="(rating, index) in ratings" :key="index">
                             <td>{{ index + 1 }}</td>
-                            <td>{{ rating.name }}</td>
+                            <td>{{ rating.account_name }}</td>
                             <td>
                               {{ rating.group_id == 1 ? "CNTT" : "KHMT" }}
                             </td>
                             <td>{{ rating.rating }}/5</td>
                             <td>{{ rating.comment }}</td>
-                            <td>{{ rating.created_at }}</td>
+                            <!-- <td>{{ rating.created_at }}</td> -->
                           </tr>
                         </tbody>
                       </table>
@@ -512,7 +517,7 @@
 const v = new Date();
 const dialog = ref(false);
 const dialog1 = ref(false);
-const groupsUser = ref([]);
+// const groupsUser = ref([]);
 const ratings = ref([]);
 const tab = ref("option-1");
 const tab1 = ref("option-1");
@@ -520,21 +525,23 @@ const tab2 = ref("option-1");
 const route = useRoute();
 const faculties = ref({});
 const myUsers = ref({
-  id: "",
-  img: "",
+  // id: "",
+  avatar_url: "",
   full_name: "",
   email: "",
   phone_number: "",
   address: "",
   gender: "",
   birthday: "",
+  faculty: "",
   faculty_id: "",
+  is_active:0,
 });
 
 const { url: url2 } = useUrl({
   path: `/users/${route.params.id}`,
   queryParams: {
-    isAccept: "true",
+    // isAccept: "true",
   },
 });
 
@@ -548,10 +555,8 @@ const {
 })(url2, { immediate: false });
 getUsers().json().execute();
 getUsersResponse(() => {
-  console.log("OK");
-  myUsers.value = dataGetUsers.value.data.user;
-  ratings.value = dataGetUsers.value.data.ratings;
-  console.log(dataGetUsers.value.data.ratings);
+  myUsers.value = dataGetUsers.value.data.data;
+  ratings.value = dataGetUsers.value.data.data.ratings;
 });
 
 const {
@@ -583,39 +588,40 @@ resPut(() => {
   myUsers.value = dataPut.value.data.data;
 });
 errPut(() => {
-  if (codePut.value === getConfig("constants.statusCodes.validation")) {
-    validationErrorMessages.value = dataPut.value.meta.error_message;
-  }
-  return false;
+  // if (codePut.value === getConfig("constants.statusCodes.validation")) {
+  //   validationErrorMessages.value = dataPut.value.meta.error_message;
+  // }
+  // return false;
+  console.log("Loi put")
 });
 const submit = () => {
   put(myUsers.value).json().execute();
+  getUsers().json().execute();
 };
 
 // Tạo url lấy groups user đang tham gia học
-const { url: urlgroupUser } = useUrl({
-  path: "users/groups",
-  queryParams: {
-    is_user: 1,
-    is_active: 1,
-  },
-});
+// const { url: urlgroupUser } = useUrl({
+//   path: "users/groups",
+//   queryParams: {
+
+//   },
+// });
 
 // Lấy groups của user đang đăng nhập
-const {
-  data: dataGetgroupsUser,
-  get: getgroupsUser,
-  onFetchResponse: getgroupsUserResponse,
-  onFetchError: getgroupsUserError,
-} = useFetchApi({
-  requireAuth: true,
-  disableHandleErrorUnauthorized: true,
-})(urlgroupUser, { immediate: false });
-getgroupsUser().json().execute();
-getgroupsUserResponse(() => {
-  groupsUser.value = dataGetgroupsUser.value.data.data;
-  console.log(dataGetgroupsUser.value.data.data);
-});
+// const {
+//   data: dataGetgroupsUser,
+//   get: getgroupsUser,
+//   onFetchResponse: getgroupsUserResponse,
+//   onFetchError: getgroupsUserError,
+// } = useFetchApi({
+//   requireAuth: true,
+//   disableHandleErrorUnauthorized: true,
+// })(urlgroupUser, { immediate: false });
+// getgroupsUser().json().execute();
+// getgroupsUserResponse(() => {
+//   groupsUser.value = dataGetgroupsUser.value.data.data;
+//   console.log(dataGetgroupsUser.value.data.data);
+// });
 </script>
 <style scoped>
 .wrap {

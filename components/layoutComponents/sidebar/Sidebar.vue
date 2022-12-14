@@ -35,8 +35,8 @@ const logout = () => {
     <div class="scrollnavbar">
       <div class="profile">
         <div class="profile-pic">
-          <v-avatar size="45">
-            <img src="/images/users/user2.jpg" width="50" alt="Julia" />
+          <v-avatar size="50" color="black">
+            <span class="text-h6">SA</span>
           </v-avatar>
         </div>
         <div class="profile-name">
@@ -60,7 +60,7 @@ const logout = () => {
         </template>
         
       </v-list>
-      <v-btn @click="logout" style="width:90%; margin:auto"  color="success">LOGOUT</v-btn>
+      <v-btn @click="logout" style="width:90%; margin:auto"  color="success"> <v-icon>mdi-logout</v-icon>LOGOUT</v-btn>
       <!-- <div class="pa-4 ma-4 bg-light-primary rounded-lg text-center">
         <img src="/images/sidebar-buynow-bg.svg" />
         <h4 class="font-weight-regular mb-3">Study for love</h4>
@@ -70,3 +70,10 @@ const logout = () => {
     </div>
   </div>
 </template>
+<style scoped>
+.profile-pic{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

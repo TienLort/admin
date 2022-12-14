@@ -72,13 +72,9 @@ getGroupRes(() => {
         </div>
       </v-col>
       <v-col cols="12" sm="8">
-        <h5>Chức năng :</h5>
         <div class="control-btn">
-          <v-btn color="success">
-            Tìm kiếm mentors
-          </v-btn>
-          <v-btn color="secondary"> Bắt đầu hoạt động </v-btn>
-          <v-btn color="error"> Khóa nhóm </v-btn>
+          <span>Trạng thái:</span>
+          <h5>Đã đóng</h5>
         </div>
       </v-col>
     </v-row>

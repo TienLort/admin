@@ -92,18 +92,22 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="loader">
-                <InfiniteLoading
-                  v-if="loading"
-                  class="loading"
-                  @infinite="load1"
-                />
-              </div>
-
+              <v-row> </v-row>
+              <v-progress-circular
+                indeterminate
+                color="primary"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin: auto;
+                "
+                v-if="loading"
+              ></v-progress-circular>
               <v-pagination
                 v-model="page"
                 :length="totalPages"
-                total-visible="7"
+                total-visible="1"
                 color="purple"
               ></v-pagination>
             </div>
@@ -114,18 +118,16 @@
   </v-window>
 </template>
 <script setup>
-import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css";
 definePageMeta({
   layout: "default",
   middleware: "authenticated",
 });
+
 const route = useRoute();
 const router = useRouter();
 const { getConfig } = useConfig();
 const faculties = ref({});
 const loading = ref(true);
-console.log("Load :", loading);
 const myUsers = ref([]);
 const filter = ref({
   a: {
@@ -153,7 +155,7 @@ const {
   disableHandleErrorUnauthorized: true,
 })(urlUser, { immediate: false });
 
-// getFilterUsers().json().execute();
+getFilterUsers().json().execute();
 
 getFilterUsersResponse(() => {
   console.log(dataGetFilterUsers.value.data.data);
@@ -192,14 +194,6 @@ const search = () => {
   });
   myUsers.value = [];
   getFilterUsers().json().execute();
-};
-
-const load1 = () => {
-  setTimeout(() => {
-    getFilterUsers().json().execute();
-    filter.value.a.page += 1;
-    console.log("Thumbz");
-  }, 200);
 };
 </script>
 

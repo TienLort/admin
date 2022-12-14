@@ -1,17 +1,17 @@
 export default [
-  {
-    title: "Trang chủ",
-    icon: "mdi-view-dashboard-edit",
-    to: "/",
-  },
+  // {
+  //   title: "Trang chủ",
+  //   icon: "mdi-view-dashboard-edit",
+  //   to: "/",
+  // },
   {
     title: "Quản lý sinh viên",
-    icon: "mdi-account",
+    icon: "mdi-account-school",
     to: "/users",
   },
   {
     title: "Quản lý Mentor",
-    icon: "mdi-account-school",
+    icon: "mdi-human-male-board-poll",
     to: "/mentors",
   },
   {

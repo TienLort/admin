@@ -11,11 +11,23 @@
         <p><span>Khoa:</span> {{ group.faculty }}</p>
         <p class="title">
           <span> Tóm tắt thông tin: </span>
-          {{ group.title }}
+          {{ group.topic }}
         </p>
-        <span>Thông tin chi tiết</span>
         <p class="information">
+          <span>Thông tin chi tiết</span>
           {{ group.information }}
+        </p>
+        <p class="information">
+          <span>Phòng học</span>
+          {{ group.location_study }}
+        </p>
+        <p class="information">
+          <span>Thời gian dự kiến</span>
+          {{ group.time_study }}
+        </p>
+        <p class="information">
+          <span>Loại nhóm học</span>
+          {{ group.self_study == 0 ? "Nhóm tìm kiếm mentor" : "Nhóm tự học"   }}
         </p>
       </v-col>
     </v-row>
@@ -30,18 +42,17 @@
         <p><span>Thành viên hiện có:</span> {{ group.quantity }} thành viên</p>
         <div v-for="(member, index) in group.members" :key="member.id">
           <p class="mb-0">
-            <NuxtLink :to="{ path: `/users/${index + 1}` }" class="full">
+            <NuxtLink :to="{ path: `/users/${member.id}` }" class="full">
               {{ index + 1 }}. {{ member.full_name }} _ Khoa:
               {{ member.faculty }}
             </NuxtLink>
           </p>
         </div>
       </v-col>
-      <v-col cols="12" sm="8">
+      <v-col cols="12" sm="4">
         <h5>Chức năng :</h5>
         <div class="control-btn">
-          <v-btn color="success" @click="submit"> Tìm kiếm mentors </v-btn>
-          <v-btn color="error"> Bắt đầu hoạt động </v-btn>
+          <v-btn color="success" @click="submit"> {{ group.self_study == 0 ? "Tìm kiếm mentor" : "Tạo nhóm học"   }} </v-btn>
         </div>
       </v-col>
     </v-row>
@@ -63,11 +74,15 @@ const group = ref({
   subject: "",
   title: "",
   information: "",
+  topic:"",
+  self_study:"",
+  time_study:"",
   quantity: "",
   members: [
     {
       full_name: "",
       faculty: "",
+      id:0,
     },
   ],
 });
@@ -110,6 +125,7 @@ errPut(() => {
 });
 const submit = () => {
   put().json().execute();
+  navigateTo("/groups")
 };
 </script>
 <style scoped>

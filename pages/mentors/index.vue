@@ -1,217 +1,99 @@
 <template>
   <v-card>
-    <v-toolbar color="">
-      <v-toolbar-title>
-        <!-- Quản lý thông tin mentor : -->
-        <v-tabs v-model="tab" color="primary">
-          <v-tab value="option-1" class="option-btn">
-            <v-icon start> mdi-account </v-icon>
-            Đăng ký làm mentor
-          </v-tab>
-          <v-tab value="option-2" class="option-btn">
-            <v-icon start> mdi-access-point </v-icon>
-            Mentor đang hoạt động
-          </v-tab>
-        </v-tabs>
-      </v-toolbar-title>
-    </v-toolbar>
-    <div class="flex-row">
-      <v-window v-model="tab">
-        <v-window-item value="option-1">
-          <v-card flat>
-            <v-row align-item="center" class="list px-3 mx-auto pt-3">
-              <v-col cols="12" align-item="center" class="col-cus">
-                <v-row>
-                  <v-col cols="12" sm="4" lg="3">
-                    <input
-                      v-model="filter.a.search"
-                      class="form-control border input-cus"
-                      type="search"
-                      placeholder="Môn học"
-                    />
-                  </v-col>
-                  <v-col cols="12" sm="4" lg="3">
-                    <select
-                      v-model="faculty.faculty_id"
-                      class="form-select select-cus"
-                      required
-                    >
-                      <option value="" disabled selected>Chọn khoa</option>
-                      <option
-                        v-for="faculty in faculties"
-                        :key="faculty.id"
-                        :value="faculty.id"
-                      >
-                        {{ faculty.name }}
-                      </option>
-                    </select>
-                  </v-col>
-                  <v-col cols="12" sm="4" lg="3">
-                    <select
-                      v-model="filter.a.subject_id"
-                      class="form-select select-cus"
-                      required
-                    >
-                      <option value="" disabled selected>Chọn môn học</option>
-                      <option
-                        v-for="subject in subjects"
-                        :key="subject.id"
-                        :value="subject.id"
-                      >
-                        {{ subject.name }}
-                      </option>
-                    </select>
-                  </v-col>
-                  <v-col cols="12" sm="4" lg="3">
-                    <v-btn @click.prevent="search" width="100%">
-                      <v-icon>mdi-magnify</v-icon>Tìm kiếm
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" class="cus-table">
-                <v-row>
-                  <div class="header_fixed">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>No.</th>
-                          <th>Ảnh</th>
-                          <th>Họ và Tên</th>
-                          <th>Email</th>
-                          <th>Khoa</th>
-                          <th>Hành động</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="mentor in myMentors" :key="mentor.id">
-                          <td>{{ mentor.id }}</td>
-                          <td><img :src="`${mentor.img}`" /></td>
-                          <td>{{ mentor.name }}</td>
-                          <td>{{ mentor.email }}</td>
-                          <td>{{ mentor.faculty }}</td>
-                          <td>
-                            <button
-                              @click="navigateTo(`/mentors/${mentor.id}`)"
-                            >
-                              <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div class="loader">
-                      <InfiniteLoading
-                        v-if="loading1"
-                        class="loading"
-                        @infinite="load"
-                      />
-                    </div>
-                    <v-pagination
-                      v-model="page"
-                      :length="totalPages"
-                      total-visible="7"
-                      color="purple"
-                    ></v-pagination>
-                  </div>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-window-item>
-        <v-window-item value="option-2">
-          <v-card flat>
+    <div>
+      <div class="cus-header">
+        <v-row align-item="center">
+          <v-col cols="3">
+            <input
+              v-model="filter.a.search"
+              class="form-control border input-cus"
+              type="search"
+              placeholder="Search"
+            />
+          </v-col>
+          <v-col cols="3">
             <div>
-              <div class="cus-header">
-                <v-row align-item="center">
-                  <v-col cols="3">
-                    <input
-                      v-model="filter.a.search"
-                      class="form-control border input-cus"
-                      type="search"
-                      placeholder="Search"
-                    />
-                  </v-col>
-                  <v-col cols="3">
-                    <div>
-                      <select
-                        v-model="filter.a.type"
-                        class="form-select select-cus"
-                        id="type"
-                        required
-                      >
-                        <option value="" disabled selected>Trạng thái</option>
-                        <option :value="getConfig('constants.typeOfUser.all')">
-                          Tất cả
-                        </option>
-                        <option
-                          :value="getConfig('constants.typeOfUser.active')"
-                        >
-                          đang hoạt động
-                        </option>
-                        <option
-                          :value="getConfig('constants.typeOfUser.block')"
-                        >
-                          khóa tài khoản
-                        </option>
-                      </select>
-                    </div>
-                  </v-col>
-                  <v-col cols="3">
-                    <div>
-                      <select
-                        v-model="filter.a.faculty"
-                        class="form-select select-cus"
-                        required
-                      >
-                        <option value="" disabled selected>Chọn khoa</option>
-                        <option
-                          v-for="faculty in faculties"
-                          :key="faculty.id"
-                          :value="faculty.id"
-                        >
-                          {{ faculty.name }}
-                        </option>
-                      </select>
-                    </div>
-                  </v-col>
-                  <v-col cols="3">
-                    <v-btn @click.prevent="search1" width="100%" class="">
-                      Search
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </div>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="4"
-                  md="4"
-                  lg="3"
-                  v-for="mentor in myMentors"
-                  :key="mentor.id"
-                >
-                  <MentorCard :mentor="mentor" />
-                </v-col>
-              </v-row>
-              <div class="text-center">
-                <v-pagination
-                  v-model="model"
-                  :length="4"
-                  rounded="circle"
-                ></v-pagination>
-              </div>
+              <select
+                v-model="filter.a.type"
+                class="form-select select-cus"
+                id="type"
+                required
+              >
+                <option value="" disabled selected>Trạng thái</option>
+                <option :value="getConfig('constants.typeOfUser.all')">
+                  Tất cả
+                </option>
+                <option :value="getConfig('constants.typeOfUser.active')">
+                  đang hoạt động
+                </option>
+                <option :value="getConfig('constants.typeOfUser.block')">
+                  khóa tài khoản
+                </option>
+              </select>
             </div>
-          </v-card>
-        </v-window-item>
-      </v-window>
+          </v-col>
+          <v-col cols="3">
+            <div>
+              <select
+                v-model="filter.a.faculty"
+                class="form-select select-cus"
+                required
+              >
+                <option value="" disabled selected>Chọn khoa</option>
+                <option
+                  v-for="faculty in faculties"
+                  :key="faculty.id"
+                  :value="faculty.id"
+                >
+                  {{ faculty.name }}
+                </option>
+              </select>
+            </div>
+          </v-col>
+          <v-col cols="3">
+            <v-btn @click.prevent="search1" width="100%" class="">
+              Search
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
+      <v-row>
+        <v-col
+          cols="12"
+          sm="4"
+          md="4"
+          lg="3"
+          v-for="mentor in myMentors"
+          :key="mentor.id"
+        >
+          <MentorCard :mentor="mentor" />
+          
+        </v-col>
+      </v-row>   
+      <v-progress-circular
+                indeterminate
+                color="primary"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  margin: auto;
+                "
+                v-if="loading"
+              ></v-progress-circular>   
+      <div class="text-center">
+        
+        <v-pagination
+          v-model="model"
+          :length="1"
+          rounded="circle"
+        ></v-pagination>
+      </div>
     </div>
   </v-card>
 </template>
 <script setup>
-import InfiniteLoading from "v3-infinite-loading";
 import MentorCard from "../../components/mentors/MentorCard.vue";
-import "v3-infinite-loading/lib/style.css";
 definePageMeta({
   layout: "default",
   middleware: "authenticated",
@@ -221,7 +103,7 @@ const router = useRouter();
 const { getConfig } = useConfig();
 const subjects = ref([]);
 const faculties = ref({});
-const loading1 = ref(true);
+const loading = ref(true);
 const model = ref(1);
 const totalPages = ref(6);
 
@@ -244,7 +126,7 @@ const filter = ref({
 const { url: urlMentor } = useUrl({
   path: "/mentors",
   queryParams: {
-    queryParams: filter.value.a,
+    // queryParams: filter.value.a,
   },
 });
 
@@ -321,15 +203,7 @@ const search1 = () => {
   console.log("Ok :1", loading1);
 };
 
-// getFilterMentors().json().execute();
-
-const load = () => {
-  setTimeout(() => {
-    getFilterMentors().json().execute();
-    filter.value.a.page += 1;
-    console.log("run load");
-  }, 500);
-};
+getFilterMentors().json().execute();
 
 getFaculty().json().execute();
 getFacultyResponse(() => {
@@ -337,9 +211,9 @@ getFacultyResponse(() => {
 });
 getSubjectResponse(() => {
   subjects.value = dataSubject.value.data;
-  console.log("subject")
+  console.log("subject");
   console.log(subjects.value);
-}); 
+});
 
 watch(faculty.value, () => {
   getSubject().json().execute();
@@ -418,7 +292,7 @@ tr:hover td {
 .v-tabs .v-btn {
   background-color: #3c195b;
   align-items: center;
-  padding:10px 20px;
+  padding: 10px 20px;
   border-radius: 10px !important;
 }
 .v-toolbar {

@@ -1,469 +1,367 @@
 <template>
   <div class="wrap">
-    <div class="container emp-profile">
-      <div class="user-infor">
-        <v-row>
-          <v-col sm="12" md="12" lg="4">
-            <div class="file">
-              <div class="avatar">
-                <img cover src="/images/user.png" alt="" />
-                <div>
-                  <v-icon>mdi-image-multiple </v-icon>
-                  <!-- <input type="file" name="file" /> -->
+    <v-progress-circular
+      indeterminate
+      color="primary"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+      "
+      v-if="loading"
+    ></v-progress-circular>
+    <div v-else>
+      <div class="container emp-profile">
+        <div class="user-infor">
+          <v-row>
+            <v-col sm="12" md="12" lg="4">
+              <div class="file">
+                <div class="avatar">
+                  <img cover src="/images/user.png" alt="" />
+                  <div>
+                    <v-icon>mdi-image-multiple </v-icon>
+                    <!-- <input type="file" name="file" /> -->
+                  </div>
                 </div>
               </div>
-            </div>
-          </v-col>
-          <v-col sm="12" md="12" lg="8">
-            <div class="profile-head">
-              <h3>{{ myUsers.full_name }}</h3>
-              <p class="proile-status">Status : <span>Active</span></p>
-            </div>
-            <div class="control-btn">
-              <v-dialog v-model="dialog" persistent max-width="600px">
-                <template v-slot:activator="{ props }">
-                  <v-btn
-                    color="secondary"
-                    dark
-                    v-bind="props"
-                    @click="dialog = true"
-                    variant="outlined"
-                  >
-                    Chỉnh sửa thông tin
-                  </v-btn>
-                </template>
-                <v-card class="card-cus">
-                  <v-card-title>
-                    <span class="text-h5">Update User Profile</span>
-                  </v-card-title>
-                  <form @submit.prevent="submit">
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Full name*"
-                              required
-                              v-model="myUsers.full_name"
-                            ></v-text-field>
-                          </v-col>
+            </v-col>
+            <v-col sm="12" md="12" lg="8">
+              <div class="profile-head">
+                <h3>{{ myUsers.full_name }}</h3>
+                <p class="proile-status">
+                  Status :
+                  <span>{{
+                    myUsers.is_active == 0 ? "Đang khóa" : "Đang hoạt động"
+                  }}</span>
+                </p>
+              </div>
+              <div class="control-btn">
+                <v-dialog v-model="dialog" persistent max-width="600px">
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      color="secondary"
+                      dark
+                      v-bind="props"
+                      @click="dialog = true"
+                      variant="flat"
+                    >
+                      <v-icon style="font-size: 18px">mdi-account-edit</v-icon>
+                      <span>Chỉnh sửa thông tin</span>
+                    </v-btn>
+                  </template>
+                  <v-card class="card-cus">
+                    <v-card-title
+                      color="secondary"
+                      style="
+                        text-align: center;
+                        padding: 16px 0;
+                        background-color: blue;
+                        color: #fff;
+                      "
+                    >
+                      <span class="text-h3">Cập nhật thông tin sinh viên</span>
+                    </v-card-title>
+                    <form @submit.prevent="submit">
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12">
+                              <v-text-field
+                                label="Full name*"
+                                required
+                                v-model="myUsers.full_name"
+                              ></v-text-field>
+                            </v-col>
 
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Email*"
-                              required
-                              v-model="myUsers.email"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Phone number*"
-                              required
-                              type="number"
-                              v-model="myUsers.phone_number"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              label="Address*"
-                              required
-                              type="text"
-                              v-model="myUsers.address"
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <!-- <Datepicker v-model="myUsers.birthday" /> -->
-                            <input type="date" v-model="myUsers.birthday" />
-                          </v-col>
-                          <v-col cols="12" sm="6">
-                            <v-select
-                              :items="['male', 'female']"
-                              label="Gender*"
-                              required
-                              v-model="myUsers.gender"
-                            ></v-select>
-                          </v-col>
-                          <v-col cols="12" sm="6">
-                            <select
-                              id="faculty"
-                              v-model="myUsers.faculty_id"
-                              class="form-select select-cus"
-                              required
-                            >
-                              <option value="" disable selected>
-                                Choose your faculty
-                              </option>
-                              <option
-                                v-for="faculty in faculties"
-                                :key="faculty.id"
-                                :value="faculty.id"
+                            <v-col cols="12">
+                              <v-text-field
+                                label="Email*"
+                                required
+                                v-model="myUsers.email"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                                label="Phone number*"
+                                required
+                                type="number"
+                                v-model="myUsers.phone_number"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                                label="Address*"
+                                required
+                                type="text"
+                                v-model="myUsers.address"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <v-text-field
+                                label="is_active*"
+                                required
+                                type="text"
+                                v-model="myUsers.is_active"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                              <!-- <Datepicker v-model="myUsers.birthday" /> -->
+                              <input type="date" v-model="myUsers.birthday" />
+                            </v-col>
+                            <v-col cols="12" sm="6">
+                              <v-select
+                                :items="['male', 'female']"
+                                label="Gender*"
+                                required
+                                v-model="myUsers.gender"
+                              ></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="6">
+                              <select
+                                id="faculty"
+                                v-model="myUsers.faculty"
+                                class="form-select select-cus"
+                                required
                               >
-                                {{ faculty.name }}
-                              </option>
-                            </select>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                      <small>* Các trường bắt buộc nhập thông tin</small>
-                    </v-card-text>
-                    <v-card-actions>
+                                <option
+                                  v-for="faculty in faculties"
+                                  :key="faculty.id"
+                                  :value="myUsers.faculty"
+                                >
+                                  {{ faculty.name }}
+                                </option>
+                              </select>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                        <small>* Các trường bắt buộc nhập thông tin</small>
+                      </v-card-text>
+                      <v-card-actions style="background-color: #ddd">
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="black"
+                          text
+                          @click="dialog = false"
+                          variant="outlined"
+                        >
+                          Đóng
+                        </v-btn>
+                        <v-btn
+                          text
+                          @click="submit, (dialog = false)"
+                          type="submit"
+                          variant="flat"
+                          color="secondary"
+                        >
+                          Lưu
+                        </v-btn>
+                      </v-card-actions>
+                    </form>
+                  </v-card>
+                </v-dialog>
+                <v-dialog v-model="dialog1" persistent>
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      dark
+                      v-bind="props"
+                      @click="dialog1 = true"
+                      variant="flat"
+                      color="error"
+                    >
+                      <v-icon>mdi-lock</v-icon>
+                      Khóa tài khoản
+                    </v-btn>
+                  </template>
+                  <v-card style="width: 50%; margin: auto">
+                    <v-card-title
+                      style="
+                        text-align: center;
+                        padding: 16px 0;
+                        background-color: red;
+                        color: #fff;
+                      "
+                      class="text-h5"
+                    >
+                      Khoá Tài Khoản
+                    </v-card-title>
+                    <v-card-text style="display: flex; align-item: center">
+                      <v-icon
+                        style="font-size: 60px; color: red; margin-right: 10px"
+                        >mdi-account-lock</v-icon
+                      >
+                      <span
+                        >Tài khoản sau khi khóa sẽ không thể sử dụng các chức
+                        năng của ứng dụng cho đến khi được mở lại.</span
+                      ></v-card-text
+                    >
+                    <v-card-actions style="background-color: #ddd">
                       <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="dialog = false">
-                        Close
+                      <v-btn
+                        color="secondary"
+                        variant="flat"
+                        @click="dialog1 = false"
+                      >
+                        Hủy
                       </v-btn>
                       <v-btn
-                        color="blue darken-1"
-                        text
-                        @click="dialog = false"
-                        type="submit"
+                        color="error"
+                        variant="flat"
+                        @click="dialog1 = false"
                       >
-                        Save
+                        Đồng ý
                       </v-btn>
                     </v-card-actions>
-                  </form>
-                </v-card>
-              </v-dialog>
-              <v-dialog v-model="dialog1" persistent>
-                <template v-slot:activator="{ props }">
-                  <v-btn
-                    color="secondary"
-                    dark
-                    v-bind="props"
-                    @click="dialog1 = true"
-                    variant="outlined"
-                  >
-                    Khóa tài khoản
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title class="text-h5">
-                    Bạn có chắc muốn khóa tài khoản này không ?
-                  </v-card-title>
-                  <v-card-text
-                    >Tài khoản sau khi khóa sẽ không thể sử dụng các chức năng
-                    của ứng dụng cho đến khi được mở lại.</v-card-text
-                  >
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      color="green-darken-1"
-                      variant="text"
-                      @click="dialog1 = false"
-                    >
-                      Hủy
-                    </v-btn>
-                    <v-btn
-                      color="green-darken-1"
-                      variant="text"
-                      @click="dialog1 = false"
-                    >
-                      Đồng ý
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </div>
-          </v-col>
-        </v-row>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </v-col>
+          </v-row>
+        </div>
       </div>
-    </div>
-    <div class="profile-user">
-      <div class="col-md-12 col-cus">
-        <v-card>
-          <v-toolbar class="toolbar-cus">
-            <v-toolbar-title class="pl-3 pt-3 pb-3">
-              <h5>Quản lý thông tin sinh viên :</h5>
-              <v-tabs v-model="tab" color="primary">
-                <v-tab value="option-1" class="option-btn">
-                  <v-icon start> mdi-account </v-icon>
-                  Thông tin sinh viên :
-                </v-tab>
-                <v-tab value="option-2" class="option-btn">
-                  <v-icon start> mdi-access-point </v-icon>
-                  Nhóm học :
-                </v-tab>
-                <v-tab value="option-3" class="option-btn">
-                  <v-icon start> mdi-text-box </v-icon>
-                  Đánh giá :
-                </v-tab>
-              </v-tabs>
-            </v-toolbar-title>
-          </v-toolbar>
-          <div class="flex-row">
-            <v-window v-model="tab">
-              <v-window-item value="option-1">
-                <v-card flat>
-                  <div class="profile-tab pl-5 pt-3">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label>Name</label>
-                          </div>
-                          <div class="col-md-9">
-                            <p>{{ myUsers.full_name }}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label>Email</label>
-                          </div>
-                          <div class="col-md-9">
-                            <p>{{ myUsers.email }}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label>Phone</label>
-                          </div>
-                          <div class="col-md-9">
-                            <p>{{ myUsers.phone_number }}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label>Address</label>
-                          </div>
-                          <div class="col-md-9">
-                            <p>{{ myUsers.address }}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label>Gender</label>
-                          </div>
-                          <div class="col-md-9">
-                            <p>{{ myUsers.gender == 1 ? "Nam" : "Nữ" }}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label>BirthDay</label>
-                          </div>
-                          <div class="col-md-9">
-                            <p>{{ myUsers.birthday }}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Faculty</label>
-                      </div>
-                      <div class="col-md-6">
-                        <p>{{ myUsers.faculty_id }}</p>
-                      </div>
-                    </div>
-                  </div>
-                </v-card>
-              </v-window-item>
-              <v-window-item value="option-2">
-                <v-card flat>
-                  <v-toolbar>
-                    <v-card-title class="text-center justify-center">
-                      <h3 class="h3-cus">Danh sách nhóm học sinh viên :</h3>
-                    </v-card-title>
-                  </v-toolbar>
-                  <div class="d-flex flex-row">
-                    <v-tabs v-model="tab1" direction="vertical" color="primary">
-                      <v-tab value="option-1"> Đăng ký </v-tab>
-                      <v-tab value="option-2"> Đang học </v-tab>
-                      <v-tab value="option-3"> Hoàn thành </v-tab>
-                    </v-tabs>
-                    <v-window v-model="tab1">
-                      <v-window-item value="option-1">
-                        <v-card flat>
-                          <v-card-text>
-                            <div class="header_fixed">
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>No.</th>
-
-                                    <th>Môn học</th>
-                                    <th>Khoa</th>
-                                    <th>Thành viên</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    v-for="(group, index) in groupsUser"
-                                    :key="index"
-                                  >
-                                    <td>{{ group.id }}</td>
-
-                                    <td>
-                                      {{ group.subject }}
-                                    </td>
-                                    <td>{{ group.faculty }}</td>
-                                    <td>{{ group.quantity }} người</td>
-                                    <td>{{ group.status }}</td>
-                                    <td>
-                                      <button
-                                        @click="navigateTo(`/groups/${group.id}`)"
-                                      >
-                                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                                      </button>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <v-pagination
-                                v-model="page"
-                                :length="totalPages"
-                                total-visible="7"
-                                color="purple"
-                              ></v-pagination>
+      <div class="profile-user">
+        <div class="col-md-12 col-cus">
+          <v-card>
+            <v-toolbar class="toolbar-cus">
+              <v-toolbar-title class="pl-3 pt-3 pb-3">
+                <h5>Quản lý thông tin sinh viên :</h5>
+                <v-tabs v-model="tab" color="primary">
+                  <v-tab value="option-1" class="option-btn">
+                    <v-icon start> mdi-account </v-icon>
+                    Thông tin sinh viên :
+                  </v-tab>
+                  <v-tab value="option-2" class="option-btn">
+                    <v-icon start> mdi-access-point </v-icon>
+                    Nhóm học :
+                  </v-tab>
+                  <v-tab value="option-3" class="option-btn">
+                    <v-icon start> mdi-text-box </v-icon>
+                    Đánh giá :
+                  </v-tab>
+                </v-tabs>
+              </v-toolbar-title>
+            </v-toolbar>
+            <div class="flex-row">
+              <v-window v-model="tab">
+                <v-window-item value="option-1">
+                  <v-card flat>
+                    <div class="profile-tab pl-5 pt-3">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>Name</label>
                             </div>
-                          </v-card-text>
-                        </v-card>
-                      </v-window-item>
-                      <v-window-item value="option-2">
-                        <v-card flat>
-                          <v-card-text>
-                            <div class="header_fixed">
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>No.</th>
-
-                                    <th>Môn học</th>
-                                    <th>Khoa</th>
-                                    <th>Thành viên</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    v-for="(group, index) in groupsUser"
-                                    :key="index"
-                                  >
-                                    <td>{{ group.id }}</td>
-
-                                    <td>
-                                      {{ group.subject }}
-                                    </td>
-                                    <td>{{ group.faculty }}</td>
-                                    <td>{{ group.quantity }} người</td>
-                                    <td>{{ group.status }}</td>
-                                    <td>
-                                      <button
-                                        @click="navigateTo(`/groups/${group.id}`)"
-                                      >
-                                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                                      </button>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <v-pagination
-                                v-model="page"
-                                :length="totalPages"
-                                total-visible="7"
-                                color="purple"
-                              ></v-pagination>
+                            <div class="col-md-9">
+                              <p>{{ myUsers.full_name }}</p>
                             </div>
-                          </v-card-text>
-                        </v-card>
-                      </v-window-item>
-                      <v-window-item value="option-3">
-                        <v-card flat>
-                          <v-card-text>
-                            <div class="header_fixed">
-                              <table>
-                                <thead>
-                                  <tr>
-                                    <th>No.</th>
-
-                                    <th>Môn học</th>
-                                    <th>Khoa</th>
-                                    <th>Thành viên</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    v-for="(group, index) in groupsUser"
-                                    :key="index"
-                                  >
-                                    <td>{{ group.id }}</td>
-
-                                    <td>
-                                      {{ group.subject }}
-                                    </td>
-                                    <td>{{ group.faculty }}</td>
-                                    <td>{{ group.quantity }} người</td>
-                                    <td>{{ group.status }}</td>
-                                    <td>
-                                      <button
-                                        @click="navigateTo(`/groups/${group.id}`)"
-                                      >
-                                        <v-icon class="pr-3">mdi-eye</v-icon>Xem
-                                      </button>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                              <v-pagination
-                                v-model="page"
-                                :length="totalPages"
-                                total-visible="7"
-                                color="purple"
-                              ></v-pagination>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>Email</label>
                             </div>
-                          </v-card-text>
-                        </v-card>
-                      </v-window-item>
-                    </v-window>
-                  </div>                  
-                </v-card>
-              </v-window-item>
-              <v-window-item value="option-3">
-                <v-card flat>
-                  <div class="mentor-review">
-                    <h3>Đánh giá từ sinh viên :</h3>
-                    <v-col cols="12" class="cus-table">
+                            <div class="col-md-9">
+                              <p>{{ myUsers.email }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>Phone</label>
+                            </div>
+                            <div class="col-md-9">
+                              <p>{{ myUsers.phone_number }}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>Address</label>
+                            </div>
+                            <div class="col-md-9">
+                              <p>{{ myUsers.address }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>Gender</label>
+                            </div>
+                            <div class="col-md-9">
+                              <p>{{ myUsers.gender == 1 ? "Nam" : "Nữ" }}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <label>BirthDay</label>
+                            </div>
+                            <div class="col-md-9">
+                              <p>{{ myUsers.birthday }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Faculty</label>
+                        </div>
+                        <div class="col-md-6">
+                          <p>{{ myUsers.faculty }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </v-card>
+                </v-window-item>
+                <v-window-item value="option-2">
+                  <v-card flat>
+                    <v-toolbar>
+                      <v-card-title class="text-center justify-center">
+                        <h3 class="h3-cus">Danh sách nhóm học sinh viên :</h3>
+                      </v-card-title>
+                    </v-toolbar>
+                    <v-card-text>
                       <div class="header_fixed">
-                        <table>
+                        <table class="table-group">
                           <thead>
                             <tr>
                               <th>No.</th>
-                              <th>Tên người đánh giá</th>
-                              <th>Group</th>
-                              <th>điểm</th>
-                              <th>Nhận xét</th>
-                              <th>thời gian</th>
+
+                              <th>Môn học</th>
+                              <th>Khoa</th>
+                              <th>Phân Loại</th>
+                              <th>Topic</th>
+                              <th>Trạng thái</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for="(rating, index) in ratings" :key="index">
-                              <td>{{ index + 1 }}</td>
-                              <td>{{ rating.name }}</td>
+                            <tr
+                              v-for="(group, index) in groupsUser"
+                              :key="index"
+                              @click="navigateTo(`/groups/${group.id}/${messages1[group.status]}`)"
+                            >
+                              <td>{{ group.id }}</td>
+
                               <td>
-                                {{ rating.group_id == 1 ? "CNTT" : "KHMT" }}
+                                {{ group.subject }}
                               </td>
-                              <td>{{ rating.rating }} / 10</td>
-                              <td>{{ rating.comment }}</td>
-                              <td>{{ rating.created_at }}</td>
+                              <td>{{ group.faculty }}</td>
+                              <td>{{ group.self_study == 1 ? "Nhóm tự học" : "Nhóm tìm mentor" }}</td>
+                              <td>
+                                {{ group.topic }}
+                              </td>
+                              <td>{{ messages[group.status] }}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -474,13 +372,56 @@
                           color="purple"
                         ></v-pagination>
                       </div>
-                    </v-col>
-                  </div>
-                </v-card>
-              </v-window-item>
-            </v-window>
-          </div>
-        </v-card>
+                    </v-card-text>
+                  </v-card>
+                </v-window-item>
+                <v-window-item value="option-3">
+                  <v-card flat>
+                    <v-toolbar>
+                      <v-card-title class="text-center justify-center">
+                        <h3 class="h3-cus">Chi tiết đánh giá :</h3>
+                      </v-card-title>
+                    </v-toolbar>
+                    <v-card-text>
+                      <div class="header_fixed">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>No.</th>
+                              <th>Tên người đánh giá</th>
+                              <th>Group</th>
+                              <th>điểm</th>
+                              <th>Nhận xét</th>
+                              <!-- <th>thời gian</th> -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(rating, index) in ratings" :key="index">
+                              <td>{{ index + 1 }}</td>
+                              <td>{{ rating.account_name }}</td>
+                              <td>
+                                {{ rating.group_id == 1 ? "CNTT" : "KHMT" }}
+                              </td>
+                              <td>{{ rating.rating }}/5</td>
+                              <td>{{ rating.comment }}</td>
+                              <!-- <td>{{ rating.created_at }}</td> -->
+                            </tr>
+                          </tbody>
+                        </table>
+                        <v-pagination
+                          v-model="page"
+                          :length="totalPages"
+                          total-visible="7"
+                          color="purple"
+                        ></v-pagination>
+                      </div>
+                    </v-card-text>
+                  </v-card>
+                </v-window-item>
+              </v-window>
+            </div>
+          </v-card>
+        </div>
       </div>
     </div>
   </div>
@@ -493,24 +434,41 @@ const groupsUser = ref([]);
 const ratings = ref([]);
 const tab = ref("option-1");
 const tab1 = ref("option-1");
+const tab2 = ref("option-1");
+const loading = ref(true);
 const route = useRoute();
 const faculties = ref({});
 const myUsers = ref({
-  id: "",
-  img: "",
+  // id: "",
+  avatar_url: "",
   full_name: "",
   email: "",
   phone_number: "",
   address: "",
   gender: "",
   birthday: "",
+  faculty: "",
   faculty_id: "",
+  is_active: 0,
 });
-
+const messages = {
+  '0': 'Đang chờ duyệt',
+  '1':'tìm kiếm bạn học',
+  '2': 'tìm kiếm mentor',
+  '3': 'đang hoạt động',
+  '4': 'đã đóng',
+}
+var messages1 = {
+  '0':'create',
+  '1':'recruit-member',
+  '2': 'recruit-mentor',
+  '3': 'is-active',
+  '4': 'is-close'
+}
 const { url: url2 } = useUrl({
   path: `/users/${route.params.id}`,
   queryParams: {
-    isAccept: "true",
+    // isAccept: "true",
   },
 });
 
@@ -524,10 +482,10 @@ const {
 })(url2, { immediate: false });
 getUsers().json().execute();
 getUsersResponse(() => {
-  console.log("OK");
-  myUsers.value = dataGetUsers.value.data.user;
-  ratings.value = dataGetUsers.value.data.ratings;
-  console.log(dataGetUsers.value.data.ratings);
+  myUsers.value = dataGetUsers.value.data.data;
+  ratings.value = dataGetUsers.value.data.data.ratings;
+  groupsUser.value = dataGetUsers.value.data.data.groups;
+  loading.value = false;
 });
 
 const {
@@ -556,42 +514,43 @@ const {
 })(`/users/${route.params.id}`, { immediate: false });
 // Trả về khi put thông tin cá nhân
 resPut(() => {
-  myUsers.value = dataPut.value.data.data;
+  console.log("put thanh cong");
 });
 errPut(() => {
-  if (codePut.value === getConfig("constants.statusCodes.validation")) {
-    validationErrorMessages.value = dataPut.value.meta.error_message;
-  }
-  return false;
+  // if (codePut.value === getConfig("constants.statusCodes.validation")) {
+  //   validationErrorMessages.value = dataPut.value.meta.error_message;
+  // }
+  // return false;
+  console.log("Loi put");
 });
 const submit = () => {
+  console.log(myUsers.value);
   put(myUsers.value).json().execute();
 };
 
 // Tạo url lấy groups user đang tham gia học
-const { url: urlgroupUser } = useUrl({
-  path: "users/groups",
-  queryParams: {
-    is_user: 1,
-    is_active: 1,
-  },
-});
+// const { url: urlgroupUser } = useUrl({
+//   path: "users/groups",
+//   queryParams: {
+
+//   },
+// });
 
 // Lấy groups của user đang đăng nhập
-const {
-  data: dataGetgroupsUser,
-  get: getgroupsUser,
-  onFetchResponse: getgroupsUserResponse,
-  onFetchError: getgroupsUserError,
-} = useFetchApi({
-  requireAuth: true,
-  disableHandleErrorUnauthorized: true,
-})(urlgroupUser, { immediate: false });
-getgroupsUser().json().execute();
-getgroupsUserResponse(() => {
-  groupsUser.value = dataGetgroupsUser.value.data.data;
-  console.log(dataGetgroupsUser.value.data.data);
-});
+// const {
+//   data: dataGetgroupsUser,
+//   get: getgroupsUser,
+//   onFetchResponse: getgroupsUserResponse,
+//   onFetchError: getgroupsUserError,
+// } = useFetchApi({
+//   requireAuth: true,
+//   disableHandleErrorUnauthorized: true,
+// })(urlgroupUser, { immediate: false });
+// getgroupsUser().json().execute();
+// getgroupsUserResponse(() => {
+//   groupsUser.value = dataGetgroupsUser.value.data.data;
+//   console.log(dataGetgroupsUser.value.data.data);
+// });
 </script>
 <style scoped>
 .wrap {
@@ -620,7 +579,7 @@ getgroupsUserResponse(() => {
 .profile-user {
   margin: 20px auto;
   background-color: #fff;
-  width: 90%;
+  width: 100%;
   box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
     0 7px 10px -5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -808,6 +767,9 @@ input[type="date"] {
   padding: 10px;
   font-weight: 600;
 }
+.text-h3 {
+  margin: 5px auto;
+}
 .mentor-review h5 {
   text-align: center;
 }
@@ -867,13 +829,21 @@ input[type="date"] {
   overflow: auto;
   border-top: 3px solid red;
 }
+table {
+  width: 100%;
+}
 
 .header_fixed thead th {
   background-color: #023e73;
   color: #fff;
   font-size: 15px;
 }
-th,
+th {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+  font-size: 14px;
+  text-align: center;
+}
 td {
   border-bottom: 1px solid #ccc;
   padding: 10px 20px;
@@ -890,29 +860,51 @@ tr:nth-child(odd) {
 tr:hover td {
   cursor: pointer;
 }
-th:nth-child(1),
-.td:nth-child(1) {
+thead th:nth-child(1) {
   width: 5%;
 }
-th:nth-child(2),
-.td:nth-child(1) {
+
+thead th:nth-child(2) {
   width: 20%;
 }
-th:nth-child(3),
-.td:nth-child(2) {
+
+thead th:nth-child(3) {
+  width: 10%;
+}
+
+thead th:nth-child(4) {
+  width: 10%;
+}
+thead th:nth-child(5) {
+  width: 20%;
+}
+thead th:nth-child(6) {
+  width: 30%;
+}
+.table-group {
+  width: 100%;
+}
+
+.table-group thead th:nth-child(1) {
+  width: 5%;
+}
+
+.table-group thead th:nth-child(2) {
+  width: 20%;
+}
+
+.table-group thead th:nth-child(3) {
+  width: 20%;
+}
+
+.table-group thead th:nth-child(4) {
   width: 15%;
 }
-.th:nth-child(4),
-.td:nth-child(3) {
-  width: 10%;
+.table-group thead th:nth-child(5) {
+  width: 20%;
 }
-.th:nth-child(5),
-.td:nth-child(4) {
-  width: 40%;
-}
-.th:nth-child(6),
-.td:nth-child(5) {
-  width: 10%;
+.table-group thead th:nth-child(6) {
+  width: 20%;
 }
 
 td button {

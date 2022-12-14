@@ -3,105 +3,150 @@
     <v-row align-item="center" class="list px-3 mx-auto">
       <v-col cols="12" sm="12" align-item="center" class="col-cus">
         <v-row>
-          <v-col cols="4" class="mr-10">
-          <lable>Tìm kiếm thông báo: </lable>
-          <div class="input-group search" id="search">
-            <input
-            v-model="filter.a.search"
-              class="form-control border input-cus"
-              type="search"
-              placeholder="Search"
-            />
-          </div>
-        </v-col>
-        <v-col cols="3">
-          <v-btn @click.prevent="search" width="100%" class="mt-4">
-            <v-icon>mdi-magnify</v-icon>
-            Search
-          </v-btn>
-        </v-col>
-        <v-dialog v-model="dialog" persistent>
-        <template v-slot:activator="{ props }">
-          <v-btn tile v-bind="props" @click="dialog = true" width="" class="mt-4">
-            <v-icon left> mdi-pencil </v-icon>
-             Tạo thông báo
-          </v-btn>
-        </template>
-        <v-card>
-          <v-card-title class=" ml-3 mt-3 mb-3">
-            <span class="text-h5"> Thông báo mới :</span>
-          </v-card-title>
-          <div>
-            <v-text-field
-              label="Title"
-              background-color="light-blue"
-              prepend-icon="mdi-account"
-            ></v-text-field>
-            <v-textarea
-              color="black"
-              label="Label"
-              prepend-icon="mdi-comment"
-            ></v-textarea>
-            <div class="d-flex flex-wrap gap-2 flex-row-reverse"></div>
-          </div>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="white" text @click="dialog = false"> Close </v-btn>
-            <v-btn color="white" text @click="dialog = false"> Save </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+          <v-col cols="12" sm="6" md="6" lg="3">
+            <lable>Tìm kiếm thông báo: </lable>
+            <div class="input-group search" id="search">
+              <input
+                v-model="filter.a.search"
+                class="form-control border input-cus"
+                type="search"
+                placeholder="Search"
+              />
+            </div>
+          </v-col>
+          <v-col cols="12" sm="6" md="6" lg="3">
+            <v-btn @click.prevent="search" width="100%" class="mt-4 btn-cus1">
+              <v-icon>mdi-magnify</v-icon>
+              Search
+            </v-btn>
+          </v-col>
+          <v-col cols="12" sm="6" md="6" lg="3"></v-col>
+          <v-col cols="12" sm="6" md="6" lg="3">
+            <v-dialog v-model="dialog" persistent>
+              <template v-slot:activator="{ props }">
+                <v-btn
+                  tile
+                  v-bind="props"
+                  @click="dialog = true"
+                  class="mt-4 btn-cus1"
+                  style="float: right"
+                >
+                  <v-icon left> mdi-pencil </v-icon>
+                  Tạo thông báo
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title
+                  class="mb-3"
+                  style="
+                    text-align: center;
+                    padding: 16px 0;
+                    background-color: blue;
+                    color: #fff;
+                  "
+                >
+                  <span class="text-h5"> Thông báo mới :</span>
+                </v-card-title>
+                <form @submit.prevent="submit">
+                  <div style="text-align: center; padding: 16px">
+                    <v-text-field
+                      label="Title"
+                      background-color="light-blue"
+                      prepend-icon="mdi-account"
+                      v-model="newPost.title"
+                    ></v-text-field>
+                    <v-textarea
+                      color="black"
+                      label="Label"
+                      prepend-icon="mdi-comment"
+                      v-model="newPost.content"
+                    ></v-textarea>
+                    <div class="d-flex flex-wrap gap-2 flex-row-reverse"></div>
+                  </div>
+                  <v-card-actions style="background-color: #ddd">
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="black"
+                      text
+                      @click="dialog = false"
+                      variant="outlined"
+                      style="background-color: #fff"
+                    >
+                      Đóng
+                    </v-btn>
+                    <v-btn
+                      text
+                      @click="dialog = false"
+                      type="submit"
+                      variant="flat"
+                      color="secondary"
+                    >
+                      Lưu
+                    </v-btn>
+                  </v-card-actions>
+                </form>
+              </v-card>
+            </v-dialog>
+          </v-col>
         </v-row>
       </v-col>
-      <v-col cols="12" sm="12">
-        <v-row>
-          <div class="header_fixed">
-            <table >
-              <thead>
-                <tr>
-                  <!-- <th><input type="checkbox" v-model="checkAll" data-check-all/></th> -->
-                  <th>No.</th>
-                  <th>Content</th>
-                  <th>Time</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(post, index) in posts" :key="index">
-                  <!-- <td><input type="checkbox" data-check-all-item/></td> -->
-                  <td>{{ index + 1 }}</td>
-                  <td class="td-cus">
-                    <h3>
-                      {{ post.title }}
-                    </h3>
-                    <p>
-                      {{ post.content }}
-                    </p>
-                  </td>
-                  <td>{{ post.created_at.slice(0,10) }}</td>
-                  <!-- <td>{{ post.created_at.slice(0, 10) }}</td> -->
-                  <td>
-                    <div class="text-nowrap mt-3 card">
-                      <button @click="navigateTo(`/notifications/${index}`)">
-                        <v-icon>mdi-clipboard-edit-outline</v-icon>
-                      </button>
-                      <button >
-                        <v-icon>mdi-trash-can-outline</v-icon>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <v-pagination
-              v-model="page"
-              :length="totalPages"
-              total-visible="7"
-              color="purple"
-            ></v-pagination>
-          </div>
-        </v-row>
-      </v-col>
+      <v-row>
+        <div class="header_fixed">
+          <table>
+            <thead>
+              <tr>
+                <!-- <th><input type="checkbox" v-model="checkAll" data-check-all/></th> -->
+                <th>No.</th>
+                <th>Content</th>
+                <th>Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(post, index) in posts" :key="index">
+                <!-- <td><input type="checkbox" data-check-all-item/></td> -->
+                <td>{{ index + 1 }}</td>
+                <td class="td-cus">
+                  <h3>
+                    {{ post.title }}
+                  </h3>
+                  <p>
+                    {{ post.content }}
+                  </p>
+                </td>
+                <td>{{ post.created_at.slice(0, 10) }}</td>
+                <!-- <td>{{ post.created_at.slice(0, 10) }}</td> -->
+                <td>
+                  <button
+                    @click="navigateTo(`/notifications/${post.id}`)"
+                    style="
+                      margin-left: 10px;
+                      background-color: #05b187;
+                      color: #fff;
+                    "
+                  >
+                    <v-icon>mdi-clipboard-edit-outline</v-icon>
+                  </button>                  
+                </td>
+              </tr>
+            </tbody>
+            
+          </table>
+          <v-progress-circular
+              indeterminate
+              color="primary"
+              style="display: flex;justify-content: center;align-items: center;margin:auto"
+              v-if="loading"
+            ></v-progress-circular>
+
+          <v-pagination
+            v-model="page"
+            :length="pagination.total_page"
+            color="purple"
+            @click="handleChangePage"
+          ></v-pagination>
+        </div>
+      </v-row>
     </v-row>
     <v-row
       align-content="center"
@@ -115,24 +160,33 @@
 <script setup>
 definePageMeta({
   layout: "default",
-  // middleware: "authenticated",
+  middleware: "authenticated",
 });
+const page = ref(1);
 const router = useRouter();
 const route = useRoute();
 const dialog = ref(false);
+const loading = ref(true);
 const posts = ref([]);
-const {token} = useToken();
+const newPost = ref({
+  title: "",
+  content: "",
+});
+const pagination = ref({
+  current_page: 0,
+  total_page: 0,
+  total_rows: 0,
+});
 const filter = ref({
   a: {
     search: route.query.search === undefined ? "" : route.query.search,
   },
 });
-// const checkAll = ref([]);
 
 const { url: url1 } = useUrl({
   path: "/notifications",
   queryParams: {
-    isAccept: "true",
+    page: page,
   },
 });
 
@@ -147,7 +201,8 @@ const {
 getPosts().json().execute();
 getPostsResponse(() => {
   posts.value = dataGetPosts.value.data.data;
-  console.log(posts.value);
+  pagination.value = dataGetPosts.value.data.pagination;
+  loading.value = false;
 });
 
 const search = () => {
@@ -158,6 +213,40 @@ const search = () => {
   posts.value = [];
   getPosts().json().execute();
 };
+
+const {
+  data: dataPost,
+  onFetchResponse: resPost,
+  onFetchError: errPost,
+  statusCode: codePost,
+  post,
+} = useFetchApi({
+  requireAuth: true,
+  disableHandleErrorUnauthorized: true,
+})("/notifications", { immediate: false });
+// Trả về khi put thông tin cá nhân
+resPost(() => {
+  // myUsers.value = dataPut.value.data.data;
+});
+errPost(() => {
+  if (codePost.value === getConfig("constants.statusCodes.validation")) {
+    validationErrorMessages.value = dataPost.value.meta.error_message;
+  }
+  return false;
+});
+
+const submit = () => {
+  post(newPost.value).json().execute();
+  newPost.value.title = "";
+  newPost.value.content = "";
+
+  getPosts().json().execute();
+};
+
+const handleChangePage = () => {
+  console.log(page.value);
+  getPosts().json().execute();
+};
 </script>
 <style lang="scss" scoped>
 .v-card {
@@ -166,10 +255,8 @@ const search = () => {
 
 * {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
   font-family: "Roboto Slab", "Times New Roman", serif;
-
 }
 
 body {
@@ -215,8 +302,8 @@ td {
 .td-cus {
   text-align: left;
 }
-.td-cus h3{
-  color:blue;
+.td-cus h3 {
+  color: blue;
 }
 .input-cus {
   padding: 15px;
@@ -237,18 +324,19 @@ tr:hover td {
 td button {
   border: none;
   padding: 7px 20px;
-  border-radius:5px;
+  border-radius: 5px;
   background-color: #023e73;
   color: #e6e7e8;
 }
+td button:hover {
+  opacity: 0.8;
+}
 
-.v-btn {
+.btn-cus1 {
   background-color: #126da6;
   color: #fff;
-  margin-left: 40px;
   padding: 28px;
   display: flex;
-  float: right;
 }
 
 th:nth-child(1),
@@ -287,8 +375,12 @@ td:nth-child(1) {
 .col-cus {
   background-color: #f6f8fc;
   padding: 20px;
-  margin-bottom:20px;
+  margin-bottom: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
 }
+.v-dialog .v-overlay__content > .v-card {
+  border-radius: 20px;
+}
+
 </style>

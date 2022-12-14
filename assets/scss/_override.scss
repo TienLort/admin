@@ -21,7 +21,7 @@ html {
     padding: 30px 30px 0.625rem;
   }
   .v-card-actions {
-    padding: 0.625rem 30px 30px;
+    padding: 10px 30px;
   }
   .v-card {
     border-radius: 6px;
@@ -35,6 +35,9 @@ html {
     &:hover {
       transform: scale(1.05);
     }
+  }
+  .v-btn__content{
+    align-items: center;
   }
   .v-btn-group .v-btn {
     height: inherit !important;

@@ -37,7 +37,6 @@
                   <thead>
                     <tr>
                       <th>No.</th>
-                      <th>Tên sinh viên</th>
                       <th>Môn học</th>
                       <th>Chủ đề</th>
                       <th>Phân Loại</th>
@@ -47,11 +46,10 @@
                   <tbody>
                     <tr v-for="(group, index) in groupsCreate" :key="index">
                       <td>{{ index + 1 }}</td>
-                      <td>{{ group.members[0].full_name }}</td>
+                      <!-- <td>{{ group.members[0].full_name }}</td> -->
                       <td>{{ group.subject }}</td>
                       <td>{{ group.topic }}</td>
                       <td>{{ group.seft_study ? "Nhóm có mentor" : "Nhóm tự học" }}</td>
-                      <!-- <td>{{ group.created_at.slice(0, 10) }}</td> -->
                       <td>
                         <button
                           @click="navigateTo(`/groups/${group.id}/create`)"
@@ -62,6 +60,12 @@
                     </tr>
                   </tbody>
                 </table>
+                <v-progress-circular
+              indeterminate
+              color="primary"
+              v-if="loading"
+              style="display: flex;justify-content: center;align-items: center;margin:auto"
+              ></v-progress-circular>
                 <v-pagination
                   v-model="page"
                   :length="totalPages"
@@ -86,6 +90,12 @@
                 <GroupCard :group="group" />
               </v-col>
             </v-row>
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              v-if="loading"
+              style="display: flex;justify-content: center;align-items: center;margin:auto; padding-top:80px;"
+              ></v-progress-circular>
             <div class="text-center">
               <v-pagination
                 v-model="model"
@@ -109,6 +119,12 @@
                 <GroupCard :group="group" />
               </v-col>
             </v-row>
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              v-if="loading"
+              style="display: flex;justify-content: center;align-items: center;margin:auto; padding-top:80px;"
+              ></v-progress-circular>
             <div class="text-center">
               <v-pagination
                 v-model="model"
@@ -132,6 +148,12 @@
                 <GroupCard :group="group" />
               </v-col>
             </v-row>
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              v-if="loading"
+              style="display: flex;justify-content: center;align-items: center;margin:auto; padding-top:80px;"
+              ></v-progress-circular>
             <div class="text-center">
               <v-pagination
                 v-model="model"
@@ -155,11 +177,13 @@
                 <GroupCard :group="group" />
               </v-col>
             </v-row>
+            
             <div class="text-center">
               <v-pagination
                 v-model="model"
                 :length="4"
                 rounded="circle"
+                style="padding-top:16px"
               ></v-pagination>
             </div>
           </v-card>
@@ -178,6 +202,7 @@ const groups1 = ref([]);
 const groups2 = ref([]);
 const groups3 = ref([]);
 const groups4 = ref([]);
+const loading = ref(true);
 
 const { url: url0 } = useUrl({
   path: "/groups",
@@ -221,6 +246,8 @@ const {
 getGroupsCreate().json().execute();
 getGroupsCreateResponse(() => {
   groupsCreate.value = dataGetGroupsCreate.value.data.data;
+  console.log( groupsCreate.value)
+  loading.value = false;
 });
 
 // const { url: url2 } = useUrl({

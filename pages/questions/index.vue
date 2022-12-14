@@ -29,7 +29,6 @@
                     v-bind="props"
                     @click="dialog = true"
                     class="mt-4 btn-cus1"
-                    style="float: right"
                   >
                     <v-icon left> mdi-pencil </v-icon>
                     Tạo câu hỏi
@@ -90,7 +89,6 @@
             <table>
               <thead>
                 <tr>
-                  <!-- <th><input type="checkbox" v-model="checkAll" data-check-all/></th> -->
                   <th>No.</th>
                   <th>Content</th>
                   <th>Action</th>
@@ -98,41 +96,27 @@
               </thead>
               <tbody>
                 <tr v-for="(question, index) in questions" :key="index">
-                  <!-- <td><input type="checkbox" data-check-all-item/></td> -->
                   <td>{{ index + 1 }}</td>
                   <td class="td-cus">
                     <p>
                       {{ question.content }}
                     </p>
                   </td>                  
-                  <!-- <td>{{ question.created_at.slice(0, 10) }}</td> -->
-                  <td>
-                    <button
-                      @click="navigateTo(`/questions/${question.id}`)"
-                      style="
-                        margin-left: 10px;
-                        background-color: #05b187;
-                        color: #fff;
-                      "
-                    >
-                      <v-icon>mdi-clipboard-edit-outline</v-icon>
-                    </button>
-                    <button
-                      style="
-                        margin: 10px 0 0 10px;
-                        background-color: #fc4b6c;
-                        color: #fff;
-                      "
-                    >
-                      <v-icon>mdi-trash-can-outline</v-icon>
-                    </button>
+                  <td style="display: flex;justify-content: center;">                    
+                    <DiaLogForm :question="question"/> 
                   </td>
                 </tr>
               </tbody>
             </table>
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              v-if="loading"
+              style="display: flex;justify-content: center;align-items: center;margin:auto"
+              ></v-progress-circular>
             <v-pagination
               v-model="page"
-              :length="4"
+              :length="1"
               color="purple"
               @click="handleChangePage"
             ></v-pagination>
@@ -151,6 +135,8 @@
   </template>
   
   <script setup>
+import DiaLogForm from "../../components/dialogForm/DiaLogForm.vue";
+
   definePageMeta({
     layout: "default",
     middleware: "authenticated",
@@ -159,6 +145,7 @@
   const router = useRouter();
   const route = useRoute();
   const dialog = ref(false);
+  const loading = ref(true);
   const questions = ref([]);
   const newQuestion = ref({
     id: "",
@@ -194,6 +181,7 @@
   getQuestionsResponse(() => {
     questions.value = dataGetQuestions.value.data.data;
     // pagination.value = dataGetQuestions.value.data.pagination;
+    loading.value = false;
   });
   
   const search = () => {
@@ -210,7 +198,7 @@
     onFetchResponse: resQuestion,
     onFetchError: errQuestion,
     statusCode: codeQuestion,
-    Question,
+    put,
   } = useFetchApi({
     requireAuth: true,
     disableHandleErrorUnauthorized: true,
@@ -227,7 +215,7 @@
   });
   
   const submit = () => {
-    Question(newQuestion.value).json().execute();
+    put(newQuestion.value).json().execute();
     newQuestion.value.title='';
     newQuestion.value.content='';
   

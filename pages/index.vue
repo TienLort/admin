@@ -1,151 +1,164 @@
 <template>
   <div class="wrap">
-  <div class="container1">
-    <div class="content">
-      <div class="cards">
-        <div class="card">
-          <div class="box">
-            <h2>2194</h2>
-            <h3>Students</h3>
+    <div class="container1">
+      <div class="content">
+        <div class="cards">
+          <div class="card">
+            <div class="box">
+              <h2>3</h2>
+              <h3>Sinh Viên</h3>
+            </div>
+            <div class="icon-case">
+              <v-icon style="font-size: 70px; color: #f05362"
+                >mdi-account-school-outline</v-icon
+              >
+            </div>
           </div>
-          <div class="icon-case">
-            <img src="/images/students.png" alt="" />
+          <div class="card">
+            <div class="box">
+              <h2>53</h2>
+              <h3>Mentor</h3>
+            </div>
+            <div class="icon-case">
+              <v-icon style="font-size: 70px; color: #f05362"
+                >mdi-human-male-board-poll</v-icon
+              >
+            </div>
+          </div>
+          <div class="card">
+            <div class="box">
+              <h2>5</h2>
+              <h3>Câu hỏi</h3>
+            </div>
+            <div class="icon-case">
+              <v-icon style="font-size: 70px; color: #f05362"
+                >mdi-account-question-outline</v-icon
+              >
+            </div>
+          </div>
+          <div class="card">
+            <div class="box">
+              <h2>5</h2>
+              <h3>Nhóm học</h3>
+            </div>
+            <div class="icon-case">
+              <v-icon style="font-size: 70px; color: #f05362"
+                >mdi-account-group-outline</v-icon
+              >
+            </div>
+          </div>
+          <div class="card">
+            <div class="box">
+              <h2>13</h2>
+              <h3>Thông báo</h3>
+            </div>
+            <div class="icon-case">
+              <v-icon style="font-size: 70px; color: #f05362"
+                >mdi-bell-ring-outline</v-icon
+              >
+            </div>
           </div>
         </div>
-        <div class="card">
-          <div class="box">
-            <h2>53</h2>
-            <h3>Mentor</h3>
+        <div class="content-2">
+          <div class="recent-payments">
+            <div class="title">
+              <h2>Recent Payments</h2>
+              <a href="#" class="btn">View All</a>
+            </div>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>School</th>
+                <th>Amount</th>
+                <th>Option</th>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>St. James College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>St. James College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>St. James College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>St. James College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>St. James College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+              <tr>
+                <td>John Doe</td>
+                <td>St. James College</td>
+                <td>$120</td>
+                <td><a href="#" class="btn">View</a></td>
+              </tr>
+            </table>
           </div>
-          <div class="icon-case">
-            <img src="/images/teachers.png" alt="" />
+          <div class="new-students">
+            <div class="title">
+              <h2>Top Mentor</h2>
+              <a href="#" class="btn">View All</a>
+            </div>
+            <table>
+              <tr>
+                <th>Profile</th>
+                <th>Name</th>
+                <th>option</th>
+              </tr>
+              <tr>
+                <td><img src="/images/user.png" alt="" /></td>
+                <td>John Steve Doe</td>
+                <td><img src="/images/info.png" alt="" /></td>
+              </tr>
+              <tr>
+                <td><img src="/images/user.png" alt="" /></td>
+                <td>John Steve Doe</td>
+                <td><img src="/images/info.png" alt="" /></td>
+              </tr>
+              <tr>
+                <td><img src="/images/user.png" alt="" /></td>
+                <td>John Steve Doe</td>
+                <td><img src="/images/info.png" alt="" /></td>
+              </tr>
+              <tr>
+                <td><img src="/images/user.png" alt="" /></td>
+                <td>John Steve Doe</td>
+                <td><img src="/images/info.png" alt="" /></td>
+              </tr>
+            </table>
           </div>
         </div>
-        <div class="card">
-          <div class="box">
-            <h2>5</h2>
-            <h3>Schools</h3>
-          </div>
-          <div class="icon-case">
-            <img src="/images/schools.png" alt="" />
-          </div>
-        </div>
-        <div class="card">
-          <div class="box">
-            <h2>350000</h2>
-            <h3>Income</h3>
-          </div>
-          <div class="icon-case">
-            <img src="/images/income.png" alt="" />
-          </div>
-        </div>
-        <div class="card">
-          <div class="box">
-            <h2>350000</h2>
-            <h3>Income</h3>
-          </div>
-          <div class="icon-case">
-            <img src="/images/income.png" alt="" />
-          </div>
-        </div>
-        <div class="card">
-          <div class="box">
-            <h2>350000</h2>
-            <h3>Income</h3>
-          </div>
-          <div class="icon-case">
-            <img src="/images/groups.png" alt="" class="img-cus"/>
-          </div>
-        </div>
-      </div>
-      <div class="content-2">
-        <div class="recent-payments">
-          <div class="title">
-            <h2>Recent Payments</h2>
-            <a href="#" class="btn">View All</a>
-          </div>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>School</th>
-              <th>Amount</th>
-              <th>Option</th>
-            </tr>
-            <tr>
-              <td>John Doe</td>
-              <td>St. James College</td>
-              <td>$120</td>
-              <td><a href="#" class="btn">View</a></td>
-            </tr>
-            <tr>
-              <td>John Doe</td>
-              <td>St. James College</td>
-              <td>$120</td>
-              <td><a href="#" class="btn">View</a></td>
-            </tr>
-            <tr>
-              <td>John Doe</td>
-              <td>St. James College</td>
-              <td>$120</td>
-              <td><a href="#" class="btn">View</a></td>
-            </tr>
-            <tr>
-              <td>John Doe</td>
-              <td>St. James College</td>
-              <td>$120</td>
-              <td><a href="#" class="btn">View</a></td>
-            </tr>
-            <tr>
-              <td>John Doe</td>
-              <td>St. James College</td>
-              <td>$120</td>
-              <td><a href="#" class="btn">View</a></td>
-            </tr>
-            <tr>
-              <td>John Doe</td>
-              <td>St. James College</td>
-              <td>$120</td>
-              <td><a href="#" class="btn">View</a></td>
-            </tr>
-          </table>
-        </div>
-        <div class="new-students">
-          <div class="title">
-            <h2>Top Mentor</h2>
-            <a href="#" class="btn">View All</a>
-          </div>
-          <table>
-            <tr>
-              <th>Profile</th>
-              <th>Name</th>
-              <th>option</th>
-            </tr>
-            <tr>
-              <td><img src="/images/user.png" alt="" /></td>
-              <td>John Steve Doe</td>
-              <td><img src="/images/info.png" alt="" /></td>
-            </tr>
-            <tr>
-              <td><img src="/images/user.png" alt="" /></td>
-              <td>John Steve Doe</td>
-              <td><img src="/images/info.png" alt="" /></td>
-            </tr>
-            <tr>
-              <td><img src="/images/user.png" alt="" /></td>
-              <td>John Steve Doe</td>
-              <td><img src="/images/info.png" alt="" /></td>
-            </tr>
-            <tr>
-              <td><img src="/images/user.png" alt="" /></td>
-              <td>John Steve Doe</td>
-              <td><img src="/images/info.png" alt="" /></td>
-            </tr>
-          </table>
+        <div class="content-3">
+          <v-carousel hide-delimiters>
+            <v-carousel-item
+              v-for="(item, i) in items"
+              :key="i"
+
+              >
+              <!-- :src="item.src"
+                cover -->
+          <img :src="item.src"/>
+          </v-carousel-item>
+          </v-carousel>
         </div>
       </div>
     </div>
-  </div>
-
   </div>
 </template>
 
@@ -154,6 +167,20 @@ definePageMeta({
   layout: "default",
   middleware: "authenticated",
 });
+const items = ref([
+  {
+    src: "/images/m1.jpg",
+  },
+  {
+    src: "/images/users/user.jpg",
+  },
+  {
+    src: "/images/users/user2.jpg",
+  },
+  {
+    src: "/images/users/3.jpg",
+  },
+]);
 </script>
 
 <style scoped>
@@ -175,11 +202,11 @@ h2 {
 h3 {
   color: #999;
 }
-.wrap{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+.wrap {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 
 .btn {
@@ -195,7 +222,7 @@ h3 {
   padding: 3px 8px;
   border: 2px solid #f05462;
 }
-.img-cus{
+.img-cus {
   width: 65px;
   height: 50px;
 }
@@ -218,12 +245,12 @@ td {
 }
 .container1 {
   width: 100%;
-  background: #f1f1f1;
+  /* background: #f1f1f1; */
 }
 
 .container1 .content {
   position: relative;
-  background: #f1f1f1;
+  /* background: #f1f1f1; */
 }
 
 .container1 .content .cards {
@@ -242,7 +269,8 @@ td {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
 .container1 .content .content-2 {
@@ -258,7 +286,8 @@ td {
   flex: 5;
   background: white;
   margin: 0 25px 25px 25px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   display: flex;
   flex-direction: column;
 }
@@ -268,7 +297,8 @@ td {
   background: white;
   min-height: 50vh;
   margin: 0 25px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   display: flex;
   flex-direction: column;
 }
@@ -293,5 +323,12 @@ td {
   .container1 .content .content-2 .recent-payments table td:nth-child(2) {
     display: none;
   }
+}
+.v-carousel-item img{
+  object-fit: cover;
+  width: 330px !important;
+}
+.v-carousel-item{
+  margin: auto;
 }
 </style>

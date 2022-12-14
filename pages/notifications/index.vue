@@ -126,20 +126,19 @@
                     "
                   >
                     <v-icon>mdi-clipboard-edit-outline</v-icon>
-                  </button>
-                  <button
-                    style="
-                      margin: 10px 0 0 10px;
-                      background-color: #fc4b6c;
-                      color: #fff;
-                    "
-                  >
-                    <v-icon>mdi-trash-can-outline</v-icon>
-                  </button>
+                  </button>                  
                 </td>
               </tr>
             </tbody>
+            
           </table>
+          <v-progress-circular
+              indeterminate
+              color="primary"
+              style="display: flex;justify-content: center;align-items: center;margin:auto"
+              v-if="loading"
+            ></v-progress-circular>
+
           <v-pagination
             v-model="page"
             :length="pagination.total_page"
@@ -163,17 +162,18 @@ definePageMeta({
   layout: "default",
   middleware: "authenticated",
 });
-const page=  ref(1);
+const page = ref(1);
 const router = useRouter();
 const route = useRoute();
 const dialog = ref(false);
+const loading = ref(true);
 const posts = ref([]);
 const newPost = ref({
   title: "",
   content: "",
 });
 const pagination = ref({
-  current_page:0,
+  current_page: 0,
   total_page: 0,
   total_rows: 0,
 });
@@ -202,6 +202,7 @@ getPosts().json().execute();
 getPostsResponse(() => {
   posts.value = dataGetPosts.value.data.data;
   pagination.value = dataGetPosts.value.data.pagination;
+  loading.value = false;
 });
 
 const search = () => {
@@ -236,16 +237,16 @@ errPost(() => {
 
 const submit = () => {
   post(newPost.value).json().execute();
-  newPost.value.title='';
-  newPost.value.content='';
+  newPost.value.title = "";
+  newPost.value.content = "";
 
   getPosts().json().execute();
 };
 
-const handleChangePage =() =>{
+const handleChangePage = () => {
   console.log(page.value);
   getPosts().json().execute();
-}; 
+};
 </script>
 <style lang="scss" scoped>
 .v-card {
@@ -381,4 +382,5 @@ td:nth-child(1) {
 .v-dialog .v-overlay__content > .v-card {
   border-radius: 20px;
 }
+
 </style>

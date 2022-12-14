@@ -182,7 +182,7 @@
           </div>
         </div>
         <div class="control-btn">
-          <v-btn variant="flat" color="error" >Xoá </v-btn>
+          <v-btn variant="flat" color="error" @click="deleteGroup">Xoá </v-btn>
           <v-btn variant="flat" color="success" @click="submit">Duyệt</v-btn>
         </div>
       </div>
@@ -254,6 +254,7 @@ errPut(() => {
 });
 const submit = () => {
   put().json().execute();
+  navigateTo("/groups");
 };
 </script>
 

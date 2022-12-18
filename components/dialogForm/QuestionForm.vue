@@ -77,6 +77,7 @@ const props = defineProps({
   },
 });
 const dialog = ref(false);
+
 </script>
 <style scoped>
 .v-card {

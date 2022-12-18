@@ -21,8 +21,9 @@
         @click="dialog1 = true"
         variant="flat"
         color="error"
+        style="margin-left:auto;margin-right:auto;margin-top:10px;color:#fff;background-color: red; border-radius: 50% !important;"
+        icon="mdi-delete-outline"
       >
-        <v-icon>mdi-lock</v-icon>
       </v-btn>
     </template>
     <v-card style="margin: auto">
@@ -69,6 +70,9 @@ const props = defineProps({
   notify: {
     type: Object,
   },
+  callback:{
+    type: Function,
+  }
 });
 const dialog1 = ref(false);
 const {
@@ -83,8 +87,9 @@ const {
 resDeletePost(() => {});
 errDeletePost(() => {});
 const deleteNotify = () => {
-  dialog1.value = false;
   delPost().json().execute();
+  props.callback();
+  dialog1.value = false;
 };
 </script>
 

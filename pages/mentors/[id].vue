@@ -185,8 +185,6 @@
                             <button @click="handleAccept(group.id)">
                               <v-icon class="pr-3">mdi-eye</v-icon>Xem
                             </button>
-
-                            
                           </td>
                         </tr>
                       </tbody>

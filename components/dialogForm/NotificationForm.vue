@@ -19,11 +19,9 @@
         tile
         v-bind="props"
         @click="dialog = true"
-        class="btn-cus1"
-        style="float: right"
-      >
-        <v-icon left> mdi-pencil </v-icon>
-        Tạo thông báo
+        style="margin-bottom:10px;margin:auto;color:#fff;background-color: blue; border-radius: 50% !important;"
+        icon="mdi-clipboard-edit-outline"
+      >        
       </v-btn>
     </template>
     <v-card>

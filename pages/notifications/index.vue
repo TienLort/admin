@@ -129,10 +129,10 @@
                 </td>
                 <td>{{ post.created_at.slice(0, 10) }}</td>
                 <!-- <td>{{ post.created_at.slice(0, 10) }}</td> -->
-                <td>
+                <td style="margin:auto">
                   <NotificationForm :notify="post"/>
-                  <DeleteNotifyForm :notify="post"/>
-                  <v-btn
+                  <DeleteNotifyForm :notify="post" :callback="handleReload"/>
+                  <!-- <v-btn
                     @click="navigateTo(`/notifications/${post.id}`)"
                     style="
                       margin-left: auto;
@@ -156,7 +156,7 @@
                     "
                     icon="mdi-delete-outline"
                   >
-                  </v-btn>
+                  </v-btn> -->
                 </td>
               </tr>
             </tbody>
@@ -200,7 +200,7 @@ definePageMeta({
   layout: "default",
   middleware: "authenticated",
 });
-
+const { $toast } = useNuxtApp()
 const page = ref(1);
 const router = useRouter();
 const route = useRoute();
@@ -266,6 +266,7 @@ const {
 // Trả về khi put thông tin cá nhân
 resPost(() => {
   // myUsers.value = dataPut.value.data.data;
+  $toast('Tạo thông báo thành công', 'success', 1500);
 });
 errPost(() => {
   // if (codePost.value === getConfig("constants.statusCodes.validation")) {
@@ -280,8 +281,8 @@ const submit = () => {
   post(newPost.value).json().execute();
   newPost.value.title = "";
   newPost.value.content = "";
-
   getPosts().json().execute();
+  loading.value = true;
 };
 
 const handleChangePage = () => {
@@ -292,6 +293,13 @@ const handleClose = () => {
   dialog.value = false;
   newPost.value.title = "";
   newPost.value.content = "";
+}
+const handleReload = () =>{
+  loading.value = true;
+  getPosts().json().execute();
+  $toast('Xóa thông báo thành công', 'success', 1500);
+
+
 }
 </script>
 <style lang="scss" scoped>

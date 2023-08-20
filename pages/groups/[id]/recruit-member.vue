@@ -4,12 +4,7 @@
       indeterminate
       color="primary"
       v-if="loading"
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-      "
+      style="display: flex; justify-content: center; align-items: center; margin: auto"
     ></v-progress-circular>
     <v-row v-if="!loading">
       <v-col cols="12" lg="4" sm="12">
@@ -46,10 +41,7 @@
       <v-col cols="12" sm="8">
         <p><span>Người tạo nhóm :</span></p>
         <p class="mb-0">
-          <NuxtLink
-            :to="{ path: `/users/${group.membersAccepted[0].id}` }"
-            class="full"
-          >
+          <NuxtLink :to="{ path: `/users/${group.membersAccepted[0].id}` }" class="full">
             {{ group.membersAccepted[0].full_name }} - Khoa
             {{ group.membersAccepted[0].faculty }}
           </NuxtLink>
@@ -58,10 +50,7 @@
       </v-col>
       <v-col cols="12" sm="4">
         <div class="control-btn">
-          <v-btn
-            color="success"
-            @click="submit(group.quantity, group.subject, group.faculty)"
-          >
+          <v-btn color="success" @click="submit(group.quantity, group.subject, group.faculty)">
             {{ group.self_study == 0 ? "Tìm kiếm mentor" : "Tạo nhóm học" }}
           </v-btn>
           <v-btn

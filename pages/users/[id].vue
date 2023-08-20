@@ -3,12 +3,7 @@
     <v-progress-circular
       indeterminate
       color="primary"
-      style="
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-      "
+      style="display: flex; justify-content: center; align-items: center; margin: auto"
       v-if="loading"
     ></v-progress-circular>
     <div v-else>
@@ -46,9 +41,7 @@
                           <h5 class="card-header">Profile Details</h5>
                           <!-- Account -->
                           <div class="card-body">
-                            <div
-                              class="d-flex align-items-start align-items-sm-center gap-4"
-                            >
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
                               <img
                                 v-if="myUsers.avatar_url !== null"
                                 :src="`${myUsers.avatar_url}`"
@@ -74,14 +67,8 @@
                                   </h2>
                                 </div>
                                 <div class="button-wrapper">
-                                  <EditUserForm
-                                    :user="myUsers"
-                                    :faculties="faculties"
-                                  />
-                                  <LockUserForm
-                                    :user="myUsers"
-                                    :callback="handlePut"
-                                  />
+                                  <EditUserForm :user="myUsers" :faculties="faculties" />
+                                  <LockUserForm :user="myUsers" :callback="handlePut" />
                                 </div>
                               </div>
                             </div>
@@ -91,9 +78,7 @@
                             <form>
                               <div class="row">
                                 <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label"
-                                    >Họ và tên</label
-                                  >
+                                  <label for="firstName" class="form-label">Họ và tên</label>
                                   <input
                                     class="form-control"
                                     type="text"
@@ -105,27 +90,15 @@
                                   />
                                 </div>
                                 <div class="mb-3 col-md-12">
-                                  <label for="firstName" class="form-label"
-                                    >Trạng thái</label
-                                  >
-                                  <select
-                                    id="country"
-                                    class="select2 form-select"
-                                    disabled
-                                  >
+                                  <label for="firstName" class="form-label">Trạng thái</label>
+                                  <select id="country" class="select2 form-select" disabled>
                                     <option value="1">
-                                      {{
-                                        myUsers.is_active == 0
-                                          ? "Đã khóa"
-                                          : "Đang hoạt động"
-                                      }}
+                                      {{ myUsers.is_active == 0 ? "Đã khóa" : "Đang hoạt động" }}
                                     </option>
                                   </select>
                                 </div>
                                 <div class="mb-3 col-md-12">
-                                  <label for="email" class="form-label"
-                                    >E-mail</label
-                                  >
+                                  <label for="email" class="form-label">E-mail</label>
                                   <input
                                     class="form-control"
                                     type="text"
@@ -137,13 +110,9 @@
                                   />
                                 </div>
                                 <div class="mb-3 col-md-12">
-                                  <label class="form-label" for="phoneNumber"
-                                    >Phone Number</label
-                                  >
+                                  <label class="form-label" for="phoneNumber">Phone Number</label>
                                   <div class="input-group input-group-merge">
-                                    <span class="input-group-text"
-                                      >VI (+84)</span
-                                    >
+                                    <span class="input-group-text">VI (+84)</span>
                                     <input
                                       type="text"
                                       id="phoneNumber"
@@ -155,9 +124,7 @@
                                   </div>
                                 </div>
                                 <div class="mb-3 col-md-12">
-                                  <label for="address" class="form-label"
-                                    >Address</label
-                                  >
+                                  <label for="address" class="form-label">Address</label>
                                   <input
                                     type="text"
                                     class="form-control"
@@ -168,9 +135,7 @@
                                   />
                                 </div>
                                 <div class="mb-3 col-md-12">
-                                  <label for="address" class="form-label"
-                                    >Sinh Nhật</label
-                                  >
+                                  <label for="address" class="form-label">Sinh Nhật</label>
                                   <input
                                     type="text"
                                     class="form-control"
@@ -181,28 +146,16 @@
                                   />
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                  <label class="form-label" for="country"
-                                    >Giới tính</label
-                                  >
-                                  <select
-                                    id="country"
-                                    class="select2 form-select"
-                                    disabled
-                                  >
+                                  <label class="form-label" for="country">Giới tính</label>
+                                  <select id="country" class="select2 form-select" disabled>
                                     <option value="1">
                                       {{ myUsers.gender == 0 ? "Nữ" : "Nam" }}
                                     </option>
                                   </select>
                                 </div>
                                 <div class="mb-3 col-md-6">
-                                  <label for="language" class="form-label"
-                                    >Khoa</label
-                                  >
-                                  <select
-                                    id="language"
-                                    class="select2 form-select"
-                                    disabled
-                                  >
+                                  <label for="language" class="form-label">Khoa</label>
+                                  <select id="language" class="select2 form-select" disabled>
                                     <option value="">
                                       {{ myUsers.faculty }}
                                     </option>
@@ -242,13 +195,7 @@
                             <tr
                               v-for="(group, index) in groupsUser"
                               :key="index"
-                              @click="
-                                navigateTo(
-                                  `/groups/${group.id}/${
-                                    messages1[group.status]
-                                  }`
-                                )
-                              "
+                              @click="navigateTo(`/groups/${group.id}/${messages1[group.status]}`)"
                             >
                               <td>{{ index + 1 }}</td>
 
@@ -257,11 +204,7 @@
                               </td>
                               <td>{{ group.faculty }}</td>
                               <td>
-                                {{
-                                  group.self_study == 1
-                                    ? "Nhóm tự học"
-                                    : "Nhóm tìm mentor"
-                                }}
+                                {{ group.self_study == 1 ? "Nhóm tự học" : "Nhóm tìm mentor" }}
                               </td>
                               <td>
                                 {{ group.topic }}
@@ -309,10 +252,7 @@
                               <div v-if="ratings_from.length == 0">
                                 <h3>Hiện chưa có rating</h3>
                               </div>
-                              <div
-                                class="header_fixed"
-                                v-if="ratings_from.length > 0"
-                              >
+                              <div class="header_fixed" v-if="ratings_from.length > 0">
                                 <table>
                                   <thead>
                                     <tr>
@@ -324,10 +264,7 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr
-                                      v-for="(rating, index) in ratings"
-                                      :key="index"
-                                    >
+                                    <tr v-for="(rating, index) in ratings" :key="index">
                                       <td>{{ index + 1 }}</td>
                                       <td>{{ rating.account_from }}</td>
                                       <td>
@@ -359,10 +296,7 @@
                               <div v-if="ratings_from.length == 0">
                                 <h3>Hiện chưa có rating</h3>
                               </div>
-                              <div
-                                class="header_fixed"
-                                v-if="ratings_from.length > 0"
-                              >
+                              <div class="header_fixed" v-if="ratings_from.length > 0">
                                 <table>
                                   <thead>
                                     <tr>
@@ -374,10 +308,7 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr
-                                      v-for="(rating, index) in ratings_from"
-                                      :key="index"
-                                    >
+                                    <tr v-for="(rating, index) in ratings_from" :key="index">
                                       <td>{{ index + 1 }}</td>
                                       <td>{{ rating.account_from }}</td>
                                       <td>
@@ -510,17 +441,6 @@ errPut(() => {
 const handlePut = () => {
   put(myUsers.value).json().execute();
 };
-// const handleLockAccount = () => {
-//   loading.value = true;
-//   if (myUsers.value.is_active == 1) {
-//     myUsers.value.is_active = 0;
-//     put(myUsers.value).json().execute();
-//   } else {
-//     myUsers.value.is_active = 1;
-//     put(myUsers.value).json().execute();
-//   }
-//   dialog1.value = false;
-// };
 </script>
 <style scoped>
 .wrap {
@@ -530,13 +450,11 @@ const handlePut = () => {
   margin: 20px auto;
   background-color: #fff;
   width: 100%;
-  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12),
-    0 7px 10px -5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
 }
 .control-btn {
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
 }
 .control-btn .v-btn {
@@ -709,7 +627,6 @@ input[type="date"] {
   font-weight: 600;
 }
 .mentor-review h3 {
-  /* text-align: center; */
   padding: 20px;
 }
 .mentor-review h3:after {
